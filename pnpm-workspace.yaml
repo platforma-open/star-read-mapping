@@ -2,7 +2,6 @@ packages:
   - workflow
   - model
   - ui
-  - pl-table
   - .
   - test
 

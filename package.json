@@ -13,7 +13,6 @@
     "@platforma-open/milaboratories.star-read-mapping.model": "workspace:*",
     "@platforma-open/milaboratories.star-read-mapping.ui": "workspace:*",
     "@platforma-open/milaboratories.star-read-mapping.workflow": "workspace:*",
-    "@milaboratory/pl-table": "workspace:*",
     "@platforma-sdk/model": "catalog:"
   },
   "block": {

@@ -9,9 +9,6 @@ catalogs:
     '@changesets/cli':
       specifier: ^2.27.7
       version: 2.27.8
-    '@milaboratories/helpers':
-      specifier: ^1.6.2
-      version: 1.6.2
     '@milaboratories/software-pframes-conv':
       specifier: ^1.5.6
       version: 1.5.6
@@ -68,9 +65,6 @@ importers:
 
   .:
     dependencies:
-      '@milaboratory/pl-table':
-        specifier: workspace:*
-        version: link:pl-table
       '@platforma-open/milaboratories.star-read-mapping.model':
         specifier: workspace:*
         version: link:model
@@ -93,9 +87,6 @@ importers:
 
   model:
     dependencies:
-      '@milaboratory/pl-table':
-        specifier: workspace:*
-        version: link:../pl-table
       '@platforma-sdk/model':
         specifier: 'catalog:'
         version: 1.2.27
@@ -112,64 +103,6 @@ importers:
       vite:
         specifier: 'catalog:'
         version: 5.4.8(@types/node@22.5.4)
-
-  pl-table:
-    dependencies:
-      '@ag-grid-community/client-side-row-model':
-        specifier: ^32.1.0
-        version: 32.1.0
-      '@ag-grid-community/core':
-        specifier: ^32.1.0
-        version: 32.1.0
-      '@ag-grid-community/infinite-row-model':
-        specifier: ^32.1.0
-        version: 32.1.0
-      '@ag-grid-community/styles':
-        specifier: ^32.1.0
-        version: 32.1.0
-      '@ag-grid-community/vue3':
-        specifier: ^32.1.0
-        version: 32.1.0(typescript@5.5.4)
-      '@ag-grid-enterprise/clipboard':
-        specifier: ^32.1.0
-        version: 32.1.0
-      '@ag-grid-enterprise/range-selection':
-        specifier: ^32.1.0
-        version: 32.1.0
-      '@milaboratories/helpers':
-        specifier: 'catalog:'
-        version: 1.6.2
-      '@milaboratories/uikit':
-        specifier: 'catalog:'
-        version: 1.2.5(typescript@5.5.4)
-      '@platforma-sdk/model':
-        specifier: 'catalog:'
-        version: 1.2.27
-      '@platforma-sdk/ui-vue':
-        specifier: 'catalog:'
-        version: 1.3.8(typescript@5.5.4)
-      canonicalize:
-        specifier: ^2.0.0
-        version: 2.0.0
-      vue:
-        specifier: 'catalog:'
-        version: 3.5.10(typescript@5.5.4)
-      zod:
-        specifier: 'catalog:'
-        version: 3.23.8
-    devDependencies:
-      '@vitejs/plugin-vue':
-        specifier: 'catalog:'
-        version: 5.1.4(vite@5.4.8(@types/node@22.5.4))(vue@3.5.10(typescript@5.5.4))
-      typescript:
-        specifier: 'catalog:'
-        version: 5.5.4
-      vite:
-        specifier: 'catalog:'
-        version: 5.4.8(@types/node@22.5.4)
-      vue-tsc:
-        specifier: 'catalog:'
-        version: 2.1.6(typescript@5.5.4)
 
   test:
     dependencies:
@@ -216,9 +149,6 @@ importers:
       '@milaboratory/graph-maker':
         specifier: 'catalog:'
         version: 0.0.41(typescript@5.5.4)
-      '@milaboratory/pl-table':
-        specifier: workspace:*
-        version: link:../pl-table
       '@platforma-open/milaboratories.star-read-mapping.model':
         specifier: workspace:*
         version: link:../model
@@ -882,9 +812,6 @@ packages:
 
   '@milaboratories/computable@2.1.7':
     resolution: {integrity: sha512-sNkSqyDJqBpzkCLl3qrrGFhue4Gz0uP7nkE2V2KD7GOpJ/NhRngRrgE4oxKVKnpoHofJHlHrX1D8TX+vN0W4dw==}
-
-  '@milaboratories/helpers@1.6.2':
-    resolution: {integrity: sha512-w6LeiA5Q1bFNLRf+Q/9N72QSPG+LyAQPU15c73/ZwLFIWwxSMNWeH4KSwhqsfDJXv0XjfHGgSO0fxM6q4J7gIw==}
 
   '@milaboratories/pframes-node@1.5.6':
     resolution: {integrity: sha512-NbIrCZBSf78S4aDNmKk+6ZoxsfRW/v/PHyj5YXge2HUXUrAtn5Rjxg8nwVGDt9JWj4qbq24jFa+3v/iWvmrK5Q==}
@@ -5127,8 +5054,6 @@ snapshots:
       '@milaboratories/ts-helpers': 1.0.27
       '@types/node': 20.16.10
       utility-types: 3.11.0
-
-  '@milaboratories/helpers@1.6.2': {}
 
   '@milaboratories/pframes-node@1.5.6(@milaboratories/pl-model-common@1.3.13)':
     dependencies:

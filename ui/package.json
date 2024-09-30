@@ -11,7 +11,6 @@
   "dependencies": {
     "@milaboratory/graph-maker": "catalog:",
     "@platforma-open/milaboratories.star-read-mapping.model": "workspace:*",
-    "@milaboratory/pl-table": "workspace:*",
     "@milaboratories/uikit": "catalog:",
     "@platforma-sdk/model": "catalog:",
     "@platforma-sdk/ui-vue": "catalog:",
