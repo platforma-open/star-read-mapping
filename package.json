@@ -1,5 +1,5 @@
 {
-  "name": "@milaboratory/milaboratories.star-read-mapping",
+  "name": "@platforma-open/milaboratories.star-read-mapping",
   "version": "1.0.2",
   "scripts": {
     "build": "rm -rf ./dist && block-tools pack",
@@ -10,17 +10,17 @@
     "index.js"
   ],
   "dependencies": {
-    "@milaboratory/milaboratories.star-read-mapping.model": "workspace:*",
-    "@milaboratory/milaboratories.star-read-mapping.ui": "workspace:*",
-    "@milaboratory/milaboratories.star-read-mapping.workflow": "workspace:*",
+    "@platforma-open/milaboratories.star-read-mapping.model": "workspace:*",
+    "@platforma-open/milaboratories.star-read-mapping.ui": "workspace:*",
+    "@platforma-open/milaboratories.star-read-mapping.workflow": "workspace:*",
     "@milaboratory/pl-table": "workspace:*",
-    "@milaboratory/sdk-ui": "0.12.10"
+    "@platforma-sdk/model": "catalog:"
   },
   "block": {
     "components": {
-      "workflow": "@milaboratory/milaboratories.star-read-mapping.workflow/dist/tengo/tpl/main.plj.gz",
-      "model": "@milaboratory/milaboratories.star-read-mapping.model/dist/model.json",
-      "ui": "@milaboratory/milaboratories.star-read-mapping.ui/dist"
+      "workflow": "@platforma-open/milaboratories.star-read-mapping.workflow/dist/tengo/tpl/main.plj.gz",
+      "model": "@platforma-open/milaboratories.star-read-mapping.model/dist/model.json",
+      "ui": "@platforma-open/milaboratories.star-read-mapping.ui/dist"
     },
     "meta": {
       "title": "STAR read mapping",
@@ -44,6 +44,6 @@
   },
   "devDependencies": {
     "@changesets/cli": "catalog:",
-    "@milaboratory/pl-block-tools": "catalog:"
+    "@platforma-sdk/block-tools": "catalog:"
   }
 }

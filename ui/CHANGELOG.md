@@ -1,4 +1,4 @@
-# @milaboratory/milaboratories.block-template.ui
+# @platforma-open/milaboratories.block-template.ui
 
 ## 1.2.0
 

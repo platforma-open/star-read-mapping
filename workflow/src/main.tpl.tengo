@@ -31,15 +31,15 @@
 //	- normCounts: p-frame		- normalized count matrix p-frame
 //
 
-wf := import("@milaboratory/tengo-sdk:workflow")
-ll := import("@milaboratory/tengo-sdk:ll")
-render := import("@milaboratory/tengo-sdk:render")
-file := import("@milaboratory/tengo-sdk:file")
-llPFrames := import("@milaboratory/tengo-sdk:pframes.ll")
+wf := import("@platforma-sdk/workflow-tengo:workflow")
+ll := import("@platforma-sdk/workflow-tengo:ll")
+render := import("@platforma-sdk/workflow-tengo:render")
+file := import("@platforma-sdk/workflow-tengo:file")
+llPFrames := import("@platforma-sdk/workflow-tengo:pframes.ll")
 pfconvParamsLib := import(":pfconv_params")
-assets := import("@milaboratory/tengo-sdk:assets")
-pframes := import("@milaboratory/tengo-sdk:pframes")
-pUtil := import("@milaboratory/tengo-sdk:pframes.util")
+assets := import("@platforma-sdk/workflow-tengo:assets")
+pframes := import("@platforma-sdk/workflow-tengo:pframes")
+pUtil := import("@platforma-sdk/workflow-tengo:pframes.util")
 
 starAlignmentTpl := assets.importTemplate(":star-alignment")
 

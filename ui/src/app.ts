@@ -1,5 +1,5 @@
-import { model } from '@milaboratory/milaboratories.star-read-mapping.model';
-import { defineApp } from '@milaboratory/sdk-vue';
+import { model } from '@platforma-open/milaboratories.star-read-mapping.model';
+import { defineApp } from '@platforma-sdk/ui-vue';
 import PrincipalComponentAnalysis from './pages/PCAPage.vue';
 import Settings from './pages/MainPage.vue';
 import SequenceDataQC from './pages/QCPage.vue';

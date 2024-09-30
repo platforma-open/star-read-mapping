@@ -1,5 +1,5 @@
 {
-  "name": "@milaboratory/milaboratories.star-read-mapping.workflow",
+  "name": "@platforma-open/milaboratories.star-read-mapping.workflow",
   "version": "1.0.0",
   "type": "module",
   "description": "Tengo-based template",
@@ -7,8 +7,8 @@
     "build": "rm -rf dist && pl-tengo check && pl-tengo build"
   },
   "devDependencies": {
-    "@milaboratory/pframes-conv": "catalog:",
-    "@milaboratory/tengo-template-builder": "catalog:",
-    "@milaboratory/tengo-sdk": "catalog:"
+    "@milaboratories/software-pframes-conv": "catalog:",
+    "@platforma-sdk/tengo-builder": "catalog:",
+    "@platforma-sdk/workflow-tengo": "catalog:"
   }
 }

@@ -15,7 +15,7 @@ import {
   PTableHandle,
   PTableVector,
   ValueType,
-} from "@milaboratory/sdk-ui";
+} from "@platforma-sdk/model";
 
 import canonicalize from "canonicalize";
 

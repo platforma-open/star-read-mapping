@@ -6,7 +6,7 @@ import {
   PTableSorting,
   RemoteBlobHandleAndSize,
   ValueOrErrors,
-} from "@milaboratory/sdk-ui";
+} from "@platforma-sdk/model";
 
 /**
  * Data table settings

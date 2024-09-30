@@ -3,7 +3,7 @@ import {
   BlobDriver,
   LocalBlobHandleAndSize,
   RemoteBlobHandleAndSize,
-} from "@milaboratory/sdk-ui";
+} from "@platforma-sdk/model";
 
 export async function xsvGridOptions(
   blobDriver: BlobDriver,

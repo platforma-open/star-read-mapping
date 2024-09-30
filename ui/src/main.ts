@@ -1,6 +1,6 @@
-import '@milaboratory/platforma-uikit/styles';
-import { BlockLayout } from '@milaboratory/sdk-vue';
-import '@milaboratory/sdk-vue/lib/dist/style.css'; // @todo (will also be sdk-vue/styles)
+import '@milaboratories/uikit/styles';
+import { BlockLayout } from '@platforma-sdk/ui-vue';
+import '@platforma-sdk/ui-vue/dist/style.css'; // @todo (will also be sdk-vue/styles)
 import { createApp } from 'vue';
 import { sdkPlugin } from './app';
 

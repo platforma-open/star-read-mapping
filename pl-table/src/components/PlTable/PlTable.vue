@@ -18,9 +18,9 @@ import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model";
 import { AgGridVue } from "@ag-grid-community/vue3";
 import { ClipboardModule } from "@ag-grid-enterprise/clipboard";
 import { RangeSelectionModule } from "@ag-grid-enterprise/range-selection";
-import { deepClone } from "@milaboratory/helpers";
-import { LineDropdown } from "@milaboratory/platforma-uikit";
-import { AxisId, PTableRecordFilter } from "@milaboratory/sdk-ui";
+import { deepClone } from "@milaboratories/helpers";
+import { PlDropdownLine } from "@milaboratories/uikit";
+import { AxisId, PTableRecordFilter } from "@platforma-sdk/model";
 import { computed, ref, shallowRef, watch } from "vue";
 import OverlayLoading from "./OverlayLoading.vue";
 import OverlayNoData from "./OverlayNoData.vue";
@@ -224,7 +224,7 @@ const getRowId = (params: GetRowIdParams) => {
 <template>
   <div v-if="settings?.sourceType === 'pframe' && settings.sheets">
     <div v-for="sheet in settings.sheets">
-      <LineDropdown
+      <PlDropdownLine
         :model-value="
           model?.gridState?.sheets?.[axisIdFn(sheet.axis)] ??
           sheet.defaultValue ??

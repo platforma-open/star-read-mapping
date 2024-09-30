@@ -12,10 +12,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@milaboratory/platforma-uikit": "catalog:",
-    "@milaboratory/sdk-ui": "catalog:",
-    "@milaboratory/sdk-vue": "catalog:",
-    "@milaboratory/helpers": "catalog:",
+    "@milaboratories/uikit": "catalog:",
+    "@platforma-sdk/model": "catalog:",
+    "@platforma-sdk/ui-vue": "catalog:",
+    "@milaboratories/helpers": "catalog:",
     "canonicalize": "^2.0.0",
     "@ag-grid-community/core": "^32.1.0",
     "@ag-grid-community/vue3": "^32.1.0",

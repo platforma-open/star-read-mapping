@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { PlTextArea } from '@milaboratory/platforma-uikit';
+import { PlTextArea } from '@milaboratories/uikit';
 import { ref } from 'vue';
 import { GraphMaker } from "@milaboratory/graph-maker";
 import { GraphMakerSettings } from "@milaboratory/graph-maker/dist/GraphMaker/types";
-import "@milaboratory/platforma-uikit/lib/dist/style.css";
-import { model } from "@milaboratory/milaboratories.star-read-mapping.model";
+import "@milaboratories/uikit/lib/dist/style.css";
+import { model } from "@platforma-open/milaboratories.star-read-mapping.model";
 import "@milaboratory/graph-maker/dist/style.css";
 import { useApp } from "../app";
 

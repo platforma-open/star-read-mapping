@@ -5,9 +5,8 @@ import {
   InferOutputsType,
   Option,
   Ref,
-  isPColumn,
   isPColumnSpec
-} from "@milaboratory/sdk-ui";
+} from "@platforma-sdk/model";
 
 /**
  * Block arguments coming from the user interface

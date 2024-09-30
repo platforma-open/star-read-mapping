@@ -4,8 +4,8 @@ import {
   PlTextArea,
   FileInput,
   PlProgressBar 
-} from "@milaboratory/sdk-vue";
-// import { PlBtnGroup } from '@milaboratory/platforma-uikit';
+} from "@platforma-sdk/ui-vue";
+// import { PlBtnGroup } from '@milaboratories/uikit';
 import { computed 
  // , reactive 
 } from "vue";

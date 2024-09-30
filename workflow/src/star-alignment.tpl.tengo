@@ -1,11 +1,11 @@
-self := import("@milaboratory/tengo-sdk:tpl")
-pConstants := import("@milaboratory/tengo-sdk:pframes.constants")
-exec := import("@milaboratory/tengo-sdk:exec")
-file := import("@milaboratory/tengo-sdk:file")
-pframes := import("@milaboratory/tengo-sdk:pframes")
+self := import("@platforma-sdk/workflow-tengo:tpl")
+pConstants := import("@platforma-sdk/workflow-tengo:pframes.constants")
+exec := import("@platforma-sdk/workflow-tengo:exec")
+file := import("@platforma-sdk/workflow-tengo:file")
+pframes := import("@platforma-sdk/workflow-tengo:pframes")
 json := import("json")
-ll := import("@milaboratory/tengo-sdk:ll")
-xsv := import("@milaboratory/tengo-sdk:pframes.xsv")
+ll := import("@platforma-sdk/workflow-tengo:ll")
+xsv := import("@platforma-sdk/workflow-tengo:pframes.xsv")
 pfconvParamsLib := import(":pfconv_params")
 
 

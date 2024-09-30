@@ -1,4 +1,4 @@
-import { Platforma } from "@milaboratory/sdk-ui";
+import { Platforma } from "@platforma-sdk/model";
 
 declare global {
     const platforma: Platforma | undefined;
