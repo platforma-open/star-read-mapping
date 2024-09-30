@@ -1,0 +1,4 @@
+node_modules/
+dist/
+block-pack/
+*.tgz

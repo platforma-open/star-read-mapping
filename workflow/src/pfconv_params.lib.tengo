@@ -1,0 +1,43 @@
+ll := import("@milaboratory/tengo-sdk:ll")
+
+getColumns := func(blockId, species) {
+  return {
+    "axes": [
+      {
+        "column": "Geneid",
+        "spec": {
+          "name": "pl7.app/rna-seq/geneId",
+          "type": "String",
+          "domain": {
+            "pl7.app/blockId": blockId,
+            "pl7.app/species": species
+          },
+          "annotations": {
+            "pl7.app/label": "Ensembl Id"
+          }
+        }
+      }
+      ],
+    "columns": [
+      {
+        "column": "sample_Aligned.sortedByCoord.out.BAM",
+        "id": "raw-Count",
+        "allowNA": true,
+        "spec": {
+          "name": "pl7.app/rna-seq/rawCount",
+          "valueType": "Double",
+          "annotations": {
+            "pl7.app/label": "Expression level",
+            "pl7.app/rna-seq/normalized": "false"
+          }
+        }
+      }
+      ],
+    "storageFormat": "Binary",
+    "partitionKeyLength": 0
+  }
+}
+
+export ll.toStrict({
+	getColumns: getColumns
+})

@@ -1,0 +1,135 @@
+// STAR preprocessing workflow
+// 
+// Minimum Viable Block:
+// 
+// Expected arguments:
+//  - ref: Ref               	- a reference to the fastq file
+//  - species: string        	- species
+//  - libraryType: string	 	- single-end or paired-end
+//
+// Outputs:
+//	- progress: handle		 	- analysis log
+//
+// Exports:
+//	- rawCounts: p-frame 		- raw count matrix p-frame
+// 
+// Extended version:
+// 
+// Expected arguments:
+//  - ref: Ref               	- a reference to the fastq file
+//  - species: string        	- species
+//  - libraryType: string	 	- single-end or paired-end
+//
+// Outputs:
+//	- progress: handle		 	- analysis log
+//	- pcaComponents: p-frame 	- PCA p-frame
+//	- sampleDistances: p-frame 	- Hierarchical clustering output distances 
+//	- multiQC: handle 			- multiQC report
+//
+// Exports:
+//	- rawCounts: p-frame 		- raw count matrix p-frame
+//	- normCounts: p-frame		- normalized count matrix p-frame
+//
+
+wf := import("@milaboratory/tengo-sdk:workflow")
+ll := import("@milaboratory/tengo-sdk:ll")
+render := import("@milaboratory/tengo-sdk:render")
+file := import("@milaboratory/tengo-sdk:file")
+llPFrames := import("@milaboratory/tengo-sdk:pframes.ll")
+pfconvParamsLib := import(":pfconv_params")
+assets := import("@milaboratory/tengo-sdk:assets")
+pframes := import("@milaboratory/tengo-sdk:pframes")
+pUtil := import("@milaboratory/tengo-sdk:pframes.util")
+
+starAlignmentTpl := assets.importTemplate(":star-alignment")
+
+wf.prepare(func(args){
+	return{
+		resolvedInput: wf.resolve(args.ref, { errIfMissing: true })
+	}
+})	
+
+
+wf.body(func(args) {
+
+	blockId := wf.blockId().getDataAsJson()
+	input := args.resolvedInput
+	inputSpec := input.spec
+
+
+	species := args.species
+	libraryType := args.libraryType
+	strandness := args.strandness
+
+	pfconvParams := pfconvParamsLib.getColumns(blockId, species)
+
+	// Get indexed genome
+	indexImport := file.importFile(args.indexFile) // The file can be accessed with indexImport.file
+	// Get genome annotation
+	genomeAnnImport := file.importFile(args.genomeAnnFile) // The file can be accessed with genomeAnnImport.file
+
+	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
+
+	ll.print("check inputSpec", inputSpec)
+
+	aggregationTargets := [{
+		type: "Resource",
+		name: "starLog"
+	}, {
+		type: "Resource",
+		name: "starReport"
+	}, {
+		type: "Resource",
+		name: "featureCountsLog"
+	}, {
+		type: "Resource",
+		name: "countsReport"		
+	}, {
+		type: "BinaryPartitioned",
+		name: "rawCounts",
+		partitionKeyLength: 0 // [geneId]
+	}]
+
+	decomposition := pUtil.decomposePfconvCfg(pfconvParams)
+	purifiedPfconvCfg := decomposition.purifiedCfg
+	ColumnsSpec := decomposition.columnsSpec
+
+	ll.print("DEBUG_MESSAGE", "before running aggregate")
+
+	starResults := llPFrames.aggregate(
+		input.data, [1], starAlignmentTpl,
+		aggregationTargets,
+		false,
+		{
+			blockId: blockId,
+			species: species,
+			libraryType: libraryType,
+			strandness: strandness,
+			indexFile: indexImport.file,
+			genomeAnn: genomeAnnImport,
+			fileExtension: fileExtension
+
+		}
+	)
+
+	outputs := {
+		indexImportHandle: indexImport.handle,
+		genomeAnnImportHandle: genomeAnnImport.handle, 
+		starProgress: starResults.output("starLog"),
+		starQc: starResults.output("starReport"),
+		featureCountsProgress: starResults.output("featureCountsLog"),
+		featureCountsQc: starResults.output("countsReport"),
+		pf: starResults.output("rawCounts")		
+	}
+	exports := {
+		rawCount : {
+			spec: ColumnsSpec,
+			data: starResults.output("rawCounts")
+		}
+	}
+
+	return {
+		outputs: outputs,
+		exports: exports
+	}
+})

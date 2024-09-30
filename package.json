@@ -1,0 +1,49 @@
+{
+  "name": "@milaboratory/milaboratories.star-read-mapping",
+  "version": "1.0.2",
+  "scripts": {
+    "build": "rm -rf ./dist && block-tools pack",
+    "build-all": "pnpm run -r build"
+  },
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@milaboratory/milaboratories.star-read-mapping.model": "workspace:*",
+    "@milaboratory/milaboratories.star-read-mapping.ui": "workspace:*",
+    "@milaboratory/milaboratories.star-read-mapping.workflow": "workspace:*",
+    "@milaboratory/pl-table": "workspace:*",
+    "@milaboratory/sdk-ui": "0.12.10"
+  },
+  "block": {
+    "components": {
+      "workflow": "@milaboratory/milaboratories.star-read-mapping.workflow/dist/tengo/tpl/main.plj.gz",
+      "model": "@milaboratory/milaboratories.star-read-mapping.model/dist/model.json",
+      "ui": "@milaboratory/milaboratories.star-read-mapping.ui/dist"
+    },
+    "meta": {
+      "title": "STAR read mapping",
+      "logo": "file:logos/block-logo.png",
+      "url": "https://github.com/platforma/block-star-read-mapping",
+      "docs": "https://github.com/platforma/block-star-read-mapping/docs",
+      "support": "mailto:support@organization.com",
+      "description": "Bulk RNA-seq data preprocessing using STAR aligner. It runs QC and produces a count matrix.",
+      "longDescription": "file:./docs/description.md",
+      "changelog": "file:CHANGELOG.md",
+      "tags": [
+        "dna",
+        "tcr"
+      ],
+      "organization": {
+        "name": "MiLaboratories Inc",
+        "url": "https://organization.com",
+        "logo": "file:logos/organization-logo.png"
+      }
+    }
+  },
+  "devDependencies": {
+    "@changesets/cli": "catalog:",
+    "@milaboratory/pl-block-tools": "catalog:"
+  }
+}

@@ -1,0 +1,176 @@
+self := import("@milaboratory/tengo-sdk:tpl")
+pConstants := import("@milaboratory/tengo-sdk:pframes.constants")
+exec := import("@milaboratory/tengo-sdk:exec")
+file := import("@milaboratory/tengo-sdk:file")
+pframes := import("@milaboratory/tengo-sdk:pframes")
+json := import("json")
+ll := import("@milaboratory/tengo-sdk:ll")
+xsv := import("@milaboratory/tengo-sdk:pframes.xsv")
+pfconvParamsLib := import(":pfconv_params")
+
+
+self.defineOutputs("starLog", 
+					"starReport", 
+					"featureCountsLog", 
+					"countsReport",
+					"rawCounts")
+
+
+self.body(func(inputs) {
+	inputData := inputs[pConstants.VALUE_FIELD_NAME]
+	blockId := inputs.blockId
+	species := inputs.species
+	fileExtension := inputs.fileExtension
+	libraryType := inputs.libraryType
+	strandness := inputs.strandness
+	indexTar := inputs.indexFile
+	genomeAnn := inputs.genomeAnn.file
+
+	ll.print("DEBUG_MESSAGE", "before running star")
+
+	loadIndexFiles:= exec.builder().
+				cmd("tar").
+				addFile("index.tar", indexTar).
+				arg("-xvf index.tar").
+				saveFile("chrLength.txt").
+				saveFile("chrName.txt").
+				saveFile("chrNameLength.txt").
+				saveFile("chrStart.txt").
+				saveFile("exonGeTrInfo.tab").
+				saveFile("exonInfo.tab").
+				saveFile("geneInfo.tab").
+				saveFile("Genome").
+				saveFile("genomeParameters.txt").
+				saveFile("Log.out").
+				saveFile("SA").
+				saveFile("SAindex").
+				saveFile("sjdbInfo.txt").
+				saveFile("sjdbList.fromGTF.out.tab").
+				saveFile("sjdbList.out.tab").
+				saveFile("transcriptInfo.tab").
+				printErrStreamToStdout().
+				cache(24 * 60 * 60 * 1000).
+				run()
+
+	//indexFileNames := loadIndexFiles.getStdoutStream()
+	chrLength := loadIndexFiles.getFile("chrLength.txt")
+	chrName := loadIndexFiles.getFile("chrName.txt")
+	chrNameLength := loadIndexFiles.getFile("chrNameLength.txt")
+	chrStart := loadIndexFiles.getFile("chrStart.txt")
+	exonGeTrInfo := loadIndexFiles.getFile("exonGeTrInfo.tab")
+	exonInfo := loadIndexFiles.getFile("exonInfo.tab")
+	geneInfo := loadIndexFiles.getFile("geneInfo.tab")
+	Genome := loadIndexFiles.getFile("Genome")
+	genomeParameters := loadIndexFiles.getFile("genomeParameters.txt")
+	Log := loadIndexFiles.getFile("Log.out")
+	SA := loadIndexFiles.getFile("SA")
+	SAindex := loadIndexFiles.getFile("SAindex")
+	sjdbInfo := loadIndexFiles.getFile("sjdbInfo.txt")
+	sjdbListFromGTFOut := loadIndexFiles.getFile("sjdbList.fromGTF.out.tab")
+	sjdbListOut := loadIndexFiles.getFile("sjdbList.out.tab")
+	transcriptInfo := loadIndexFiles.getFile("transcriptInfo.tab")
+
+
+	star:= exec.builder().
+			cmd("STAR").
+			mkDir("genomeIndex").
+			addFile("genomeIndex/chrLength.txt", chrLength).
+			addFile("genomeIndex/chrName.txt", chrName).
+			addFile("genomeIndex/chrNameLength.txt", chrNameLength).
+			addFile("genomeIndex/chrStart.txt", chrStart).
+			addFile("genomeIndex/exonGeTrInfo.tab", exonGeTrInfo).
+			addFile("genomeIndex/exonInfo.tab", exonInfo).
+			addFile("genomeIndex/geneInfo.tab", geneInfo).
+			addFile("genomeIndex/Genome", Genome).
+			addFile("genomeIndex/genomeParameters.txt", genomeParameters).
+			addFile("genomeIndex/Log.out", Log).
+			addFile("genomeIndex/SA", SA).
+			addFile("genomeIndex/SAindex", SAindex).
+			addFile("genomeIndex/sjdbInfo.txt", sjdbInfo).
+			addFile("genomeIndex/sjdbList.fromGTF.out.tab", sjdbListFromGTFOut).
+			addFile("genomeIndex/sjdbList.out.tab", sjdbListOut).
+			addFile("genomeIndex/transcriptInfo.tab", transcriptInfo).
+			arg("-genomeDir genomeIndex").
+			arg("--outSAMtype BAM SortedByCoordinate").
+			arg("--readFilesIn")	
+
+	filesByRIndex := {}
+	for sKey, inputFile in inputData.inputs() {
+		key := json.decode(sKey)
+		r := key[0]
+		if (r[0] != 'R' && r[0] != "I") || (r[1] != '1' && r[1] != '2') || len(r) != 2 {
+			ll.panic("malformed read index: %v", r)
+		}
+		filesByRIndex[r] = inputFile
+	}
+
+	for rIndex in ["I1", "I2", "R1", "R2"] {
+		inputFile := filesByRIndex[rIndex]
+		if is_undefined(inputFile) {
+			continue
+		}
+		fileName := "input_" + rIndex + "." + fileExtension
+		star.addFile(fileName, inputFile).
+			arg(fileName)
+	}
+
+	star = star.
+			arg("--outFileNamePrefix sample_").
+			saveFile("sample_Aligned.sortedByCoord.out.BAM").
+			saveFile("sample_Log.final.out").
+			printErrStreamToStdout().
+			cache(24 * 60 * 60 * 1000).
+			run()
+
+	
+	starLog := star.getStdoutStream()
+	starReport := star.getFile("sample_Log.final.out")
+
+
+	ll.print("DEBUG_MESSAGE", "before running featureCounts")
+	// Calculate counts from BAM file
+	featureCounts:= exec.builder().
+					cmd("featureCounts").
+					arg("-t").arg("exon").
+					arg("-g").arg("gene_id").
+					arg("-s").arg(strandness).
+					arg("-a").arg("annotations.gtf")
+
+	if libraryType == "PairedEnd" {
+		featureCounts = featureCounts.arg("-p")
+		}
+	
+	featureCounts = featureCounts.
+						arg("-o rawCounts.tsv").
+						arg("sample_Aligned.sortedByCoord.out.BAM").
+						arg("--basename").
+						addFile("annotations.gtf", genomeAnn).
+						saveFile("rawCounts.tsv").
+						saveFile("rawCounts.tsv.summary"). // featureCounts qc
+						printErrStreamToStdout().
+						cache(24 * 60 * 60 * 1000).
+						run()
+
+	featureCountsLog := featureCounts.getStdoutStream()
+	countsReport := star.getFile("rawCounts.tsv.summary")
+
+	// From tsv to PColumn for rawCount
+	// How the tsv looks
+	// Geneid				Chr	Start		End		Strand	Length	../read-mapping/mapped/DevCell2015/subsampled/SRR1571968Aligned.sortedByCoord.out.bam
+	// ENSMUSG00000104478	1	108344807	108347562	+	2756	0
+	// ...
+	tsvImportParams := pfconvParamsLib.getColumns(blockId, species)
+	rawCounts := xsv.importFile(featureCounts.getFile("rawCounts.tsv"), "tsv", tsvImportParams)
+
+
+	output := {
+		starLog: starLog,
+		starReport: starReport,
+		featureCountsLog: featureCountsLog,
+		countsReport: countsReport,
+		rawCounts: pframes.exportFrame(rawCounts)
+	}
+
+	return output
+
+})
