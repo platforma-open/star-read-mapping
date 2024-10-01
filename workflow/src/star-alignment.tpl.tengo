@@ -90,8 +90,8 @@ self.body(func(inputs) {
 			addFile("genomeIndex/sjdbList.fromGTF.out.tab", sjdbListFromGTFOut).
 			addFile("genomeIndex/sjdbList.out.tab", sjdbListOut).
 			addFile("genomeIndex/transcriptInfo.tab", transcriptInfo).
-			arg("-genomeDir genomeIndex").
-			arg("--outSAMtype BAM SortedByCoordinate").
+			arg("--genomeDir").arg("genomeIndex").
+			arg("--outSAMtype").arg("BAM").arg("SortedByCoordinate").
 			arg("--readFilesIn")	
 
 	filesByRIndex := {}
