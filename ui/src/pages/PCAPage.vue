@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { PlTextArea } from '@milaboratories/uikit';
 import { ref } from 'vue';
-import { GraphMaker } from "@milaboratory/graph-maker";
-import { GraphMakerSettings } from "@milaboratory/graph-maker/dist/GraphMaker/types";
-import "@milaboratories/uikit/lib/dist/style.css";
+import { GraphMaker } from "@milaboratories/graph-maker";
+import { GraphMakerSettings } from "@milaboratories/graph-maker/dist/GraphMaker/types";
 import { model } from "@platforma-open/milaboratories.star-read-mapping.model";
-import "@milaboratory/graph-maker/dist/style.css";
+import "@milaboratories/graph-maker/dist/style.css";
 import { useApp } from "../app";
 
 const placeholder = ref('Here should go the PCA plot');

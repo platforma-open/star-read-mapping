@@ -2,7 +2,7 @@
 import { 
   PlDropdown, 
   PlTextArea,
-  FileInput,
+  PlFileInput,
   PlProgressBar 
 } from "@platforma-sdk/ui-vue";
 // import { PlBtnGroup } from '@milaboratories/uikit';
@@ -50,6 +50,7 @@ const indexUploadProgress = computed(() => {
 
 // genome annotation file upload progress
 const genomeAnnUploadProgress = computed(() => {
+  // return app.getOutputFieldOkOptional("genomeAnnUploadProgress");
   const p = app.getOutputFieldOkOptional("genomeAnnUploadProgress");
   if (p?.done) {
     return 100;
@@ -87,7 +88,7 @@ const genomeAnnUploadProgress = computed(() => {
       label="Select strandness"
     />
 
-    <FileInput
+    <PlFileInput
       v-model="args.model.indexFile"
       placeholder="Drag .tar index file"
       file-dialog-title="Select index tar file"
@@ -97,6 +98,7 @@ const genomeAnnUploadProgress = computed(() => {
     <PlProgressBar
       :progress="indexUploadProgress"
       loading
+      completeMessage="Index uploaded"
     />
     <FileInput
       v-model="args.model.genomeAnnFile"
@@ -108,6 +110,7 @@ const genomeAnnUploadProgress = computed(() => {
     <PlProgressBar
       :progress="genomeAnnUploadProgress"
       loading
+      completeMessage="Genome annotation uploaded"
     />
 
     <PlTextArea
