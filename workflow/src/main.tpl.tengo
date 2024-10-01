@@ -71,6 +71,7 @@ wf.body(func(args) {
 	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
 
 	ll.print("check inputSpec", inputSpec)
+	ll.print("check fileExtension", fileExtension)
 
 	aggregationTargets := [{
 		type: "Resource",
@@ -94,8 +95,6 @@ wf.body(func(args) {
 	purifiedPfconvCfg := decomposition.purifiedCfg
 	ColumnsSpec := decomposition.columnsSpec
 
-	ll.print("DEBUG_MESSAGE", "before running aggregate")
-
 	starResults := llPFrames.aggregate(
 		input.data, [1], starAlignmentTpl,
 		aggregationTargets,
@@ -105,7 +104,7 @@ wf.body(func(args) {
 			species: species,
 			libraryType: libraryType,
 			strandness: strandness,
-			indexFile: indexImport.file,
+			index: indexImport,
 			genomeAnn: genomeAnnImport,
 			fileExtension: fileExtension
 

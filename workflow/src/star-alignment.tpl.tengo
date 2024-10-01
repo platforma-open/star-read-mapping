@@ -23,15 +23,14 @@ self.body(func(inputs) {
 	fileExtension := inputs.fileExtension
 	libraryType := inputs.libraryType
 	strandness := inputs.strandness
-	indexTar := inputs.indexFile
+	indexTar := inputs.index.file
 	genomeAnn := inputs.genomeAnn.file
-
-	ll.print("DEBUG_MESSAGE", "before running star")
 
 	loadIndexFiles:= exec.builder().
 				cmd("tar").
 				addFile("index.tar", indexTar).
-				arg("-xvf index.tar").
+				arg("-xvf").
+				arg("index.tar").
 				saveFile("chrLength.txt").
 				saveFile("chrName.txt").
 				saveFile("chrNameLength.txt").
@@ -70,6 +69,7 @@ self.body(func(inputs) {
 	sjdbListOut := loadIndexFiles.getFile("sjdbList.out.tab")
 	transcriptInfo := loadIndexFiles.getFile("transcriptInfo.tab")
 
+	ll.print("check fileExtension before star", fileExtension)
 
 	star:= exec.builder().
 			cmd("STAR").
@@ -110,6 +110,7 @@ self.body(func(inputs) {
 			continue
 		}
 		fileName := "input_" + rIndex + "." + fileExtension
+		ll.print("print fileName in loop", fileName)
 		star.addFile(fileName, inputFile).
 			arg(fileName)
 	}
@@ -125,9 +126,8 @@ self.body(func(inputs) {
 	
 	starLog := star.getStdoutStream()
 	starReport := star.getFile("sample_Log.final.out")
+	bamFile := star.getFile("sample_Aligned.sortedByCoord.out.BAM")
 
-
-	ll.print("DEBUG_MESSAGE", "before running featureCounts")
 	// Calculate counts from BAM file
 	featureCounts:= exec.builder().
 					cmd("featureCounts").
@@ -141,9 +141,10 @@ self.body(func(inputs) {
 		}
 	
 	featureCounts = featureCounts.
-						arg("-o rawCounts.tsv").
+						arg("-o").arg("rawCounts.tsv").
 						arg("sample_Aligned.sortedByCoord.out.BAM").
 						arg("--basename").
+						addFile("sample_Aligned.sortedByCoord.out.BAM", bamFile).
 						addFile("annotations.gtf", genomeAnn).
 						saveFile("rawCounts.tsv").
 						saveFile("rawCounts.tsv.summary"). // featureCounts qc
