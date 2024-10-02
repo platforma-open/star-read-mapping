@@ -116,7 +116,8 @@ self.body(func(inputs) {
 	}
 
 	star = star.
-			arg("--outFileNamePrefix sample_").
+			arg("--readFilesCommand").arg("zcat").
+			arg("--outFileNamePrefix").arg("sample_").
 			saveFile("sample_Aligned.sortedByCoord.out.BAM").
 			saveFile("sample_Log.final.out").
 			printErrStreamToStdout().
@@ -131,6 +132,8 @@ self.body(func(inputs) {
 	// Calculate counts from BAM file
 	featureCounts:= exec.builder().
 					cmd("featureCounts").
+					addFile("sample_Aligned.sortedByCoord.out.BAM", bamFile).
+					addFile("annotations.gtf", genomeAnn).
 					arg("-t").arg("exon").
 					arg("-g").arg("gene_id").
 					arg("-s").arg(strandness).
@@ -141,16 +144,14 @@ self.body(func(inputs) {
 		}
 	
 	featureCounts = featureCounts.
-						arg("-o").arg("rawCounts.tsv").
-						arg("sample_Aligned.sortedByCoord.out.BAM").
-						arg("--basename").
-						addFile("sample_Aligned.sortedByCoord.out.BAM", bamFile).
-						addFile("annotations.gtf", genomeAnn).
-						saveFile("rawCounts.tsv").
-						saveFile("rawCounts.tsv.summary"). // featureCounts qc
-						printErrStreamToStdout().
-						cache(24 * 60 * 60 * 1000).
-						run()
+					arg("-o").arg("rawCounts.tsv").
+					arg("sample_Aligned.sortedByCoord.out.BAM").
+					arg("--basename").
+					saveFile("rawCounts.tsv").
+					saveFile("rawCounts.tsv.summary"). // featureCounts qc
+					printErrStreamToStdout().
+					cache(24 * 60 * 60 * 1000).
+					run()
 
 	featureCountsLog := featureCounts.getStdoutStream()
 	countsReport := star.getFile("rawCounts.tsv.summary")

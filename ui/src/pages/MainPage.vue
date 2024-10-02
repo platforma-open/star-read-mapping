@@ -100,7 +100,7 @@ const genomeAnnUploadProgress = computed(() => {
       loading
       completeMessage="Index uploaded"
     />
-    <FileInput
+    <PlFileInput
       v-model="args.model.genomeAnnFile"
       placeholder="Drag .gtf genome annoration file"
       file-dialog-title="Select genome annotation gtf file"
