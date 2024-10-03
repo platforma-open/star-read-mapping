@@ -28,9 +28,9 @@ const inputOptions = [
 ];
 
 const inputOptionsStr = [
-  { text: "Unstranded", value: "Unstranded" },
-  { text: "Same strand", value: "SameStrand" },
-  { text: "Opposite strand", value: "OppositeStrand" },
+  { text: "Unstranded", value: "0" },
+  { text: "Stranded", value: "1" },
+  { text: "Reverse stranded", value: "2" },
 ];
 
 const speciesOptions = [

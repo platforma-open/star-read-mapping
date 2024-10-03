@@ -20,7 +20,7 @@ getColumns := func(blockId, species) {
       ],
     "columns": [
       {
-        "column": "sample_Aligned.sortedByCoord.out.BAM",
+        "column": "sample_Aligned.sortedByCoord.out.bam",
         "id": "raw-Count",
         "allowNA": true,
         "spec": {

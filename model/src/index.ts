@@ -40,7 +40,7 @@ export type BlockArgs = {
   /**
    * Strandness settings
    */
-  strandness?: "Unstranded" | "SameStrand" | "OppositeStrand";
+  strandness?: "0" | "1" | "2";
 };
 
 // /**
@@ -57,7 +57,7 @@ export const model = BlockModel.create<BlockArgs>("Heavy")
   .initialArgs({
     species: "hsa",
     libraryType: "SingleEnd",
-    strandness: "Unstranded",
+    strandness: "0",
   })
 
   /**
