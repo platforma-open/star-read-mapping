@@ -48,6 +48,7 @@ self.body(func(inputs) {
 				saveFile("sjdbList.out.tab").
 				saveFile("transcriptInfo.tab").
 				printErrStreamToStdout().
+				saveStdoutContent().
 				cache(24 * 60 * 60 * 1000).
 				run()
 
@@ -121,6 +122,7 @@ self.body(func(inputs) {
 			saveFile("sample_Aligned.sortedByCoord.out.bam").
 			saveFile("sample_Log.final.out").
 			printErrStreamToStdout().
+			saveStdoutContent().
 			cache(24 * 60 * 60 * 1000).
 			run()
 
@@ -149,19 +151,42 @@ self.body(func(inputs) {
 					saveFile("rawCounts.tsv").
 					saveFile("rawCounts.tsv.summary"). // featureCounts qc
 					printErrStreamToStdout().
+					saveStdoutContent().
 					cache(24 * 60 * 60 * 1000).
 					run()
 
+
 	featureCountsLog := featureCounts.getStdoutStream()
-	countsReport := star.getFile("rawCounts.tsv.summary")
+	countsReport := featureCounts.getFile("rawCounts.tsv.summary")
 
 	// From tsv to PColumn for rawCount
 	// How the tsv looks
 	// Geneid				Chr	Start		End		Strand	Length	sample_Aligned.sortedByCoord.out.bam
 	// ENSMUSG00000104478	1	108344807	108347562	+	2756	0
 	// ...
+
+	// Modifying tsv
+	// Geneid	sample_Aligned.sortedByCoord.out.bam
+	// ENSMUSG00000104478	0
+	// ...
+
+	outputFeatureCounts := featureCounts.getFile("rawCounts.tsv")
+
+	formatCountMatrix := exec.builder().
+							cmd("/usr/bin/env").
+							arg("bash").
+							arg("-c").
+							arg("cut -f 1,7 rawCounts.tsv > cleanRawCounts.tsv").
+							addFile("rawCounts.tsv", outputFeatureCounts).
+							saveFile("cleanRawCounts.tsv").
+							printErrStreamToStdout().
+							saveStdoutContent().
+							cache(24 * 60 * 60 * 1000).
+							run()
+
+
 	tsvImportParams := pfconvParamsLib.getColumns(blockId, species)
-	rawCounts := xsv.importFile(featureCounts.getFile("rawCounts.tsv"), "tsv", tsvImportParams)
+	rawCounts := xsv.importFile(formatCountMatrix.getFile("cleanRawCounts.tsv"), "tsv", tsvImportParams)
 
 
 	output := {

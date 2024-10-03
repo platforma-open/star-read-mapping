@@ -103,6 +103,8 @@ export const model = BlockModel.create<BlockArgs>("Heavy")
   .output("starQc", (wf) => wf.outputs?.resolve("starQc")?.getLastLogs(100)) // Does this work with this type of file?
   .output("featureCountsProgress", (wf) => wf.outputs?.resolve("featureCountsProgress")?.getLastLogs(100))
   .output("featureCountsQc", (wf) => wf.outputs?.resolve("featureCountsQc")?.getLastLogs(100)) // Does this work with this type of file?
+  
+  
 
   /**
    * P-frame with rawCounts
