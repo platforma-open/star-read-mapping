@@ -116,9 +116,9 @@ self.body(func(inputs) {
 	}
 
 	star = star.
-			arg("--readFilesCommand").arg("zcat").
+			arg("--readFilesCommand").arg("gunzip -c").
 			arg("--outFileNamePrefix").arg("sample_").
-			saveFile("sample_Aligned.sortedByCoord.out.BAM").
+			saveFile("sample_Aligned.sortedByCoord.out.bam").
 			saveFile("sample_Log.final.out").
 			printErrStreamToStdout().
 			cache(24 * 60 * 60 * 1000).
@@ -127,12 +127,12 @@ self.body(func(inputs) {
 	
 	starLog := star.getStdoutStream()
 	starReport := star.getFile("sample_Log.final.out")
-	bamFile := star.getFile("sample_Aligned.sortedByCoord.out.BAM")
+	bamFile := star.getFile("sample_Aligned.sortedByCoord.out.bam")
 
 	// Calculate counts from BAM file
 	featureCounts:= exec.builder().
 					cmd("featureCounts").
-					addFile("sample_Aligned.sortedByCoord.out.BAM", bamFile).
+					addFile("sample_Aligned.sortedByCoord.out.bam", bamFile).
 					addFile("annotations.gtf", genomeAnn).
 					arg("-t").arg("exon").
 					arg("-g").arg("gene_id").
@@ -145,8 +145,7 @@ self.body(func(inputs) {
 	
 	featureCounts = featureCounts.
 					arg("-o").arg("rawCounts.tsv").
-					arg("sample_Aligned.sortedByCoord.out.BAM").
-					arg("--basename").
+					arg("sample_Aligned.sortedByCoord.out.bam").
 					saveFile("rawCounts.tsv").
 					saveFile("rawCounts.tsv.summary"). // featureCounts qc
 					printErrStreamToStdout().
@@ -158,7 +157,7 @@ self.body(func(inputs) {
 
 	// From tsv to PColumn for rawCount
 	// How the tsv looks
-	// Geneid				Chr	Start		End		Strand	Length	../read-mapping/mapped/DevCell2015/subsampled/SRR1571968Aligned.sortedByCoord.out.bam
+	// Geneid				Chr	Start		End		Strand	Length	sample_Aligned.sortedByCoord.out.bam
 	// ENSMUSG00000104478	1	108344807	108347562	+	2756	0
 	// ...
 	tsvImportParams := pfconvParamsLib.getColumns(blockId, species)
