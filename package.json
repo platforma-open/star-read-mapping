@@ -31,8 +31,9 @@
       "longDescription": "file:./docs/description.md",
       "changelog": "file:CHANGELOG.md",
       "tags": [
-        "dna",
-        "tcr"
+        "rna-seq",
+        "qc",
+        "upstream"
       ],
       "organization": {
         "name": "MiLaboratories Inc",
