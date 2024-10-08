@@ -63,15 +63,16 @@ wf.body(func(args) {
 
 	pfconvParams := pfconvParamsLib.getColumns(blockId, species)
 
+	// decomposition := pUtil.decomposePfconvCfg(pfconvParams)
+	// purifiedPfconvCfg := decomposition.purifiedCfg
+	// ColumnsSpec := decomposition.columnsSpec
+
 	// Get indexed genome
 	indexImport := file.importFile(args.indexFile) // The file can be accessed with indexImport.file
 	// Get genome annotation
 	genomeAnnImport := file.importFile(args.genomeAnnFile) // The file can be accessed with genomeAnnImport.file
 
 	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
-
-	ll.print("check inputSpec", inputSpec)
-	ll.print("check fileExtension", fileExtension)
 
 	aggregationTargets := [{
 		type: "Resource",
@@ -87,13 +88,9 @@ wf.body(func(args) {
 		name: "countsReport"		
 	}, {
 		type: "BinaryPartitioned",
-		name: "rawCounts",
-		partitionKeyLength: 0 // [geneId]
+		name: "rawCounts"
+		//partitionKeyLength: 0 // [geneId]
 	}]
-
-	decomposition := pUtil.decomposePfconvCfg(pfconvParams)
-	purifiedPfconvCfg := decomposition.purifiedCfg
-	ColumnsSpec := decomposition.columnsSpec
 
 	starResults := llPFrames.aggregate(
 		input.data, [1], starAlignmentTpl,
@@ -121,10 +118,10 @@ wf.body(func(args) {
 		pf: starResults.output("rawCounts")		
 	}
 	exports := {
-		rawCount : {
-			spec: ColumnsSpec,
-			data: starResults.output("rawCounts")
-		}
+		// rawCount : {
+		// 	spec: ColumnsSpec,
+		// 	data: starResults.output("rawCounts")
+		// }
 	}
 
 	return {

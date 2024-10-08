@@ -161,6 +161,7 @@ self.body(func(inputs) {
 
 	// From tsv to PColumn for rawCount
 	// How the tsv looks
+	// # some featureCounts command info
 	// Geneid				Chr	Start		End		Strand	Length	sample_Aligned.sortedByCoord.out.bam
 	// ENSMUSG00000104478	1	108344807	108347562	+	2756	0
 	// ...
@@ -176,7 +177,8 @@ self.body(func(inputs) {
 							cmd("/usr/bin/env").
 							arg("bash").
 							arg("-c").
-							arg("cut -f 1,7 rawCounts.tsv > cleanRawCounts.tsv").
+							//arg("cut -f 1,7 rawCounts.tsv > cleanRawCounts.tsv").
+							arg("sed '1d' rawCounts.tsv | cut -f 1,7 > cleanRawCounts.tsv").
 							addFile("rawCounts.tsv", outputFeatureCounts).
 							saveFile("cleanRawCounts.tsv").
 							printErrStreamToStdout().
@@ -187,14 +189,14 @@ self.body(func(inputs) {
 
 	tsvImportParams := pfconvParamsLib.getColumns(blockId, species)
 	rawCounts := xsv.importFile(formatCountMatrix.getFile("cleanRawCounts.tsv"), "tsv", tsvImportParams)
-
+	ll.print("print import params", tsvImportParams)
 
 	output := {
 		starLog: starLog,
 		starReport: starReport,
 		featureCountsLog: featureCountsLog,
 		countsReport: countsReport,
-		rawCounts: pframes.exportFrame(rawCounts)
+		rawCounts: rawCounts
 	}
 
 	return output

@@ -9,7 +9,7 @@ getColumns := func(blockId, species) {
           "name": "pl7.app/rna-seq/geneId",
           "type": "String",
           "domain": {
-            "pl7.app/blockId": blockId,
+          "pl7.app/blockId": blockId,
             "pl7.app/species": species
           },
           "annotations": {

@@ -7,8 +7,6 @@ import { model } from "@platforma-open/milaboratories.star-read-mapping.model";
 import "@milaboratories/graph-maker/dist/style.css";
 import { useApp } from "../app";
 
-const placeholder = ref('Here should go the Hierarchical Clustering plot');
-
 const app = useApp();
 
 const settings = ref({
@@ -23,12 +21,6 @@ const settings = ref({
 </script>
 
 <template>
-  <PlTextArea
-    v-model="placeholder"
-    :rows="3"
-    label="MultiQC"
-  />
-
   <GraphMaker
     v-if="app.outputs.pf?.ok && app.outputs.pf.value"
     :p-frame-handle="app.outputs.pf.value"

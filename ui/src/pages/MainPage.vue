@@ -115,7 +115,7 @@ const genomeAnnUploadProgress = computed(() => {
 
     <PlTextArea
       v-if="app.outputs.starProgress && app.outputs.starProgress.ok"
-      :model-value="app.outputs.starProgress.value"
+      :model-value="app.outputs.starProgress.value?.data?.[0]?.value"
       :readonly="true"
       :rows="3"
       label="STAR alignment"

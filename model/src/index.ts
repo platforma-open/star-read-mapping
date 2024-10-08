@@ -7,6 +7,7 @@ import {
   Ref,
   isPColumnSpec
 } from "@platforma-sdk/model";
+import { parseResourceMap } from "./helpers";
 
 /**
  * Block arguments coming from the user interface
@@ -99,11 +100,16 @@ export const model = BlockModel.create<BlockArgs>("Heavy")
   /**
    * Preprocessing progress
    */
-  .output("starProgress", (wf) => wf.outputs?.resolve("starProgress")?.getLastLogs(100))
+  //.output("starProgress", (wf) => wf.outputs?.resolve("starProgress")?.getLastLogs(100))
+  .output("starProgress", (wf) => {
+    return parseResourceMap(wf.outputs?.resolve({ field: 'starProgress', assertFieldType: 'Input' }), (acc) =>
+      acc.getLastLogs(100),
+      false
+    )
+  })
   .output("starQc", (wf) => wf.outputs?.resolve("starQc")?.getLastLogs(100)) // Does this work with this type of file?
   .output("featureCountsProgress", (wf) => wf.outputs?.resolve("featureCountsProgress")?.getLastLogs(100))
   .output("featureCountsQc", (wf) => wf.outputs?.resolve("featureCountsQc")?.getLastLogs(100)) // Does this work with this type of file?
-  
   
 
   /**
@@ -121,7 +127,7 @@ export const model = BlockModel.create<BlockArgs>("Heavy")
    */
   .output("pt", (wf) => {
     const pCols = wf.outputs?.resolve("pf")?.getPColumns();
-    if (pCols === undefined) return undefined;
+    if (pCols === undefined || pCols.length === 0) return undefined;
 
     return wf.createPTable({
       columns: pCols,
