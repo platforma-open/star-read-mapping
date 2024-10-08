@@ -188,7 +188,7 @@ self.body(func(inputs) {
 
 
 	tsvImportParams := pfconvParamsLib.getColumns(blockId, species)
-	importResult := xsv.importFile(formatCountMatrix.getFile("cleanRawCounts.tsv"), "tsv", tsvImportParams, { dataOnly: true })
+	countMatrixImport := xsv.importFile(formatCountMatrix.getFile("cleanRawCounts.tsv"), "tsv", tsvImportParams, { dataOnly: true })
 	// PFrame
 	//   rawCounts.data
 	//   rawCounts.spec
@@ -201,7 +201,7 @@ self.body(func(inputs) {
 		starReport: starReport,
 		featureCountsLog: featureCountsLog,
 		countsReport: countsReport,
-		rawCounts: importResult.getFutureInputField("rawCounts")
+		countMatrixImport: countMatrixImport
 	}
 
 	return output
