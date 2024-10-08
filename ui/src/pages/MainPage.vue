@@ -117,13 +117,13 @@ const genomeAnnUploadProgress = computed(() => {
       v-if="app.outputs.starProgress && app.outputs.starProgress.ok"
       :model-value="app.outputs.starProgress.value?.data?.[0]?.value"
       :readonly="true"
-      :rows="3"
+      :rows="10"
       label="STAR alignment"
     />
 
     <PlTextArea
       v-if="app.outputs.featureCountsProgress && app.outputs.featureCountsProgress.ok"
-      :model-value="app.outputs.featureCountsProgress.value"
+      :model-value="app.outputs.featureCountsProgress.value?.data?.[0]?.value"
       :readonly="true"
       :rows="10"
       label="Feature counts"
