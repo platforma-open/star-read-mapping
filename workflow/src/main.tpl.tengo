@@ -1,7 +1,7 @@
 // STAR preprocessing workflow
-// 
+//
 // Minimum Viable Block:
-// 
+//
 // Expected arguments:
 //  - ref: Ref               	- a reference to the fastq file
 //  - species: string        	- species
@@ -12,9 +12,9 @@
 //
 // Exports:
 //	- rawCounts: p-frame 		- raw count matrix p-frame
-// 
+//
 // Extended version:
-// 
+//
 // Expected arguments:
 //  - ref: Ref               	- a reference to the fastq file
 //  - species: string        	- species
@@ -23,7 +23,7 @@
 // Outputs:
 //	- progress: handle		 	- analysis log
 //	- pcaComponents: p-frame 	- PCA p-frame
-//	- sampleDistances: p-frame 	- Hierarchical clustering output distances 
+//	- sampleDistances: p-frame 	- Hierarchical clustering output distances
 //	- multiQC: handle 			- multiQC report
 //
 // Exports:
@@ -47,7 +47,7 @@ wf.prepare(func(args){
 	return{
 		resolvedInput: wf.resolve(args.ref, { errIfMissing: true })
 	}
-})	
+})
 
 
 wf.body(func(args) {
@@ -85,11 +85,11 @@ wf.body(func(args) {
 		name: "featureCountsLog"
 	}, {
 		type: "Resource",
-		name: "countsReport"		
+		name: "countsReport"
 	}, {
 		type: "BinaryPartitioned",
 		name: "rawCounts"
-		//partitionKeyLength: 0 // [geneId]
+		partitionKeyLength: 0 // [geneId]
 	}]
 
 	starResults := llPFrames.aggregate(
@@ -110,12 +110,12 @@ wf.body(func(args) {
 
 	outputs := {
 		indexImportHandle: indexImport.handle,
-		genomeAnnImportHandle: genomeAnnImport.handle, 
+		genomeAnnImportHandle: genomeAnnImport.handle,
 		starProgress: starResults.output("starLog"),
 		starQc: starResults.output("starReport"),
 		featureCountsProgress: starResults.output("featureCountsLog"),
 		featureCountsQc: starResults.output("countsReport"),
-		pf: starResults.output("rawCounts")		
+		pf: starResults.output("rawCounts")
 	}
 	exports := {
 		// rawCount : {

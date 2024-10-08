@@ -21,7 +21,7 @@ getColumns := func(blockId, species) {
     "columns": [
       {
         "column": "sample_Aligned.sortedByCoord.out.bam",
-        "id": "raw-Count",
+        "id": "rawCounts",
         "allowNA": true,
         "spec": {
           "name": "pl7.app/rna-seq/rawCount",

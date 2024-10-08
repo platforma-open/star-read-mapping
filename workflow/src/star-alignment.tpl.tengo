@@ -9,9 +9,9 @@ xsv := import("@platforma-sdk/workflow-tengo:pframes.xsv")
 pfconvParamsLib := import(":pfconv_params")
 
 
-self.defineOutputs("starLog", 
-					"starReport", 
-					"featureCountsLog", 
+self.defineOutputs("starLog",
+					"starReport",
+					"featureCountsLog",
 					"countsReport",
 					"rawCounts")
 
@@ -93,7 +93,7 @@ self.body(func(inputs) {
 			addFile("genomeIndex/transcriptInfo.tab", transcriptInfo).
 			arg("--genomeDir").arg("genomeIndex").
 			arg("--outSAMtype").arg("BAM").arg("SortedByCoordinate").
-			arg("--readFilesIn")	
+			arg("--readFilesIn")
 
 	filesByRIndex := {}
 	for sKey, inputFile in inputData.inputs() {
@@ -126,7 +126,7 @@ self.body(func(inputs) {
 			cache(24 * 60 * 60 * 1000).
 			run()
 
-	
+
 	starLog := star.getStdoutStream()
 	starReport := star.getFile("sample_Log.final.out")
 	bamFile := star.getFile("sample_Aligned.sortedByCoord.out.bam")
@@ -144,7 +144,7 @@ self.body(func(inputs) {
 	if libraryType == "PairedEnd" {
 		featureCounts = featureCounts.arg("-p")
 		}
-	
+
 	featureCounts = featureCounts.
 					arg("-o").arg("rawCounts.tsv").
 					arg("sample_Aligned.sortedByCoord.out.bam").
@@ -188,7 +188,12 @@ self.body(func(inputs) {
 
 
 	tsvImportParams := pfconvParamsLib.getColumns(blockId, species)
-	rawCounts := xsv.importFile(formatCountMatrix.getFile("cleanRawCounts.tsv"), "tsv", tsvImportParams)
+	importResult := xsv.importFile(formatCountMatrix.getFile("cleanRawCounts.tsv"), "tsv", tsvImportParams, { dataOnly: true })
+	// PFrame
+	//   rawCounts.data
+	//   rawCounts.spec
+	// after we add { dataOnly: true }
+	//   rawCounts [ containing value from rawCounts.data ]
 	ll.print("print import params", tsvImportParams)
 
 	output := {
@@ -196,7 +201,7 @@ self.body(func(inputs) {
 		starReport: starReport,
 		featureCountsLog: featureCountsLog,
 		countsReport: countsReport,
-		rawCounts: rawCounts
+		rawCounts: importResult.get("rawCounts")
 	}
 
 	return output
