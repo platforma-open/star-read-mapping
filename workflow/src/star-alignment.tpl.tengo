@@ -201,7 +201,7 @@ self.body(func(inputs) {
 		starReport: starReport,
 		featureCountsLog: featureCountsLog,
 		countsReport: countsReport,
-		rawCounts: importResult.get("rawCounts")
+		rawCounts: importResult.getFutureInputField("rawCounts")
 	}
 
 	return output
