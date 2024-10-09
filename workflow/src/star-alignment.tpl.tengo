@@ -13,7 +13,7 @@ self.defineOutputs("starLog",
 					"starReport",
 					"featureCountsLog",
 					"countsReport",
-					"rawCounts")
+					"countMatrixImport")
 
 
 self.body(func(inputs) {

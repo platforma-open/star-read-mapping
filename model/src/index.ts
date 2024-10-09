@@ -122,15 +122,16 @@ export const model = BlockModel.create<BlockArgs>("Heavy")
    * P-frame with rawCounts
    */
   .output("pf", (wf) => {
+    //return wf.outputs?.resolve("pf")?.resolve("rawCounts.data")?.listInputFields()
     const pCols = wf.outputs?.resolve("pf")?.getPColumns();
     if (pCols === undefined) return undefined;
 
     return wf.createPFrame(pCols);
   })
 
-  /**
-   * P-table with counts output for all samples
-   */
+  // /**
+  //  * P-table with counts output for all samples
+  //  */
   .output("pt", (wf) => {
     const pCols = wf.outputs?.resolve("pf")?.getPColumns();
     if (pCols === undefined || pCols.length === 0) return undefined;

@@ -88,7 +88,7 @@ wf.body(func(args) {
 		name: "countsReport"
 	}, {
 		type: "BinaryPartitioned",
-		name: "rawCounts"
+		name: "rawCounts",
 		path: ["countMatrixImport", "rawCounts"],
 		partitionKeyLength: 0 // [geneId]
 	}]
@@ -115,13 +115,67 @@ wf.body(func(args) {
 		starQc: starResults.output("starReport"),
 		featureCountsProgress: starResults.output("featureCountsLog"),
 		featureCountsQc: starResults.output("countsReport"),
-		pf: starResults.output("rawCounts")
+		pf: pframes.exportFrame({
+			"rawCounts.spec":
+				{
+				kind: "PColumn",
+				name: "countMatrix",
+				domain: {
+					"pl7.app/blockId": blockId
+				},
+				valueType: "Double",
+				axesSpec: [
+					inputSpec.axesSpec[0],
+					{
+						"name": "pl7.app/rna-seq/geneId",
+						"type": "String",
+						"domain": {
+						"pl7.app/blockId": blockId,
+							"pl7.app/species": species
+						},
+						"annotations": {
+							"pl7.app/label": "Ensembl Id"
+						}
+					}
+				]
+			},
+			"rawCounts.data": starResults.output("rawCounts")
+		})
 	}
+
+
+	 // sample from inputSpec + previous specs
 	exports := {
-		// rawCount : {
-		// 	spec: ColumnsSpec,
-		// 	data: starResults.output("rawCounts")
-		// }
+		rawCount : {
+			spec:
+				{
+				kind: "PColumn",
+				name: "countMatrix",
+				domain: {
+					"pl7.app/blockId": blockId
+				},
+				valueType: "Double",
+				annotations: {
+					"pl7.app/label": "Expression level",
+					"pl7.app/rna-seq/normalized": "false"
+					},
+				axesSpec: [
+					inputSpec.axesSpec[0],
+					{
+						"name": "pl7.app/rna-seq/geneId",
+						"type": "String",
+						"domain": {
+						"pl7.app/blockId": blockId,
+							"pl7.app/species": species
+						},
+						"annotations": {
+							"pl7.app/label": "Ensembl Id"
+						}
+					}
+				]
+			},
+			data: starResults.output("rawCounts")
+		}
 	}
 
 	return {
