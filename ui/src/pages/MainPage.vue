@@ -1,26 +1,15 @@
 <script setup lang="ts">
-import { 
-  PlDropdown, 
-  PlTextArea,
+import {
+  PlBlockPage,
+  PlDropdown,
+  PlDropdownRef,
   PlFileInput,
-  PlProgressBar 
+  PlLogView
 } from "@platforma-sdk/ui-vue";
 // import { PlBtnGroup } from '@milaboratories/uikit';
-import { computed 
- // , reactive 
-} from "vue";
 import { useApp } from "../app";
 
 const app = useApp();
-
-const args = app.createArgsModel();
-
-const dataOptions = computed(() =>
-  app.outputValues.dataOptions?.map((v) => ({
-    text: v.label,
-    value: v.ref,
-  }))
-);
 
 const inputOptions = [
   { text: "Single-end", value: "SingleEnd" },
@@ -37,106 +26,29 @@ const speciesOptions = [
   { text: "Homo sapiens", value: "hsa" },
   { text: "Mus musculus", value: "mmu" },
 ];
-
-// index file upload progress
-const indexUploadProgress = computed(() => {
-  const p = app.getOutputFieldOkOptional("indexUploadProgress");
-  if (p?.done) {
-    return 100;
-  } else {
-    return 100 * (p?.status?.progress ?? 0.0);
-  }
-});
-
-// genome annotation file upload progress
-const genomeAnnUploadProgress = computed(() => {
-  // return app.getOutputFieldOkOptional("genomeAnnUploadProgress");
-  const p = app.getOutputFieldOkOptional("genomeAnnUploadProgress");
-  if (p?.done) {
-    return 100;
-  } else {
-    return 100 * (p?.status?.progress ?? 0.0);
-  }
-});
-
 </script>
 
 <template>
-  <div class="container">
-    <PlDropdown
-      v-if="dataOptions"
-      :options="dataOptions"
-      v-model="args.model.ref"
-      label="Select dataset"
-      clearable
-    />
+  <PlBlockPage>
+    <template #title>STAR Read Mapping</template>
 
-    <PlDropdown
-      :options="speciesOptions"
-      v-model="args.model.species"
-      label="Select species"
-    />
-    <PlDropdown
-      :options="inputOptions"
-      v-model="args.model.libraryType"
-      label="Select library type"
-    />
+    <PlDropdownRef :options="app.model.outputs.dataOptions ?? []" v-model="app.model.args.ref" label="Select dataset"
+      clearable />
 
-    <PlDropdown
-      :options="inputOptionsStr"
-      v-model="args.model.strandness"
-      label="Select strandness"
-    />
+    <PlDropdown :options="speciesOptions" v-model="app.model.args.species" label="Select species" />
+    <PlDropdown :options="inputOptions" v-model="app.model.args.libraryType" label="Select library type" />
 
-    <PlFileInput
-      v-model="args.model.indexFile"
-      placeholder="Drag .tar index file"
-      file-dialog-title="Select index tar file"
-      clearable
-    />
-    <br />
-    <PlProgressBar
-      :progress="indexUploadProgress"
-      loading
-      completeMessage="Index uploaded"
-    />
-    <PlFileInput
-      v-model="args.model.genomeAnnFile"
-      placeholder="Drag .gtf genome annoration file"
-      file-dialog-title="Select genome annotation gtf file"
-      clearable
-    />
-    <br />
-    <PlProgressBar
-      :progress="genomeAnnUploadProgress"
-      loading
-      completeMessage="Genome annotation uploaded"
-    />
+    <PlDropdown :options="inputOptionsStr" v-model="app.model.args.strandness" label="Select strandness" />
 
-    <PlTextArea
-      v-if="app.outputs.starProgress && app.outputs.starProgress.ok"
-      :model-value="app.outputs.starProgress.value?.data?.[0]?.value"
-      :readonly="true"
-      :rows="10"
-      label="STAR alignment"
-    />
+    <PlFileInput v-model="app.model.args.indexFile" :progress="app.model.outputs.indexUploadProgress"
+      placeholder="Select .tar index file" fileDialogTitle="Select index tar file" clearable />
 
-    <PlTextArea
-      v-if="app.outputs.featureCountsProgress && app.outputs.featureCountsProgress.ok"
-      :model-value="app.outputs.featureCountsProgress.value?.data?.[0]?.value"
-      :readonly="true"
-      :rows="10"
-      label="Feature counts"
-    />
-  </div>
+    <PlFileInput v-model="app.model.args.genomeAnnFile" :progress="app.model.outputs.genomeAnnUploadProgress"
+      placeholder="Drag .gtf genome annoration file" file-dialog-title="Select genome annotation gtf file" clearable />
+
+    <PlLogView :model-value="app.model.outputs.starProgress" label="STAR alignment log" />
+
+    <PlLogView :model-value="app.model.outputs.featureCountsProgress" label="Feature counts log" />
+
+  </PlBlockPage>
 </template>
-
-<style lang="css">
-.container {
-  margin-top: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 70%;
-}
-</style>

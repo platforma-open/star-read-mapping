@@ -7,8 +7,9 @@
     "build": "rm -rf dist && pl-tengo check && pl-tengo build"
   },
   "devDependencies": {
-    "@milaboratories/software-pframes-conv": "catalog:",
     "@platforma-sdk/tengo-builder": "catalog:",
-    "@platforma-sdk/workflow-tengo": "catalog:"
+    "@platforma-sdk/workflow-tengo": "catalog:",
+    "@milaboratories/software-pframes-conv": "catalog:",
+    "@milaboratories/software-small-binaries": "catalog:"
   }
 }
