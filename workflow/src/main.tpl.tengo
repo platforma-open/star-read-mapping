@@ -63,10 +63,6 @@ wf.body(func(args) {
 
 	pfconvParams := pfconvParamsLib.getColumns(blockId, species)
 
-	// decomposition := pUtil.decomposePfconvCfg(pfconvParams)
-	// purifiedPfconvCfg := decomposition.purifiedCfg
-	// ColumnsSpec := decomposition.columnsSpec
-
 	// Get indexed genome
 	indexImport := file.importFile(args.indexFile) // The file can be accessed with indexImport.file
 	// Get genome annotation
@@ -108,14 +104,7 @@ wf.body(func(args) {
 		}
 	)
 
-	outputs := {
-		indexImportHandle: indexImport.handle,
-		genomeAnnImportHandle: genomeAnnImport.handle,
-		starProgress: starResults.output("starLog"),
-		starQc: starResults.output("starReport"),
-		featureCountsProgress: starResults.output("featureCountsLog"),
-		featureCountsQc: starResults.output("countsReport"),
-		pf: pframes.exportFrame({
+	pf := {
 			"rawCounts.spec":
 				{
 				kind: "PColumn",
@@ -140,7 +129,41 @@ wf.body(func(args) {
 				]
 			},
 			"rawCounts.data": starResults.output("rawCounts")
-		})
+		}
+	
+	// convert pf to tsv
+
+	// Run clustering QC on all samples
+	clusteringQC := exec.builder().
+					cmd("/usr/bin/env").
+					arg("bash").
+					arg("-c").
+					arg("run_sample_qc.R rawCounts.csv").
+					addFile("rawCounts.tsv").
+					saveFile("PCAComponents.tsv").
+					saveFile("sampleDistances.tsv").
+					printErrStreamToStdout().
+					saveStdoutContent().
+					cache(24 * 60 * 60 * 1000).
+					run()
+
+	PCAtsvImportParams := pcaPfconvParamsLib.getColumns(blockId, inputSpec)
+	PCAComponents := xsv.importFile(clusteringQC.getFile("PCAComponents.tsv"), "tsv", PCAtsvImportParams)
+	
+	// HQtsvImportParams := hcPfconvParamsLib.getColumns(blockId, inputSpec)
+	// sampleDistances := xsv.importFile(clusteringQC.getFile("sampleDistances.tsv"), "tsv", HQtsvImportParams)
+
+
+	outputs := {
+		indexImportHandle: indexImport.handle,
+		genomeAnnImportHandle: genomeAnnImport.handle,
+		starProgress: starResults.output("starLog"),
+		starQc: starResults.output("starReport"),
+		featureCountsProgress: starResults.output("featureCountsLog"),
+		featureCountsQc: starResults.output("countsReport"),
+		pf: pframes.exportFrame(pf),
+		pcaComponents: pframes.exportFrame(PCAComponents)
+	//	pcaComponents: pframes.exportFrame(sampleDistances)
 	}
 
 
