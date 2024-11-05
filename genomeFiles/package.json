@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "STAR indexed genome references",
   "scripts": {
-    "build-ci": "echo 'This is fake build script for CI optimization'",
+    "build-skip": "echo 'This is fake build script for CI optimization'",
 
     "prebuild": "./build-everything.sh ./genomeFileUrls.json",
     "build": "pl-pkg build",

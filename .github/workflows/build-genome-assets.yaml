@@ -21,6 +21,13 @@ jobs:
         with:
           version-canonize: false
           branch-versioning: main
+
+      - uses: milaboratory/github-ci/actions/context@v4
+        id: ctx
+
+    outputs:
+      is-release: ${{ steps.ctx.outputs.is-release }}
+
   run:
     needs:
       - init
@@ -32,12 +39,12 @@ jobs:
       notify-telegram: true
 
       node-version: "20.x"
-      node-execution-path: 'genomeFiles'
+      node-execution-path: "genomeFiles"
       is-electron-application: "false"
       always-auth: "true"
       registry-url: "https://registry.npmjs.org"
 
-      build-script-name: "build"
+      build-script-name: ${{ needs.init.outputs.is-release == 'true' && 'build-skip' || 'build' }}
       test: false
 
       publish-to-public: true
