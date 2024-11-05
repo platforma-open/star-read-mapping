@@ -25,21 +25,26 @@ if ! command -v "${STAR_CMD}" >/dev/null; then
     fi
 
     _star_version="2.7.11b"
-    echo "No STAR executable found on host. Downloading '${_star_version}'..."
-    (
-        set -x
-        mkdir -p "downloads"
-        cd "downloads"
-        wget --output-document "STAR.zip" \
-            "https://github.com/alexdobin/STAR/releases/download/${_star_version}/STAR_${_star_version}.zip"
-        unzip -o STAR.zip
-    )
 
     if [ "${_os}" = "Darwin" ]; then
-        STAR_CMD="$(realpath "downloads/STAR_${_star_version}/MacOSX_x86_64/STAR")"
+        STAR_CMD="downloads/STAR_${_star_version}/MacOSX_x86_64/STAR"
     else
-        STAR_CMD="$(realpath "downloads/STAR_${_star_version}/Linux_x86_64_static/STAR")"
+        STAR_CMD="downloads/STAR_${_star_version}/Linux_x86_64_static/STAR"
     fi
+
+    if ! [ -x "${STAR_CMD}" ]; then
+        echo "No STAR executable found on host. Downloading '${_star_version}'..."
+        (
+            set -x
+            mkdir -p "downloads"
+            cd "downloads"
+            wget --output-document "STAR.zip" \
+                "https://github.com/alexdobin/STAR/releases/download/${_star_version}/STAR_${_star_version}.zip"
+            unzip -o STAR.zip
+        )
+    fi
+
+    STAR_CMD="$(realpath "${STAR_CMD}")"
 fi
 
 # Read species-specific parameters from JSON file

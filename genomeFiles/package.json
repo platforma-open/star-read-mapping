@@ -1,0 +1,33 @@
+{
+  "name": "@platforma-open/milaboratories.star-read-mapping.genome-asset",
+  "version": "1.0.0",
+  "description": "STAR indexed genome references",
+  "scripts": {
+    "build-ci": "echo 'This is fake build script for CI optimization'",
+
+    "prebuild": "./build-everything.sh ./genomeFileUrls.json",
+    "build": "pl-pkg build",
+    "sign": "pl-pkg sign --sign-command='[\"gcloud-kms-sign\", \"{pkg}\", \"{pkg}.sig\"]'",
+
+    "prepublishOnly": "npm run build && npm run sign && pl-pkg publish packages"
+  },
+  "files": [
+    "dist/"
+  ],
+  "block-software": {
+    "entrypoints": {
+      "saccharomyces-cerevisiae": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Saccharomyces_cerevisiae"
+        }
+      }
+    }
+  },
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@platforma-sdk/package-builder": "^2.10.4"
+  }
+}
