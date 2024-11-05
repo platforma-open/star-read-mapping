@@ -34,6 +34,8 @@ jobs:
 
     uses: milaboratory/github-ci/.github/workflows/node-simple.yaml@v4-beta
     with:
+      runs-on: "ubuntu-xlarge-amd64"
+
       app-name: SMART-indexed genome assets
       app-name-slug: "smart-indexed-genome-assets"
       notify-telegram: true
