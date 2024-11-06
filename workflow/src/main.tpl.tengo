@@ -174,8 +174,8 @@ wf.body(func(args) {
 		starQc: starResults.output("starReport"),
 		featureCountsProgress: starResults.output("featureCountsLog"),
 		featureCountsQc: starResults.output("countsReport"),
-		pf: pframes.exportFrame(pf),
-		pcaComponents: pframes.exportFrame(PCAComponents)
+		pf: pframes.exportFrame(pf)//,
+		// pcaComponents: pframes.exportFrame(PCAComponents)
 	//	pcaComponents: pframes.exportFrame(sampleDistances)
 	}
 

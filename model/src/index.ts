@@ -3,9 +3,8 @@ import {
   BlockModel,
   ImportFileHandle,
   InferOutputsType,
-  Option,
   Ref,
-  isPColumnSpec
+  isPColumnSpec,
 } from "@platforma-sdk/model";
 import { parseResourceMap } from "./helpers";
 
@@ -52,8 +51,7 @@ export type BlockArgs = {
 //   libraryTypeOptions?: string;
 // };
 
-
-export const model = BlockModel.create<BlockArgs>("Heavy")
+export const model = BlockModel.create<BlockArgs>()
 
   .initialArgs({
     species: "hsa",
@@ -62,38 +60,27 @@ export const model = BlockModel.create<BlockArgs>("Heavy")
   })
 
   /**
-   * Find possible options for the fasta input
+   * Find possible options for the fastq input
    */
   .output("dataOptions", (ctx) => {
-    return ctx.resultPool
-      .getSpecsFromResultPool()
-      .entries.filter((v) => {
-        if (!isPColumnSpec(v.obj)) return false;
-        const domain = v.obj.domain;
-        return (
-          v.obj.name === 'pl7.app/sequencing/data' &&
-          (v.obj.valueType as string) === 'File' &&
-          domain !== undefined &&
-          (domain['pl7.app/fileExtension'] === 'fastq' ||
-            domain['pl7.app/fileExtension'] === 'fastq.gz')
-        );
-      })
-      .map(
-        (v) =>
-          ({
-            ref: v.ref,
-            label: `${ctx.getBlockLabel(v.ref.blockId)} / ${
-              v.obj.annotations?.['pl7.app/label'] ?? `unlabelled`
-            }`
-          } satisfies Option)
+    return ctx.resultPool.getOptions((v) => {
+      if (!isPColumnSpec(v)) return false;
+      const domain = v.domain;
+      return (
+        v.name === "pl7.app/sequencing/data" &&
+        (v.valueType as string) === "File" &&
+        domain !== undefined &&
+        (domain["pl7.app/fileExtension"] === "fastq" ||
+          domain["pl7.app/fileExtension"] === "fastq.gz")
       );
+    });
   })
 
-  .output("indexUploadProgress", (wf) => 
+  .output("indexUploadProgress", (wf) =>
     wf.outputs?.resolve("indexImportHandle")?.getImportProgress()
   )
 
-  .output("genomeAnnUploadProgress", (wf) => 
+  .output("genomeAnnUploadProgress", (wf) =>
     wf.outputs?.resolve("genomeAnnImportHandle")?.getImportProgress()
   )
 
@@ -102,21 +89,27 @@ export const model = BlockModel.create<BlockArgs>("Heavy")
    */
   //.output("starProgress", (wf) => wf.outputs?.resolve("starProgress")?.getLastLogs(100))
   .output("starProgress", (wf) => {
-    return parseResourceMap(wf.outputs?.resolve({ field: 'starProgress', assertFieldType: 'Input' }), (acc) =>
-      acc.getLastLogs(100),
+    return parseResourceMap(
+      wf.outputs?.resolve({ field: "starProgress", assertFieldType: "Input" }),
+      (acc) => acc.getLastLogs(100),
       false
-    )
+    );
   })
   .output("starQc", (wf) => wf.outputs?.resolve("starQc")?.getLastLogs(100)) // Does this work with this type of file?
   //.output("featureCountsProgress", (wf) => wf.outputs?.resolve("featureCountsProgress")?.getLastLogs(100))
   .output("featureCountsProgress", (wf) => {
-    return parseResourceMap(wf.outputs?.resolve({ field: 'featureCountsProgress', assertFieldType: 'Input' }), (acc) =>
-      acc.getLastLogs(100),
+    return parseResourceMap(
+      wf.outputs?.resolve({
+        field: "featureCountsProgress",
+        assertFieldType: "Input",
+      }),
+      (acc) => acc.getLastLogs(100),
       false
-    )
+    );
   })
-  .output("featureCountsQc", (wf) => wf.outputs?.resolve("featureCountsQc")?.getLastLogs(100)) // Does this work with this type of file?
-  
+  .output("featureCountsQc", (wf) =>
+    wf.outputs?.resolve("featureCountsQc")?.getLastLogs(100)
+  ) // Does this work with this type of file?
 
   /**
    * P-frame with rawCounts
