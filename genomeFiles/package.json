@@ -23,6 +23,78 @@
           "version": "1.0.0",
           "root": "./indexed_genome/Saccharomyces_cerevisiae"
         }
+      },
+      "homo-sapiens": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Homo_sapiens"
+        }
+      },
+      "mus-musculus": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Mus_musculus"
+        }
+      },
+      "rattus-norvegicus": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Rattus_norvegicus"
+        }
+      },
+      "danio-rerio": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Danio_rerio"
+        }
+      },
+      "drosophila-melanogaster": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Drosophila_melanogaster"
+        }
+      },
+      "arabidopsis-thaliana": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Arabidopsis_thaliana"
+        }
+      },
+      "caenorhabditis-elegans": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Caenorhabditis_elegans"
+        }
+      },
+      "gallus-gallus": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Gallus_gallus"
+        }
+      },
+      "sus_scrofa": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Sus_scrofa"
+        }
       }
     }
   },
