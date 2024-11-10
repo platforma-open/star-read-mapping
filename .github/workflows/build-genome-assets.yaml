@@ -29,6 +29,7 @@ jobs:
       is-release: ${{ steps.ctx.outputs.is-release }}
 
   run:
+    runs-on: ubuntu-2xlarge-amd64
     needs:
       - init
 
