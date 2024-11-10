@@ -12,6 +12,7 @@ on:
       - "main"
     paths:
       - "genomeFiles/**"
+  workflow_dipsatch: {}
 
 jobs:
   init:
