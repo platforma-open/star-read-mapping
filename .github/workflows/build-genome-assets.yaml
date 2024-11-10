@@ -12,6 +12,7 @@ on:
       - "main"
     paths:
       - "genomeFiles/**"
+  workflow_dispatch: {}
 
 jobs:
   init:
@@ -34,6 +35,7 @@ jobs:
 
     uses: milaboratory/github-ci/.github/workflows/node-simple.yaml@v4-beta
     with:
+      gha-runner-label: 'ubuntu-2xlarge-amd64'
       app-name: SMART-indexed genome assets
       app-name-slug: "smart-indexed-genome-assets"
       notify-telegram: true
