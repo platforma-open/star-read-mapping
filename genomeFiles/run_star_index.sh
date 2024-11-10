@@ -93,6 +93,8 @@ echo "Generating genome index with sjdbOverhang=${SJDB_OVERHANG} and genomeSAind
 # Cleanup: Remove intermediate files
 rm genome.fa
 rm -rf _STARtmp/
+# Rename GTF to standard name
+mv "${GTF_FILENAME}" annotations.gtf
 
 # echo "Output files: ${GTF_FILENAME} and ${TAR_FILENAME}"
 echo "Genome index generation and packaging complete."
