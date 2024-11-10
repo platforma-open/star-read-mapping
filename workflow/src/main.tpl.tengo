@@ -64,9 +64,9 @@ wf.body(func(args) {
 	pfconvParams := pfconvParamsLib.getColumns(blockId, species)
 
 	// Get indexed genome
-	indexImport := file.importFile(args.indexFile) // The file can be accessed with indexImport.file
+	// indexImport := file.importFile(args.indexFile) // The file can be accessed with indexImport.file
 	// Get genome annotation
-	genomeAnnImport := file.importFile(args.genomeAnnFile) // The file can be accessed with genomeAnnImport.file
+	// genomeAnnImport := file.importFile(args.genomeAnnFile) // The file can be accessed with genomeAnnImport.file
 
 	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
 
@@ -98,8 +98,8 @@ wf.body(func(args) {
 			species: species,
 			libraryType: libraryType,
 			strandness: strandness,
-			index: indexImport,
-			genomeAnn: genomeAnnImport,
+			// index: indexImport,
+			// genomeAnn: genomeAnnImport,
 			fileExtension: fileExtension
 		}
 	)
@@ -140,18 +140,18 @@ wf.body(func(args) {
 	// ...
 
 	// Run clustering QC on all samples
-	clusteringQC := exec.builder().
-					cmd("/usr/bin/env").
-					arg("bash").
-					arg("-c").
-					arg("run_sample_qc.R rawCounts.csv").
-					addFile("rawCounts.csv").
-					saveFile("pca_results.csv").
-					//saveFile("sample_distances.csv").
-					printErrStreamToStdout().
-					saveStdoutContent().
-					cache(24 * 60 * 60 * 1000).
-					run()
+	// clusteringQC := exec.builder().
+	// 				cmd("/usr/bin/env").
+	// 				arg("bash").
+	// 				arg("-c").
+	// 				arg("run_sample_qc.R rawCounts.csv").
+	// 				addFile("rawCounts.csv").
+	// 				saveFile("pca_results.csv").
+	// 				//saveFile("sample_distances.csv").
+	// 				printErrStreamToStdout().
+	// 				saveStdoutContent().
+	// 				cache(24 * 60 * 60 * 1000).
+	// 				run()
 
 	// Output csv
 	// "Sample","PC1","PC2","PC3","PC4","PC5","PC6"
@@ -160,16 +160,16 @@ wf.body(func(args) {
 
 	// pcaPfconv_params.lib needs to be adjusted for "Sample" column
 	
-	PCAtsvImportParams := pcaPfconvParamsLib.getColumns(blockId, inputSpec)
-	PCAComponents := xsv.importFile(clusteringQC.getFile("PCAComponents.csv"), "tsv", PCAtsvImportParams)
+	// PCAtsvImportParams := pcaPfconvParamsLib.getColumns(blockId, inputSpec)
+	// PCAComponents := xsv.importFile(clusteringQC.getFile("PCAComponents.csv"), "tsv", PCAtsvImportParams)
 	
 	// HQtsvImportParams := hcPfconvParamsLib.getColumns(blockId, inputSpec)
 	// sampleDistances := xsv.importFile(clusteringQC.getFile("sample_distances.csv"), "tsv", HQtsvImportParams)
 
 
 	outputs := {
-		indexImportHandle: indexImport.handle,
-		genomeAnnImportHandle: genomeAnnImport.handle,
+		// indexImportHandle: indexImport.handle,
+		// genomeAnnImportHandle: genomeAnnImport.handle,
 		starProgress: starResults.output("starLog"),
 		starQc: starResults.output("starReport"),
 		featureCountsProgress: starResults.output("featureCountsLog"),

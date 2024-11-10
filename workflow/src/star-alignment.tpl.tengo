@@ -7,6 +7,7 @@ json := import("json")
 ll := import("@platforma-sdk/workflow-tengo:ll")
 xsv := import("@platforma-sdk/workflow-tengo:pframes.xsv")
 pfconvParamsLib := import(":pfconv_params")
+assets := import("@platforma-sdk/workflow-tengo:assets")
 
 
 self.defineOutputs("starLog",
@@ -23,74 +24,51 @@ self.body(func(inputs) {
 	fileExtension := inputs.fileExtension
 	libraryType := inputs.libraryType
 	strandness := inputs.strandness
-	indexTar := inputs.index.file
-	genomeAnn := inputs.genomeAnn.file
 
-	loadIndexFiles:= exec.builder().
-				cmd("tar").
-				addFile("index.tar", indexTar).
-				arg("-xvf").
-				arg("index.tar").
-				saveFile("chrLength.txt").
-				saveFile("chrName.txt").
-				saveFile("chrNameLength.txt").
-				saveFile("chrStart.txt").
-				saveFile("exonGeTrInfo.tab").
-				saveFile("exonInfo.tab").
-				saveFile("geneInfo.tab").
-				saveFile("Genome").
-				saveFile("genomeParameters.txt").
-				saveFile("Log.out").
-				saveFile("SA").
-				saveFile("SAindex").
-				saveFile("sjdbInfo.txt").
-				saveFile("sjdbList.fromGTF.out.tab").
-				saveFile("sjdbList.out.tab").
-				saveFile("transcriptInfo.tab").
-				printErrStreamToStdout().
-				saveStdoutContent().
-				cache(24 * 60 * 60 * 1000).
-				run()
+
+	genomeAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:saccharomyces-cerevisiae")
+	
 
 	//indexFileNames := loadIndexFiles.getStdoutStream()
-	chrLength := loadIndexFiles.getFile("chrLength.txt")
-	chrName := loadIndexFiles.getFile("chrName.txt")
-	chrNameLength := loadIndexFiles.getFile("chrNameLength.txt")
-	chrStart := loadIndexFiles.getFile("chrStart.txt")
-	exonGeTrInfo := loadIndexFiles.getFile("exonGeTrInfo.tab")
-	exonInfo := loadIndexFiles.getFile("exonInfo.tab")
-	geneInfo := loadIndexFiles.getFile("geneInfo.tab")
-	Genome := loadIndexFiles.getFile("Genome")
-	genomeParameters := loadIndexFiles.getFile("genomeParameters.txt")
-	Log := loadIndexFiles.getFile("Log.out")
-	SA := loadIndexFiles.getFile("SA")
-	SAindex := loadIndexFiles.getFile("SAindex")
-	sjdbInfo := loadIndexFiles.getFile("sjdbInfo.txt")
-	sjdbListFromGTFOut := loadIndexFiles.getFile("sjdbList.fromGTF.out.tab")
-	sjdbListOut := loadIndexFiles.getFile("sjdbList.out.tab")
-	transcriptInfo := loadIndexFiles.getFile("transcriptInfo.tab")
+	// chrLength := loadIndexFiles.getFile("chrLength.txt")
+	// chrName := loadIndexFiles.getFile("chrName.txt")
+	// chrNameLength := loadIndexFiles.getFile("chrNameLength.txt")
+	// chrStart := loadIndexFiles.getFile("chrStart.txt")
+	// exonGeTrInfo := loadIndexFiles.getFile("exonGeTrInfo.tab")
+	// exonInfo := loadIndexFiles.getFile("exonInfo.tab")
+	// geneInfo := loadIndexFiles.getFile("geneInfo.tab")
+	// Genome := loadIndexFiles.getFile("Genome")
+	// genomeParameters := loadIndexFiles.getFile("genomeParameters.txt")
+	// Log := loadIndexFiles.getFile("Log.out")
+	// SA := loadIndexFiles.getFile("SA")
+	// SAindex := loadIndexFiles.getFile("SAindex")
+	// sjdbInfo := loadIndexFiles.getFile("sjdbInfo.txt")
+	// sjdbListFromGTFOut := loadIndexFiles.getFile("sjdbList.fromGTF.out.tab")
+	// sjdbListOut := loadIndexFiles.getFile("sjdbList.out.tab")
+	// transcriptInfo := loadIndexFiles.getFile("transcriptInfo.tab")
 
 	ll.print("check fileExtension before star", fileExtension)
 
+	// @TODO are we sure that we need ALL files listed below ?
 	star:= exec.builder().
 			cmd("STAR").
 			mkDir("genomeIndex").
-			addFile("genomeIndex/chrLength.txt", chrLength).
-			addFile("genomeIndex/chrName.txt", chrName).
-			addFile("genomeIndex/chrNameLength.txt", chrNameLength).
-			addFile("genomeIndex/chrStart.txt", chrStart).
-			addFile("genomeIndex/exonGeTrInfo.tab", exonGeTrInfo).
-			addFile("genomeIndex/exonInfo.tab", exonInfo).
-			addFile("genomeIndex/geneInfo.tab", geneInfo).
-			addFile("genomeIndex/Genome", Genome).
-			addFile("genomeIndex/genomeParameters.txt", genomeParameters).
-			addFile("genomeIndex/Log.out", Log).
-			addFile("genomeIndex/SA", SA).
-			addFile("genomeIndex/SAindex", SAindex).
-			addFile("genomeIndex/sjdbInfo.txt", sjdbInfo).
-			addFile("genomeIndex/sjdbList.fromGTF.out.tab", sjdbListFromGTFOut).
-			addFile("genomeIndex/sjdbList.out.tab", sjdbListOut).
-			addFile("genomeIndex/transcriptInfo.tab", transcriptInfo).
+			addAsset(genomeAssets, "genomeIndex", ["chrLength.txt"]).
+			addAsset(genomeAssets, "genomeIndex", ["chrName.txt"]).
+			addAsset(genomeAssets, "genomeIndex", ["chrNameLength.txt"]).
+			addAsset(genomeAssets, "genomeIndex", ["chrStart.txt"]).
+			addAsset(genomeAssets, "genomeIndex", ["exonGeTrInfo.tab"]).
+			addAsset(genomeAssets, "genomeIndex", ["exonInfo.tab"]).
+			addAsset(genomeAssets, "genomeIndex", ["geneInfo.tab"]).
+			addAsset(genomeAssets, "genomeIndex", ["Genome"]).
+			addAsset(genomeAssets, "genomeIndex", ["genomeParameters.txt"]).
+			addAsset(genomeAssets, "genomeIndex", ["Log.out"]).
+			addAsset(genomeAssets, "genomeIndex", ["SA"]).
+			addAsset(genomeAssets, "genomeIndex", ["SAindex"]).
+			addAsset(genomeAssets, "genomeIndex", ["sjdbInfo.txt"]).
+			addAsset(genomeAssets, "genomeIndex", ["sjdbList.fromGTF.out.tab"]).
+			addAsset(genomeAssets, "genomeIndex", ["sjdbList.out.tab"]).
+			addAsset(genomeAssets, "genomeIndex", ["transcriptInfo.tab"]).
 			arg("--genomeDir").arg("genomeIndex").
 			arg("--outSAMtype").arg("BAM").arg("SortedByCoordinate").
 			arg("--readFilesIn")
@@ -135,7 +113,7 @@ self.body(func(inputs) {
 	featureCounts:= exec.builder().
 					cmd("featureCounts").
 					addFile("sample_Aligned.sortedByCoord.out.bam", bamFile).
-					addFile("annotations.gtf", genomeAnn).
+					addAsset(genomeAssets, ".", ["annotations.gtf"]).
 					arg("-t").arg("exon").
 					arg("-g").arg("gene_id").
 					arg("-s").arg(strandness).

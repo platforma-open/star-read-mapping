@@ -6,7 +6,6 @@ import {
   PlFileInput,
   PlLogView
 } from "@platforma-sdk/ui-vue";
-// import { PlBtnGroup } from '@milaboratories/uikit';
 import { useApp } from "../app";
 
 const app = useApp();

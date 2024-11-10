@@ -18,6 +18,9 @@ catalogs:
     '@platforma-open/milaboratories.software-small-binaries':
       specifier: ^1.13.1
       version: 1.14.5
+    '@platforma-open/milaboratories.star-read-mapping.genome-asset':
+      specifier: ^1.0.5
+      version: 1.0.5
     '@platforma-sdk/block-tools':
       specifier: ^2.3.21
       version: 2.3.21
@@ -81,12 +84,6 @@ importers:
       '@platforma-sdk/block-tools':
         specifier: 'catalog:'
         version: 2.3.21
-
-  genomeFiles:
-    devDependencies:
-      '@platforma-sdk/package-builder':
-        specifier: ^2.10.7
-        version: 2.10.7
 
   model:
     dependencies:
@@ -163,8 +160,8 @@ importers:
         specifier: 'catalog:'
         version: 1.14.5
       '@platforma-open/milaboratories.star-read-mapping.genome-asset':
-        specifier: workspace:*
-        version: link:../genomeFiles
+        specifier: 'catalog:'
+        version: 1.0.5
       '@platforma-sdk/tengo-builder':
         specifier: 'catalog:'
         version: 1.16.1
@@ -1111,6 +1108,9 @@ packages:
   '@platforma-open/milaboratories.software-small-binaries@1.14.5':
     resolution: {integrity: sha512-zfLLCu6Bv7yDcu8pFOUiP4v1dvSCDRjAGlzYuiNJ0IAxgC85+GUWuD0Pu7+NO/MaKQ2hrUPHhgJjzByAI/vM1w==}
 
+  '@platforma-open/milaboratories.star-read-mapping.genome-asset@1.0.5':
+    resolution: {integrity: sha512-T1Lxxy6n0cmM3/PquQ2JZ6xWCWaeZTFOLSpJ5FUv+uB28KUXQ+9rvkGC6OqZKW5jlwLgd1HmBAl01ALW6gW+kw==}
+
   '@platforma-sdk/block-tools@2.3.16':
     resolution: {integrity: sha512-t2acVKVdRWw7neDRZqNMoeNLYI1YVTytO4R8qNWSlVEokScUJUfDpTks8Gb584yCEyoDvL1QpPvCG4QYrinH8w==}
     hasBin: true
@@ -1124,10 +1124,6 @@ packages:
 
   '@platforma-sdk/model@1.7.20':
     resolution: {integrity: sha512-xDfb7/rOZEg+gtoYDZw42O3N/Ul6X9pc+fECw80KG6+AxDMNbpOqMZ8deVM9cWdmCKYIf6U6N/BSDpX3AL0Ojg==}
-
-  '@platforma-sdk/package-builder@2.10.7':
-    resolution: {integrity: sha512-m3Ni+4QdMh4ZvDsWq8DusNSNA1c+yrrQiy3BdmLLjahqt4TsSREkT157TzQQrKoxpxM4f9mHhPC7CKLOq9BBnA==}
-    hasBin: true
 
   '@platforma-sdk/tengo-builder@1.16.1':
     resolution: {integrity: sha512-jYksvztjVhBsL2MKQ1T2bkLtSUy0eABscoKpM0YH6LR6fgAyZ4K0fSL+jVnTXLfnU+M0nPoFQxRdicqWU8kofw==}
@@ -6546,6 +6542,8 @@ snapshots:
 
   '@platforma-open/milaboratories.software-small-binaries@1.14.5': {}
 
+  '@platforma-open/milaboratories.star-read-mapping.genome-asset@1.0.5': {}
+
   '@platforma-sdk/block-tools@2.3.16':
     dependencies:
       '@aws-sdk/client-s3': 3.676.0
@@ -6593,18 +6591,6 @@ snapshots:
       '@milaboratories/pl-model-common': 1.5.2
       utility-types: 3.11.0
       zod: 3.23.8
-
-  '@platforma-sdk/package-builder@2.10.7':
-    dependencies:
-      '@aws-sdk/client-s3': 3.688.0
-      '@oclif/core': 4.0.31
-      canonicalize: 2.0.0
-      tar: 7.4.3
-      winston: 3.16.0
-      yaml: 2.6.0
-      zod: 3.23.8
-    transitivePeerDependencies:
-      - aws-crt
 
   '@platforma-sdk/tengo-builder@1.16.1':
     dependencies:
