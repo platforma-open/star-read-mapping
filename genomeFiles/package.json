@@ -15,7 +15,7 @@
     "dist/"
   ],
   "block-software": {
-    "entrypoints": {
+    "entrypoints":  {
       "saccharomyces-cerevisiae": {
         "asset": {
           "type": "asset",
