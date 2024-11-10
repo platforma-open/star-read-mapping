@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.star-read-mapping.genome-asset",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "STAR indexed genome references",
   "scripts": {
     "build-skip": "echo 'This is fake build script for CI optimization'",
@@ -20,7 +20,6 @@
         "asset": {
           "type": "asset",
           "registry": "platforma-open",
-          "version": "1.0.1",
           "root": "./indexed_genome/Saccharomyces_cerevisiae"
         }
       }
