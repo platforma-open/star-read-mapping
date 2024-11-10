@@ -15,6 +15,8 @@ SPECIES="${1}"
 PARAMS_JSON_FILE="${2}"
 OUTPUT_FOLDER="${3}"
 
+echo "Running $SPECIES $PARAMS_JSON_FILE $OUTPUT_FOLDER "
+
 # Automatically download STAR on Linux and Mac OS X
 if ! command -v "${STAR_CMD}" >/dev/null; then
     _os="$(uname)"
@@ -88,21 +90,9 @@ echo "Generating genome index with sjdbOverhang=${SJDB_OVERHANG} and genomeSAind
 "${STAR_CMD}" --runThreadN ${NUM_THREADS} --runMode genomeGenerate --genomeDir ./ --genomeFastaFiles genome.fa \
      --sjdbGTFfile ${GTF_FILENAME} --sjdbOverhang ${SJDB_OVERHANG} --genomeSAindexNbases ${GENOME_SA_INDEX_NBASES}
 
-# Compress the genome index into a tar file
-TAR_FILENAME="${SPECIES}_${ASSEMBLY_VERSION}_genome_index.tar.gz"
-echo "Compressing genome index into ${TAR_FILENAME}..."
-tar -czvf ${TAR_FILENAME} Genome SA SAindex chrLength.txt chrName.txt chrNameLength.txt chrStart.txt \
-    exonGeTrInfo.tab exonInfo.tab geneInfo.tab genomeParameters.txt sjdbInfo.txt sjdbList.fromGTF.out.tab \
-    sjdbList.out.tab transcriptInfo.tab
-
-# Compress the GTF file after indexing
-echo "Compressing the GTF file: ${GTF_FILENAME}..."
-gzip ${GTF_FILENAME}
-
 # Cleanup: Remove intermediate files
 rm genome.fa
-rm -rf SA SAindex Genome chrLength.txt chrName.txt chrNameLength.txt chrStart.txt exonGeTrInfo.tab exonInfo.tab \
-    geneInfo.tab genomeParameters.txt sjdbInfo.txt sjdbList.fromGTF.out.tab sjdbList.out.tab transcriptInfo.tab _STARtmp/
+rm -rf _STARtmp/
 
-echo "Output files: ${GTF_FILENAME} and ${TAR_FILENAME}"
+# echo "Output files: ${GTF_FILENAME} and ${TAR_FILENAME}"
 echo "Genome index generation and packaging complete."
