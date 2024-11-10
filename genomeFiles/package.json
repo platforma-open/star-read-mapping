@@ -23,6 +23,22 @@
           "version": "1.0.0",
           "root": "./indexed_genome/Saccharomyces_cerevisiae"
         }
+      }
+    }
+  },
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@platforma-sdk/package-builder": "^2.10.4"
+  },
+  "//": {
+    "entrypoints": {
+      "saccharomyces-cerevisiae": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Saccharomyces_cerevisiae"
+        }
       },
       "homo-sapiens": {
         "asset": {
@@ -97,9 +113,5 @@
         }
       }
     }
-  },
-  "license": "UNLICENSED",
-  "devDependencies": {
-    "@platforma-sdk/package-builder": "^2.10.4"
   }
 }
