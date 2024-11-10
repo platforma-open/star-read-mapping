@@ -29,14 +29,13 @@ jobs:
       is-release: ${{ steps.ctx.outputs.is-release }}
 
   run:
-    runs-on: ubuntu-2xlarge-amd64
     needs:
       - init
 
     uses: milaboratory/github-ci/.github/workflows/node-simple.yaml@v4-beta
     with:
-      #runs-on: "ubuntu-xlarge-amd64"
-
+      runs-on: ubuntu-2xlarge-amd64
+    
       app-name: SMART-indexed genome assets
       app-name-slug: "smart-indexed-genome-assets"
       notify-telegram: true
