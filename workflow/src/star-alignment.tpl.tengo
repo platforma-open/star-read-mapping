@@ -173,22 +173,8 @@ self.body(func(inputs) {
 
 	outputFeatureCounts := featureCounts.getFile("rawCounts.tsv")
 
-	formatCountMatrix := exec.builder().
-							cmd("/usr/bin/env").
-							arg("bash").
-							arg("-c").
-							//arg("cut -f 1,7 rawCounts.tsv > cleanRawCounts.tsv").
-							arg("sed '1d' rawCounts.tsv | cut -f 1,7 > cleanRawCounts.tsv").
-							addFile("rawCounts.tsv", outputFeatureCounts).
-							saveFile("cleanRawCounts.tsv").
-							printErrStreamToStdout().
-							saveStdoutContent().
-							cache(24 * 60 * 60 * 1000).
-							run()
-
-
 	tsvImportParams := pfconvParamsLib.getColumns(blockId, species)
-	countMatrixImport := xsv.importFile(formatCountMatrix.getFile("cleanRawCounts.tsv"), "tsv", tsvImportParams, { dataOnly: true })
+	countMatrixImport := xsv.importFile(outputFeatureCounts, "tsv", tsvImportParams, { dataOnly: true })
 	// PFrame
 	//   rawCounts.data
 	//   rawCounts.spec
