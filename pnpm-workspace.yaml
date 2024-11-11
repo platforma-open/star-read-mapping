@@ -18,6 +18,11 @@ catalog:
   '@platforma-open/milaboratories.software-small-binaries': ^1.13.1
   '@platforma-open/milaboratories.star-read-mapping.genome-asset': ^1.0.5
 
+  '@ag-grid-community/core': ^32.2.2
+  '@ag-grid-community/client-side-row-model': ^32.2.2
+  '@ag-grid-community/vue3': ^32.2.2
+  '@ag-grid-community/styles': ^32.2.2
+
   "vue": ^3.4.34
   "vue-tsc": ^2.0.29
 

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { GraphMaker, GraphMakerSettings } from "@milaboratories/graph-maker";
 import '@milaboratories/graph-maker/styles';
-import { PlBlockPage } from "@platforma-sdk/ui-vue";
 import { ref } from 'vue';
 import { useApp } from "../app";
 
@@ -21,9 +20,7 @@ const settings = ref({
 </script>
 
 <template>
-  <PlBlockPage>
-    <GraphMaker :p-frame="app.model.outputs.pf" v-model="settings" graph-title="Title" />
-  </PlBlockPage>
+  <GraphMaker :p-frame="app.model.outputs.pf" v-model="settings" graph-title="Title" />
 </template>
 
 
