@@ -1,7 +1,6 @@
 //  import { PlTableState } from "@milaboratory/pl-table";
 import {
   BlockModel,
-  ImportFileHandle,
   InferOutputsType,
   Ref,
   isPColumnSpec,
@@ -16,16 +15,6 @@ export type BlockArgs = {
    * Reference to the fastq data
    */
   ref?: Ref;
-
-  /**
-   * Genome index upload
-   */
-  indexFile?: ImportFileHandle;
-
-  /**
-   * Genome index upload
-   */
-  genomeAnnFile?: ImportFileHandle;
 
   /**
    * Species settings
@@ -76,34 +65,64 @@ export const model = BlockModel.create<BlockArgs>()
     });
   })
 
-  .output("indexUploadProgress", (wf) =>
-    wf.outputs?.resolve("indexImportHandle")?.getImportProgress()
-  )
+  .output("labels", (ctx): Record<string, string> | undefined => {
+    const inputRef = ctx.args.ref;
+    if (inputRef === undefined) return undefined;
 
-  .output("genomeAnnUploadProgress", (wf) =>
-    wf.outputs?.resolve("genomeAnnImportHandle")?.getImportProgress()
-  )
+    const inputSpec = ctx.resultPool.getSpecByRef(inputRef);
+
+    if (inputSpec === undefined || !isPColumnSpec(inputSpec)) return undefined;
+
+    const sampleLabelsObj = ctx.resultPool.findDataWithCompatibleSpec({
+      kind: "PColumn",
+      name: "pl7.app/label",
+      valueType: "String",
+      axesSpec: [inputSpec.axesSpec[0]], // samplesId axis
+      domain: inputSpec.domain,
+    });
+
+    if (sampleLabelsObj.length === 0) return undefined;
+
+    // @TODO implement standard method for getting labels
+    const labels = Object.fromEntries(
+      Object.entries(
+        sampleLabelsObj[0].data.getDataAsJson<{
+          data: Record<string, string>;
+        }>().data
+      ).map((e) => [JSON.parse(e[0])[0], e[1]])
+    ) satisfies Record<string, string>;
+
+    return labels;
+  })
 
   /**
    * Preprocessing progress
    */
-  //.output("starProgress", (wf) => wf.outputs?.resolve("starProgress")?.getLastLogs(100))
   .output("starProgress", (wf) => {
     return parseResourceMap(
-      wf.outputs?.resolve({ field: "starProgress", assertFieldType: "Input" }),
-      (acc) => acc.getLastLogs(100),
+      wf.outputs?.resolve("starProgress"),
+      (acc) => acc.getLogHandle(),
       false
     );
   })
+
+  /**
+   * Last line from StAR output
+   */
+  .output("starProgressLine", (wf) => {
+    return parseResourceMap(
+      wf.outputs?.resolve("starProgress"),
+      (acc) => acc.getLastLogs(1),
+      false
+    );
+  })
+
   .output("starQc", (wf) => wf.outputs?.resolve("starQc")?.getLastLogs(100)) // Does this work with this type of file?
-  //.output("featureCountsProgress", (wf) => wf.outputs?.resolve("featureCountsProgress")?.getLastLogs(100))
+
   .output("featureCountsProgress", (wf) => {
     return parseResourceMap(
-      wf.outputs?.resolve({
-        field: "featureCountsProgress",
-        assertFieldType: "Input",
-      }),
-      (acc) => acc.getLastLogs(100),
+      wf.outputs?.resolve("featureCountsProgress"),
+      (acc) => acc.getLogHandle(),
       false
     );
   })
@@ -120,18 +139,6 @@ export const model = BlockModel.create<BlockArgs>()
     if (pCols === undefined) return undefined;
 
     return wf.createPFrame(pCols);
-  })
-
-  // /**
-  //  * P-table with counts output for all samples
-  //  */
-  .output("pt", (wf) => {
-    const pCols = wf.outputs?.resolve("pf")?.getPColumns();
-    if (pCols === undefined || pCols.length === 0) return undefined;
-
-    return wf.createPTable({
-      columns: pCols,
-    });
   })
 
   .sections([

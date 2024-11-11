@@ -1,34 +1,26 @@
 <script setup lang="ts">
-import { PlTextArea } from '@milaboratories/uikit';
+import { GraphMaker, GraphMakerSettings } from "@milaboratories/graph-maker";
+import '@milaboratories/graph-maker/styles';
 import { ref } from 'vue';
-import { GraphMaker } from "@milaboratories/graph-maker";
-import { GraphMakerSettings } from "@milaboratories/graph-maker/dist/GraphMaker/types";
-import { model } from "@platforma-open/milaboratories.star-read-mapping.model";
-import "@milaboratories/graph-maker/dist/style.css";
 import { useApp } from "../app";
 
 const app = useApp();
 
 const settings = ref({
   chartType: "discrete",
-  template: null,
-  optionsState: null,
-  statisticsSettings: null,
-  axesSettings: null,
-  layersSettings: null,
-  dataBindAes: null,
+  template: "dots",
+  title: "Tittle",
+  defaultOptions: undefined,
+  optionsState: undefined,
+  statisticsSettings: undefined,
+  axesSettings: undefined,
+  layersSettings: undefined,
+  dataBindAes: undefined,
 } satisfies GraphMakerSettings);
 </script>
 
 <template>
-  <GraphMaker
-    v-if="app.outputs.pf?.ok && app.outputs.pf.value"
-    :p-frame-handle="app.outputs.pf.value"
-    :settings="settings"
-    :p-frame-driver="model.pFrameDriver"
-    graph-title="Title"
-  />
-  <div v-else>"Nothing"</div>
+  <GraphMaker :p-frame="app.model.outputs.pf" v-model="settings" />
 </template>
 
 

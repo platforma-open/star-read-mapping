@@ -10,6 +10,7 @@
     "@platforma-sdk/tengo-builder": "catalog:",
     "@platforma-sdk/workflow-tengo": "catalog:",
     "@milaboratories/software-pframes-conv": "catalog:",
-    "@milaboratories/software-small-binaries": "catalog:"
+    "@platforma-open/milaboratories.software-small-binaries": "catalog:",
+    "@platforma-open/milaboratories.star-read-mapping.genome-asset": "catalog:"
   }
 }

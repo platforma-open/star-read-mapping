@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { PlTextArea } from '@milaboratories/uikit';
 import { ref } from 'vue';
 
 const placeholder = ref('Here should go the html report');
