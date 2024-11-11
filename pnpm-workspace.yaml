@@ -7,10 +7,10 @@ packages:
   
 catalog:
   '@platforma-sdk/block-tools': ^2.3.21
-  '@platforma-sdk/model': ^1.7.20
+  '@platforma-sdk/model': ^1.8.0
   '@platforma-sdk/ui-vue': ^1.7.51
   '@platforma-sdk/tengo-builder': ^1.16.1
-  '@platforma-sdk/workflow-tengo': ^1.7.2
+  '@platforma-sdk/workflow-tengo': ^1.7.6
 
   "@platforma-sdk/test": ^1.5.43
   '@milaboratories/graph-maker': ^1.0.20
