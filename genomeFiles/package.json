@@ -22,6 +22,14 @@
           "registry": "platforma-open",
           "root": "./indexed_genome/Saccharomyces_cerevisiae"
         }
+      },
+      "mus-musculus": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Mus_musculus"
+        }
       }
     }
   },
