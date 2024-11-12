@@ -16,7 +16,7 @@ self.defineOutputs("starLog",
 					"countsReport",
 					"countMatrixImport")
 
-
+ 
 self.body(func(inputs) {
 	inputData := inputs[pConstants.VALUE_FIELD_NAME]
 	blockId := inputs.blockId
@@ -95,7 +95,7 @@ self.body(func(inputs) {
 	}
 
 	star = star.
-			arg("--readFilesCommand").arg("gunzip -c").
+			arg("--readFilesCommand").arg("gunzip -c"). // this will not work on Windows
 			arg("--outFileNamePrefix").arg("sample_").
 			saveFile("sample_Aligned.sortedByCoord.out.bam").
 			saveFile("sample_Log.final.out").
@@ -176,7 +176,7 @@ self.body(func(inputs) {
 
 	output := {
 		starLog: starLog,
-		starReport: starReport,
+		starReport: file.exportFile(starReport),
 		featureCountsLog: featureCountsLog,
 		countsReport: countsReport,
 		countMatrixImport: countMatrixImport

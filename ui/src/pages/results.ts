@@ -7,8 +7,30 @@ export type ResultEntry = {
   starProgress?: AnyLogHandle;
   starProgressLine?: string;
   featureCountsProgress?: AnyLogHandle;
+  starQc?: StarQC;
 };
 
+export type StarQC = {
+  // Number of input reads
+  nInputReads?: number;
+  // Uniquely mapped reads number
+  nMapped?: number;
+
+  ///........////
+};
+
+function parseStarQCString(qcString: string): StarQC {
+  const split = qcString.split("\n");
+
+  const result: StarQC = {}
+
+  for (const line in split) {
+    
+  }
+
+}
+
+// constructs result map: sampleId => ResultEntry
 export const resultMap = computed(
   (): Record<string, ResultEntry> | undefined => {
     const app = useApp();
@@ -23,13 +45,14 @@ export const resultMap = computed(
     if (featureCountsProgress === undefined) return undefined;
 
     const r: Record<string, ResultEntry> = {};
-    for (const id in labels) {
-      r[id] = {
-        sampleLabel: labels[id],
+    for (const sampleId in labels) {
+      r[sampleId] = {
+        sampleLabel: labels[sampleId],
       };
     }
     for (const prog of starProgress.data) {
-      r[prog.key[0]].starProgress = prog.value;
+      const sampleId = prog.key[0];
+      r[sampleId].starProgress = prog.value;
     }
 
     const starProgressLine = app.model.outputs.starProgressLine;

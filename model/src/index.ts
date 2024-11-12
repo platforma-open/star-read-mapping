@@ -65,6 +65,14 @@ export const model = BlockModel.create<BlockArgs>()
     });
   })
 
+  .output("datasetSpec", (ctx) => {
+    const inputRef = ctx.args.ref;
+
+    if (inputRef === undefined) return undefined;
+
+    return ctx.resultPool.getSpecByRef(inputRef);
+  })
+
   .output("labels", (ctx): Record<string, string> | undefined => {
     const inputRef = ctx.args.ref;
     if (inputRef === undefined) return undefined;
@@ -73,6 +81,8 @@ export const model = BlockModel.create<BlockArgs>()
 
     if (inputSpec === undefined || !isPColumnSpec(inputSpec)) return undefined;
 
+
+    
     const sampleLabelsObj = ctx.resultPool.findDataWithCompatibleSpec({
       kind: "PColumn",
       name: "pl7.app/label",
@@ -117,7 +127,15 @@ export const model = BlockModel.create<BlockArgs>()
     );
   })
 
-  .output("starQc", (wf) => wf.outputs?.resolve("starQc")?.getLastLogs(100)) // Does this work with this type of file?
+  // .output("starQc", (wf) => wf.outputs?.resolve("starQc")?.getLastLogs(100)) // Does this work with this type of file?
+
+  .output("starQc", (wf) =>
+    parseResourceMap(
+      wf.outputs?.resolve("starQc"),
+      (acc) => acc.getFileContentAsString(),
+      false
+    )
+  ) // Does this work with this type of file?
 
   .output("featureCountsProgress", (wf) => {
     return parseResourceMap(

@@ -12,11 +12,14 @@ import {
 } from "@platforma-sdk/ui-vue";
 
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
-import { GridApi, GridOptions, GridReadyEvent, ModuleRegistry } from '@ag-grid-community/core';
-import { computed, reactive, shallowRef } from "vue";
+import { GridOptions, ModuleRegistry } from '@ag-grid-community/core';
+import { computed, reactive } from "vue";
 import { useApp } from "../app";
 import ReportPanel from './ReportPanel.vue';
 import { resultMap } from './results';
+
+ModuleRegistry.registerModules([ClientSideRowModelModule]);
+
 
 const app = useApp();
 
@@ -48,28 +51,23 @@ const speciesOptions = [
 
 
 /** Rows for ag-table */
-const results = computed<any[] | undefined>(() => {
+const resultRows = computed(() => {
 
   if (resultMap.value === undefined) return undefined;
+
   const rows = []
   for (const id in resultMap.value) {
-    rows.push({
+    const row = {
       "sampleId": id,
       "sampleLabel": resultMap.value[id].sampleLabel,
       "star": resultMap.value[id].starProgressLine, // @TODO status?
       "subread": "Running", // @TODO status?
-    });
+    }
+    rows.push(row);
   }
 
   return rows;
 });
-
-ModuleRegistry.registerModules([ClientSideRowModelModule]);
-
-const gridApi = shallowRef<GridApi<any>>();
-const onGridReady = (params: GridReadyEvent) => {
-  gridApi.value = params.api;
-};
 
 const columnDefs = [
   {
@@ -90,7 +88,6 @@ const columnDefs = [
     headerName: "Feature counts",
   }
 ];
-
 
 const gridOptions: GridOptions = {
   getRowId: (row) => row.data.sampleId,
@@ -114,15 +111,15 @@ const gridOptions: GridOptions = {
       <PlBtnPrimary :icon="'settings-2'" @click.stop="() => data.settingsOpen = true">Settings</PlBtnPrimary>
     </template>
 
-    <AgGridVue :theme="AgGridTheme" :style="{ height: '100%' }" @grid-ready="onGridReady" :rowData="results"
-      :columnDefs="columnDefs" :grid-options="gridOptions" :loadingOverlayComponentParams="{ notReady: true }"
+    <AgGridVue :theme="AgGridTheme" :style="{ height: '100%' }" :columnDefs="columnDefs" :rowData="resultRows"
+      :grid-options="gridOptions" :loadingOverlayComponentParams="{ notReady: true }"
       :loadingOverlayComponent=PlAgOverlayLoading :noRowsOverlayComponent=PlAgOverlayNoRows />
-
 
   </PlBlockPage>
 
   <PlSlideModal v-model="data.settingsOpen">
     <template #title>Settings</template>
+
     <PlDropdownRef :options="app.model.outputs.dataOptions ?? []" v-model="app.model.args.ref" label="Select dataset"
       clearable />
 
@@ -132,9 +129,9 @@ const gridOptions: GridOptions = {
 
   </PlSlideModal>
 
-  <PlSlideModal v-model="data.sampleReportOpen" width="80%">
+  <PlSlideModal v-model="data.sampleReportOpen" width="70%">
     <template #title>Results for {{ (data.selectedSample ? app.model.outputs.labels?.[data.selectedSample] :
       undefined) ?? "..." }}</template>
-    <ReportPanel v-model="data.selectedSample" />
+    <ReportPanel :model-value="data.selectedSample" />
   </PlSlideModal>
 </template>

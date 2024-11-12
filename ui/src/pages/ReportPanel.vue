@@ -3,7 +3,6 @@ import { PlBtnGroup, PlLogView } from '@platforma-sdk/ui-vue';
 import { computed, ref } from 'vue';
 import { resultMap } from './results';
 
-
 const sampleId = defineModel<string | undefined>()
 
 const starProgress = computed(() => {

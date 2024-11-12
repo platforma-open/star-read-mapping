@@ -40,6 +40,7 @@ pfconvParamsLib := import(":pfconv_params")
 assets := import("@platforma-sdk/workflow-tengo:assets")
 pframes := import("@platforma-sdk/workflow-tengo:pframes")
 pUtil := import("@platforma-sdk/workflow-tengo:pframes.util")
+xsv := import("@platforma-sdk/workflow-tengo:pframes.xsv")
 
 starAlignmentTpl := assets.importTemplate(":star-alignment")
 
@@ -126,12 +127,22 @@ wf.body(func(args) {
 							"pl7.app/label": "Ensembl Id"
 						}
 					}
-				]
+				],
+				annotations: {
+					"pl7.app/label": "Raw counts"
+				}
+
 			},
 			"rawCounts.data": starResults.output("rawCounts")
-		}
-	
+		}	
+
 	// convert pf to csv
+
+	// csvFile := xsv.exportFrame(pf, "csv", {})
+
+	// Sample id,Ensembl Id,Raw counts
+	// HG987SD,ENSMUSG00000104478,0
+	// ...
 
 	// Expect csv by the script:
 	// "geneId","SRR1571967","SRR1571968","SRR1571969","SRR1571970","SRR1571971","SRR1571972"
@@ -145,9 +156,9 @@ wf.body(func(args) {
 	// 				arg("bash").
 	// 				arg("-c").
 	// 				arg("run_sample_qc.R rawCounts.csv").
-	// 				addFile("rawCounts.csv").
+	// 				addFile("rawCounts.csv", csvFile).
 	// 				saveFile("pca_results.csv").
-	// 				//saveFile("sample_distances.csv").
+	// 				saveFile("sample_distances.csv").
 	// 				printErrStreamToStdout().
 	// 				saveStdoutContent().
 	// 				cache(24 * 60 * 60 * 1000).
