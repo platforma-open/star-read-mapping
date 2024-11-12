@@ -40,6 +40,8 @@ pfconvParamsLib := import(":pfconv_params")
 assets := import("@platforma-sdk/workflow-tengo:assets")
 pframes := import("@platforma-sdk/workflow-tengo:pframes")
 pUtil := import("@platforma-sdk/workflow-tengo:pframes.util")
+xsv := import("@platforma-sdk/workflow-tengo:pframes.xsv")
+exec := import("@platforma-sdk/workflow-tengo:exec")
 
 starAlignmentTpl := assets.importTemplate(":star-alignment")
 
@@ -62,11 +64,6 @@ wf.body(func(args) {
 	strandness := args.strandness
 
 	pfconvParams := pfconvParamsLib.getColumns(blockId, species)
-
-	// Get indexed genome
-	// indexImport := file.importFile(args.indexFile) // The file can be accessed with indexImport.file
-	// Get genome annotation
-	// genomeAnnImport := file.importFile(args.genomeAnnFile) // The file can be accessed with genomeAnnImport.file
 
 	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
 
@@ -131,34 +128,21 @@ wf.body(func(args) {
 			"rawCounts.data": starResults.output("rawCounts")
 		}
 	
-	// convert pf to csv
-
-	// Expect csv by the script:
-	// "geneId","SRR1571967","SRR1571968","SRR1571969","SRR1571970","SRR1571971","SRR1571972"
-	// "ENSMUSG00000104478",0,0,0,0,0,0
-	// "ENSMUSG00000104385",0,0,0,0,0,0
-	// ...
+	// Convert pf to csv
+	csvCounts := xsv.exportFrame(pf, "csv", {})
 
 	// Run clustering QC on all samples
-	// clusteringQC := exec.builder().
-	// 				cmd("/usr/bin/env").
-	// 				arg("bash").
-	// 				arg("-c").
-	// 				arg("run_sample_qc.R rawCounts.csv").
-	// 				addFile("rawCounts.csv").
-	// 				saveFile("pca_results.csv").
-	// 				//saveFile("sample_distances.csv").
-	// 				printErrStreamToStdout().
-	// 				saveStdoutContent().
-	// 				cache(24 * 60 * 60 * 1000).
-	// 				run()
-
-	// Output csv
-	// "Sample","PC1","PC2","PC3","PC4","PC5","PC6"
-	// "SRR1571967",-23.7540081790045,3.93092911169699,-15.0641416688116,-8.62517981818886,4.72078015748819,7.56460866169206e-14
-	// "SRR1571968",-10.0330775052546,-13.733269718677,12.6024489236642,5.76827403360149,11.8384569581779,7.17793879889683e-14
-
-	// pcaPfconv_params.lib needs to be adjusted for "Sample" column
+	clusteringQC := exec.builder().
+					cmd("Rscript").
+					arg("/Users/aiturbide/Blocks/block-star-read-mapping/scripts/run_sample_qc.R").
+					arg("rawCounts.csv").
+					addFile("rawCounts.csv", csvCounts).
+					saveFile("pca_results.csv").
+					saveFile("sample_distances.csv").
+					printErrStreamToStdout().
+					saveStdoutContent().
+					cache(24 * 60 * 60 * 1000).
+					run()
 	
 	// PCAtsvImportParams := pcaPfconvParamsLib.getColumns(blockId, inputSpec)
 	// PCAComponents := xsv.importFile(clusteringQC.getFile("PCAComponents.csv"), "tsv", PCAtsvImportParams)
@@ -168,15 +152,13 @@ wf.body(func(args) {
 
 
 	outputs := {
-		// indexImportHandle: indexImport.handle,
-		// genomeAnnImportHandle: genomeAnnImport.handle,
 		starProgress: starResults.output("starLog"),
 		starQc: starResults.output("starReport"),
 		featureCountsProgress: starResults.output("featureCountsLog"),
 		featureCountsQc: starResults.output("countsReport"),
 		pf: pframes.exportFrame(pf)//,
-		// pcaComponents: pframes.exportFrame(PCAComponents)
-	//	pcaComponents: pframes.exportFrame(sampleDistances)
+		// pcaComponents: pframes.exportFrame(PCAComponents)//,
+		// sampleDistances: pframes.exportFrame(sampleDistances)
 	}
 
 
