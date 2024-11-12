@@ -51,6 +51,7 @@ jobs:
 
       publish-to-public: true
       aws-login-enable: true
+      aws-login-duration: 43200
       gcp-login-enable: true
 
       npmrc-config: |
