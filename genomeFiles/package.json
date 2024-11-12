@@ -111,6 +111,14 @@
           "root": "./indexed_genome/Gallus_gallus"
         }
       },
+      "bos-taurus": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "version": "1.0.0",
+          "root": "./indexed_genome/Bos_taurus"
+        }
+      },
       "sus_scrofa": {
         "asset": {
           "type": "asset",

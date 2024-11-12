@@ -42,8 +42,9 @@ const inputOptionsStr = [
 ];
 
 const speciesOptions = [
-  { text: "Homo sapiens", value: "hsa" },
-  { text: "Mus musculus", value: "mmu" },
+  { text: "Homo sapiens", value: "homo-sapiens" },
+  { text: "Mus musculus", value: "mus-musculus" },
+  { text: "Saccharomyces cerevisiae", value: "saccharomyces-cerevisiae" },
 ];
 
 

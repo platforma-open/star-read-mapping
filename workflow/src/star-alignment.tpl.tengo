@@ -8,6 +8,7 @@ ll := import("@platforma-sdk/workflow-tengo:ll")
 xsv := import("@platforma-sdk/workflow-tengo:pframes.xsv")
 pfconvParamsLib := import(":pfconv_params")
 assets := import("@platforma-sdk/workflow-tengo:assets")
+genomeAssetsLib := import(":genomeAssets")
 
 
 self.defineOutputs("starLog",
@@ -26,30 +27,9 @@ self.body(func(inputs) {
 	strandness := inputs.strandness
 
 
-	genomeAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:saccharomyces-cerevisiae")
-	
+//genomeAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:saccharomyces-cerevisiae")
+genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 
-	//indexFileNames := loadIndexFiles.getStdoutStream()
-	// chrLength := loadIndexFiles.getFile("chrLength.txt")
-	// chrName := loadIndexFiles.getFile("chrName.txt")
-	// chrNameLength := loadIndexFiles.getFile("chrNameLength.txt")
-	// chrStart := loadIndexFiles.getFile("chrStart.txt")
-	// exonGeTrInfo := loadIndexFiles.getFile("exonGeTrInfo.tab")
-	// exonInfo := loadIndexFiles.getFile("exonInfo.tab")
-	// geneInfo := loadIndexFiles.getFile("geneInfo.tab")
-	// Genome := loadIndexFiles.getFile("Genome")
-	// genomeParameters := loadIndexFiles.getFile("genomeParameters.txt")
-	// Log := loadIndexFiles.getFile("Log.out")
-	// SA := loadIndexFiles.getFile("SA")
-	// SAindex := loadIndexFiles.getFile("SAindex")
-	// sjdbInfo := loadIndexFiles.getFile("sjdbInfo.txt")
-	// sjdbListFromGTFOut := loadIndexFiles.getFile("sjdbList.fromGTF.out.tab")
-	// sjdbListOut := loadIndexFiles.getFile("sjdbList.out.tab")
-	// transcriptInfo := loadIndexFiles.getFile("transcriptInfo.tab")
-
-	ll.print("check fileExtension before star", fileExtension)
-
-	// @TODO are we sure that we need ALL files listed below ?
 	star:= exec.builder().
 			cmd("STAR").
 			mkDir("genomeIndex").
@@ -62,7 +42,7 @@ self.body(func(inputs) {
 			addAsset(genomeAssets, "genomeIndex", ["geneInfo.tab"]).
 			addAsset(genomeAssets, "genomeIndex", ["Genome"]).
 			addAsset(genomeAssets, "genomeIndex", ["genomeParameters.txt"]).
-			addAsset(genomeAssets, "genomeIndex", ["Log.out"]).
+			//addAsset(genomeAssets, "genomeIndex", ["Log.out"]).
 			addAsset(genomeAssets, "genomeIndex", ["SA"]).
 			addAsset(genomeAssets, "genomeIndex", ["SAindex"]).
 			addAsset(genomeAssets, "genomeIndex", ["sjdbInfo.txt"]).

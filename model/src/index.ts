@@ -19,7 +19,7 @@ export type BlockArgs = {
   /**
    * Species settings
    */
-  species?: "hsa" | "mmu";
+  species?: "homo-sapiens" | "mus-musculus" | "saccharomyces-cerevisiae";
 
   /**
    * Library settings
@@ -43,7 +43,7 @@ export type BlockArgs = {
 export const model = BlockModel.create<BlockArgs>()
 
   .initialArgs({
-    species: "hsa",
+    species: "homo-sapiens",
     libraryType: "SingleEnd",
     strandness: "0",
   })
