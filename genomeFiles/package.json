@@ -35,7 +35,7 @@
   },
   "license": "UNLICENSED",
   "devDependencies": {
-    "@platforma-sdk/package-builder": "^2.10.7"
+    "@platforma-sdk/package-builder": "^2.11.1"
   },
   "//": {
     "entrypoints": {
