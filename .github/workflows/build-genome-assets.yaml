@@ -6,12 +6,15 @@ on:
       - "main"
     paths:
       - "genomeFiles/**"
+      - ".github/workflows/build-genome-assets.yaml"
 
   push:
     branches:
       - "main"
     paths:
       - "genomeFiles/**"
+      - ".github/workflows/build-genome-assets.yaml"
+
   workflow_dispatch: {}
 
 jobs:
@@ -51,6 +54,7 @@ jobs:
 
       publish-to-public: true
       aws-login-enable: true
+      aws-login-duration: 43199
       gcp-login-enable: true
 
       npmrc-config: |
