@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.star-read-mapping.genome-asset",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "STAR indexed genome references",
   "scripts": {
     "build-skip": "echo 'This is fake build script for CI optimization'",
@@ -9,7 +9,7 @@
     "build": "pl-pkg build",
     "sign": "pl-pkg sign --sign-command='[\"gcloud-kms-sign\", \"{pkg}\", \"{pkg}.sig\"]'",
 
-    "prepublishOnly": "npm run build && npm run sign && pl-pkg publish packages"
+    "prepublishOnly": "npm run build && npm run sign && pl-pkg publish packages --skip-existing-packages"
   },
   "files": [
     "dist/"
