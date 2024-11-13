@@ -6,21 +6,28 @@ import { useApp } from "../app";
 
 const app = useApp();
 
-const settings = ref({
-  chartType: "discrete",
-  template: "dots",
-  title: "Tittle",
-  defaultOptions: undefined,
-  optionsState: undefined,
-  statisticsSettings: undefined,
-  axesSettings: undefined,
-  layersSettings: undefined,
-  dataBindAes: undefined,
-} satisfies GraphMakerSettings);
+const settings = {
+  chartType: 'scatterplot',
+  template: 'dots',
+  title: '',
+  defaultOptions: [{
+    inputName: 'y',
+    selectedSource: {
+      kind: 'PColumn',
+      name: 'countMatrix',
+      valueType: 'Int'
+    }
+  }]
+   } as GraphMakerSettings;
 </script>
 
 <template>
-  <GraphMaker :p-frame="app.model.outputs.pf" v-model="settings" />
+  <div class="container_graph_page" :key="app.queryParams.id">
+    <graph-maker
+      v-model="settings"
+      :pFrame="app.model.outputs.pf"
+    />
+  </div>
 </template>
 
 
