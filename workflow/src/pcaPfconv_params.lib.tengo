@@ -3,7 +3,10 @@ ll := import("@platforma-sdk/workflow-tengo:ll")
 getColumns := func(blockId, inputSpec) {
   return {
     "axes": [
-      inputSpec.axesSpec[0]
+      {
+        "column": "Sample",
+        "spec": inputSpec.axesSpec[0]
+      } 
       ],
     "columns": [
       {
@@ -30,66 +33,6 @@ getColumns := func(blockId, inputSpec) {
           "valueType": "Double",
           "annotations": {
             "pl7.app/label": "Principal component 2"
-          }
-        }
-      },
-      {
-        "column": "PC3",
-        "id": "pc3",
-        "allowNA": false,
-        "spec": {
-          "name": "pl7.app/rna-seq/pc3",
-          "valueType": "Double",
-          "annotations": {
-            "pl7.app/label": "Principal component 3"
-          }
-        }
-      },
-      {
-        "column": "PC4",
-        "id": "pc4",
-        "allowNA": false,
-        "spec": {
-          "name": "pl7.app/rna-seq/pc4",
-          "valueType": "Double",
-          "annotations": {
-            "pl7.app/label": "Principal component 4"
-          }
-        }
-      },
-      {
-        "column": "PC4",
-        "id": "pc4",
-        "allowNA": false,
-        "spec": {
-          "name": "pl7.app/rna-seq/pc4",
-          "valueType": "Double",
-          "annotations": {
-            "pl7.app/label": "Principal component 4"
-          }
-        }
-      },
-      {
-        "column": "PC5",
-        "id": "pc5",
-        "allowNA": false,
-        "spec": {
-          "name": "pl7.app/rna-seq/pc5",
-          "valueType": "Double",
-          "annotations": {
-            "pl7.app/label": "Principal component 5"
-          }
-        }
-      },
-      {
-        "column": "PC6",
-        "id": "pc6",
-        "allowNA": false,
-        "spec": {
-          "name": "pl7.app/rna-seq/pc6",
-          "valueType": "Double",
-          "annotations": {
-            "pl7.app/label": "Principal component 6"
           }
         }
       }

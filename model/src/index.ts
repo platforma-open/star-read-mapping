@@ -141,6 +141,14 @@ export const model = BlockModel.create<BlockArgs>()
     return wf.createPFrame(pCols);
   })
 
+  .output("pcaPf", (wf) => {
+    //return wf.outputs?.resolve("pf")?.resolve("rawCounts.data")?.listInputFields()
+    const pCols = wf.outputs?.resolve("pcaComponents")?.getPColumns();
+    if (pCols === undefined) return undefined;
+
+    return wf.createPFrame(pCols);
+  })
+
   .sections([
     { type: "link", href: "/", label: "Settings" },
     { type: "link", href: "/QC", label: "Sequence Data QC" },

@@ -42,6 +42,7 @@ pframes := import("@platforma-sdk/workflow-tengo:pframes")
 pUtil := import("@platforma-sdk/workflow-tengo:pframes.util")
 xsv := import("@platforma-sdk/workflow-tengo:pframes.xsv")
 exec := import("@platforma-sdk/workflow-tengo:exec")
+pcaPfconvParamsLib := import(":pcaPfconv_params")
 
 starAlignmentTpl := assets.importTemplate(":star-alignment")
 
@@ -95,8 +96,6 @@ wf.body(func(args) {
 			species: species,
 			libraryType: libraryType,
 			strandness: strandness,
-			// index: indexImport,
-			// genomeAnn: genomeAnnImport,
 			fileExtension: fileExtension
 		}
 	)
@@ -123,7 +122,8 @@ wf.body(func(args) {
 							"pl7.app/label": "Ensembl Id"
 						}
 					}
-				]
+				],
+				annotations: {"pl7.app/label": "Expression level"}
 			},
 			"rawCounts.data": starResults.output("rawCounts")
 		}
@@ -136,6 +136,7 @@ wf.body(func(args) {
 					cmd("Rscript").
 					arg("/Users/aiturbide/Blocks/block-star-read-mapping/scripts/run_sample_qc.R").
 					arg("rawCounts.csv").
+					arg(".").
 					addFile("rawCounts.csv", csvCounts).
 					saveFile("pca_results.csv").
 					saveFile("sample_distances.csv").
@@ -144,8 +145,8 @@ wf.body(func(args) {
 					cache(24 * 60 * 60 * 1000).
 					run()
 	
-	// PCAtsvImportParams := pcaPfconvParamsLib.getColumns(blockId, inputSpec)
-	// PCAComponents := xsv.importFile(clusteringQC.getFile("PCAComponents.csv"), "tsv", PCAtsvImportParams)
+	PCAcsvImportParams := pcaPfconvParamsLib.getColumns(blockId, inputSpec)
+	PCAComponents := xsv.importFile(clusteringQC.getFile("pca_results.csv"), "csv", PCAcsvImportParams)
 	
 	// HQtsvImportParams := hcPfconvParamsLib.getColumns(blockId, inputSpec)
 	// sampleDistances := xsv.importFile(clusteringQC.getFile("sample_distances.csv"), "tsv", HQtsvImportParams)
@@ -156,8 +157,8 @@ wf.body(func(args) {
 		starQc: starResults.output("starReport"),
 		featureCountsProgress: starResults.output("featureCountsLog"),
 		featureCountsQc: starResults.output("countsReport"),
-		pf: pframes.exportFrame(pf)//,
-		// pcaComponents: pframes.exportFrame(PCAComponents)//,
+		pf: pframes.exportFrame(pf),
+		pcaComponents: pframes.exportFrame(PCAComponents)//,
 		// sampleDistances: pframes.exportFrame(sampleDistances)
 	}
 
