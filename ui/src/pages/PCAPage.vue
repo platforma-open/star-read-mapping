@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { GraphMaker, GraphMakerSettings } from "@milaboratories/graph-maker";
 import '@milaboratories/graph-maker/styles';
-import { ref } from 'vue';
+//import { ref } from 'vue';
 import { useApp } from "../app";
 
 const app = useApp();
@@ -10,22 +10,32 @@ const settings = {
   chartType: 'scatterplot',
   template: 'dots',
   title: '',
-  defaultOptions: [{
+  defaultOptions: [
+    {
+    inputName: 'x',
+    selectedSource: {
+      kind: 'PColumn',
+      name: 'Principal Component 1',
+      valueType: 'Int'
+    }
+  },
+  {
     inputName: 'y',
     selectedSource: {
       kind: 'PColumn',
-      name: 'countMatrix',
+      name: 'Principal Component 2',
       valueType: 'Int'
     }
-  }]
+  }
+]
    } as GraphMakerSettings;
 </script>
 
 <template>
-  <div class="container_graph_page" :key="app.queryParams.id">
+  <div>
     <graph-maker
       v-model="settings"
-      :pFrame="app.model.outputs.pf"
+      :pFrame="app.model.outputs.pcaPf"
     />
   </div>
 </template>
