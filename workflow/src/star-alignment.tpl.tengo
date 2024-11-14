@@ -13,6 +13,7 @@ genomeAssetsLib := import(":genomeAssets")
 
 self.defineOutputs("starLog",
 					"starReport",
+					"alignedBAM",
 					"featureCountsLog",
 					"countsReport",
 					"countMatrixImport")
@@ -157,6 +158,7 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 	output := {
 		starLog: starLog,
 		starReport: starReport,
+		alignedBAM: bamFile,
 		featureCountsLog: featureCountsLog,
 		countsReport: countsReport,
 		countMatrixImport: countMatrixImport

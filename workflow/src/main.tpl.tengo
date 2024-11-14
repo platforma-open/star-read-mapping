@@ -46,8 +46,6 @@ pcaPfconvParamsLib := import(":pcaPfconv_params")
 
 starAlignmentTpl := assets.importTemplate(":star-alignment")
 
-//mouseGenomeFiles := assets.importFile(":genome-assets")
-
 wf.prepare(func(args){
 	return{
 		resolvedInput: wf.resolve(args.ref, { errIfMissing: true })
@@ -76,6 +74,9 @@ wf.body(func(args) {
 	}, {
 		type: "Resource",
 		name: "starReport"
+	}, {
+		type: "Resource",
+		name: "alignedBAM"
 	}, {
 		type: "Resource",
 		name: "featureCountsLog"
@@ -157,6 +158,7 @@ wf.body(func(args) {
 	outputs := {
 		starProgress: starResults.output("starLog"),
 		starQc: starResults.output("starReport"),
+		alignedBAM: starResults.output("alignedBAM"),
 		featureCountsProgress: starResults.output("featureCountsLog"),
 		featureCountsQc: starResults.output("countsReport"),
 		pf: pframes.exportFrame(pf),
@@ -196,7 +198,8 @@ wf.body(func(args) {
 				]
 			},
 			data: starResults.output("rawCounts")
-		}
+		},
+		alignedBAM: starResults.output("alignedBAM")
 	}
 
 	return {

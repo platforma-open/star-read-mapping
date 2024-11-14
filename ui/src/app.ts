@@ -9,9 +9,7 @@ export const sdkPlugin = defineApp(model, () => {
     showErrorsNotification: true,
     routes: {
       "/": () => Settings,
-      "/QC": () => PrincipalComponentAnalysis,
       "/PCA": () => PrincipalComponentAnalysis,
-      "/HC": () => PrincipalComponentAnalysis,
     }
   };
 });

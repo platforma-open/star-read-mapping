@@ -12,31 +12,40 @@ const settings = {
   title: '',
   defaultOptions: [
     {
-    inputName: 'x',
-    selectedSource: {
-      kind: 'PColumn',
-      name: 'Principal Component 1',
-      valueType: 'Int'
+      inputName: 'x',
+      selectedSource: {
+        kind: 'PColumn',
+        name: "pl7.app/rna-seq/pc1",
+        valueType: "Double",
+        axesSpec: [
+          {
+            name: "pl7.app/sampleId",
+            type: "String"
+          }
+        ]
+      }
+    },
+    {
+      inputName: 'y',
+      selectedSource: {
+        kind: 'PColumn',
+        name: "pl7.app/rna-seq/pc2",
+        valueType: "Double",
+        axesSpec: [
+          {
+            name: "pl7.app/sampleId",
+            type: "String"
+          }
+        ]
+      }
     }
-  },
-  {
-    inputName: 'y',
-    selectedSource: {
-      kind: 'PColumn',
-      name: 'Principal Component 2',
-      valueType: 'Int'
-    }
-  }
-]
-   } as GraphMakerSettings;
+  ]
+} as GraphMakerSettings;
 </script>
 
 <template>
   <div>
-    <graph-maker
-      v-model="settings"
-      :pFrame="app.model.outputs.pcaPf"
-    />
+    <graph-maker v-model="settings" :pFrame="app.model.outputs.pcaPf" />
   </div>
 </template>
 
