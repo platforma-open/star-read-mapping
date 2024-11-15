@@ -17,6 +17,7 @@
     "@ag-grid-community/core": "catalog:",
     "@ag-grid-community/styles": "catalog:",
     "@ag-grid-community/vue3": "catalog:",
+    "@milaboratories/helpers": "catalog:",
     "vue": "catalog:"
   },
   "devDependencies": {

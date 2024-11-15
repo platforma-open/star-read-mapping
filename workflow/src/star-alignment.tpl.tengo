@@ -157,7 +157,7 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 
 	output := {
 		starLog: starLog,
-		starReport: starReport,
+		starReport: file.exportFile(starReport),
 		alignedBAM: bamFile,
 		featureCountsLog: featureCountsLog,
 		countsReport: countsReport,

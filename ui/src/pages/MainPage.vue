@@ -12,9 +12,10 @@ import {
 } from "@platforma-sdk/ui-vue";
 
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
-import { GridApi, GridOptions, GridReadyEvent, ModuleRegistry } from '@ag-grid-community/core';
+import { ColDef, GridApi, GridOptions, GridReadyEvent, ModuleRegistry } from '@ag-grid-community/core';
 import { computed, reactive, shallowRef } from "vue";
 import { useApp } from "../app";
+import AlignmentStatsCell from './AlignmentStatsCell.vue';
 import ReportPanel from './ReportPanel.vue';
 import { resultMap } from './results';
 
@@ -59,6 +60,7 @@ const results = computed<any[] | undefined>(() => {
       "sampleLabel": resultMap.value[id].sampleLabel,
       "star": resultMap.value[id].starProgressLine, // @TODO status?
       "subread": "Running", // @TODO status?
+      "starQc": resultMap.value[id].starQC
     });
   }
 
@@ -72,7 +74,7 @@ const onGridReady = (params: GridReadyEvent) => {
   gridApi.value = params.api;
 };
 
-const columnDefs = [
+const columnDefs: ColDef[] = [
   {
     colId: 'label',
     field: 'sampleLabel',
@@ -89,9 +91,14 @@ const columnDefs = [
     field: 'subread',
     // cellRenderer: 'AlignmentStatsCell',
     headerName: "Feature counts",
+  },
+  {
+    colId: 'starQc',
+    field: 'starQc',
+    headerName: 'Alignment score',
+    cellRenderer: 'AlignmentStatsCell'
   }
 ];
-
 
 const gridOptions: GridOptions = {
   getRowId: (row) => row.data.sampleId,
@@ -99,11 +106,11 @@ const gridOptions: GridOptions = {
     data.selectedSample = e.data?.sampleId
     data.sampleReportOpen = data.selectedSample !== undefined;
   },
-  // components: {
-  //     AlignmentStatsCell,
-  //     ProgressCell,
-  //     ChainsStatsCell
-  // }
+  components: {
+    AlignmentStatsCell,
+    //     ProgressCell,
+    //     ChainsStatsCell
+  }
 };
 
 </script>

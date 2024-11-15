@@ -2,10 +2,10 @@
 import {
   BlockModel,
   InferOutputsType,
-  Ref,
   isPColumn,
   isPColumnSpec,
-  ValueType
+  Ref,
+  ValueType,
 } from "@platforma-sdk/model";
 import { parseResourceMap } from "./helpers";
 
@@ -119,7 +119,13 @@ export const model = BlockModel.create<BlockArgs>()
     );
   })
 
-  .output("starQc", (wf) => wf.outputs?.resolve("starQc")?.getLastLogs(100)) // Does this work with this type of file?
+  .output("starQc", (wf) =>
+    parseResourceMap(
+      wf.outputs?.resolve("starQc"),
+      (acc) => acc.getFileContentAsString(),
+      false
+    )
+  )
 
   .output("alignedBAM", (wf) =>
     wf.outputs?.resolve("alignedBAM")?.getLastLogs(1)
@@ -154,22 +160,30 @@ export const model = BlockModel.create<BlockArgs>()
 
     //return wf.createPFrame(pCols);
     // enriching with upstream data
-    const valueTypes = ['Int', 'Long', 'Float', 'Double', 'String', 'Bytes'] as ValueType[];
+    const valueTypes = [
+      "Int",
+      "Long",
+      "Float",
+      "Double",
+      "String",
+      "Bytes",
+    ] as ValueType[];
     const upstream = wf.resultPool
       .getData()
       .entries.map((v) => v.obj)
       .filter(isPColumn)
-      .filter((column) => valueTypes.find((valueType) => valueType === column.spec.valueType));
+      .filter((column) =>
+        valueTypes.find((valueType) => valueType === column.spec.valueType)
+      );
 
     return wf.createPFrame([...pCols, ...upstream]);
-
   })
 
   .sections([
     { type: "link", href: "/", label: "Settings" },
-//    { type: "link", href: "/QC", label: "Sequence Data QC" },
+    //    { type: "link", href: "/QC", label: "Sequence Data QC" },
     { type: "link", href: "/PCA", label: "Principal Component Analysis" },
-//    { type: "link", href: "/HC", label: "Hierarchical Clustering" },
+    //    { type: "link", href: "/HC", label: "Hierarchical Clustering" },
   ])
 
   .done();
