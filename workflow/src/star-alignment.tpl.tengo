@@ -32,7 +32,7 @@ self.body(func(inputs) {
 genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 
 	star:= exec.builder().
-			cmd("STAR").
+			software(assets.importSoftware("@platforma-open/milaboratories.software-star:star")).
 			mkDir("genomeIndex").
 			addAsset(genomeAssets, "genomeIndex", ["chrLength.txt"]).
 			addAsset(genomeAssets, "genomeIndex", ["chrName.txt"]).
@@ -92,7 +92,7 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 
 	// Calculate counts from BAM file
 	featureCounts:= exec.builder().
-					cmd("featureCounts").
+					software(assets.importSoftware("@platforma-open/milaboratories.software-subread:featureCounts")).
 					addFile("sample_Aligned.sortedByCoord.out.bam", bamFile).
 					addAsset(genomeAssets, ".", ["annotations.gtf"]).
 					arg("-t").arg("exon").

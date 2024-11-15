@@ -4,7 +4,7 @@ ll := import("@platforma-sdk/workflow-tengo:ll")
 getGenomeAsset := func(species) {
     yeastAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:saccharomyces-cerevisiae")
     // humanAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:homo-sapiens")
-    // mouseAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:mus-musculus")
+    mouseAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:mus-musculus")
     // ratAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:rattus-norvegicus")
     // zebrafishAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:danio-rerio")
     // fruitFlyAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:drosophila-melanogaster")
@@ -14,10 +14,10 @@ getGenomeAsset := func(species) {
     // cowAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:bos-taurus")
     // pigAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:sus_scrofa")
 
-    GenomeAssetsMap := {
-        "saccharomyces-cerevisiae": yeastAssets//,
+    GenomeAssetsMap := ll.toStrict({
+        "saccharomyces-cerevisiae": yeastAssets,
         // "homo-sapiens": humanAssets,
-        // "mus-musculus": mouseAssets,
+        "mus-musculus": mouseAssets//,
         // "rattus-norvegicus": ratAssets,
         // "danio-rerio": zebrafishAssets,
         // "drosophila-melanogaster": fruitFlyAssets,
@@ -26,7 +26,7 @@ getGenomeAsset := func(species) {
         // "gallus-gallus": chickenAssets,
         // "bos-taurus": cowAssets,
         // "sus_scrofa": pigAssets
-    }
+    })
 
     genomeAssets := GenomeAssetsMap[species]
 
