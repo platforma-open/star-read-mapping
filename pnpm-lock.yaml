@@ -31,8 +31,8 @@ catalogs:
       specifier: ^1.13.1
       version: 1.14.5
     '@platforma-open/milaboratories.software-star':
-      specifier: ^1.0.0
-      version: 1.0.0
+      specifier: ^1.0.1
+      version: 1.0.1
     '@platforma-open/milaboratories.software-subread':
       specifier: ^1.0.0
       version: 1.0.0
@@ -191,7 +191,7 @@ importers:
         version: 1.14.5
       '@platforma-open/milaboratories.software-star':
         specifier: 'catalog:'
-        version: 1.0.0
+        version: 1.0.1
       '@platforma-open/milaboratories.software-subread':
         specifier: 'catalog:'
         version: 1.0.0
@@ -1145,8 +1145,8 @@ packages:
   '@platforma-open/milaboratories.software-small-binaries@1.14.5':
     resolution: {integrity: sha512-zfLLCu6Bv7yDcu8pFOUiP4v1dvSCDRjAGlzYuiNJ0IAxgC85+GUWuD0Pu7+NO/MaKQ2hrUPHhgJjzByAI/vM1w==}
 
-  '@platforma-open/milaboratories.software-star@1.0.0':
-    resolution: {integrity: sha512-ZA6zj0jj86x2PzMTAzDO7CUD06gVEywIne6IiCg1qtz63+igYeDl3j6PM+AZbgebTI1Cxtkdll0JipBoDGGiSw==}
+  '@platforma-open/milaboratories.software-star@1.0.1':
+    resolution: {integrity: sha512-pKIj68iDcmAWbQhdXDprMo8xF9RhldkvrXGxbPRiuFTzr/1OBQycwTy5WzbKQ3n6BWji27lDjJCP/YoLyn6byg==}
 
   '@platforma-open/milaboratories.software-subread@1.0.0':
     resolution: {integrity: sha512-UnIWO6J0/9fkcvPjpW6Z61TQlbA9eJxsapL0vPUpNtTZqeaRROUE4SepJ9O48PkrI47kScdKnYSHc/Y91NBocg==}
@@ -6589,7 +6589,7 @@ snapshots:
 
   '@platforma-open/milaboratories.software-small-binaries@1.14.5': {}
 
-  '@platforma-open/milaboratories.software-star@1.0.0': {}
+  '@platforma-open/milaboratories.software-star@1.0.1': {}
 
   '@platforma-open/milaboratories.software-subread@1.0.0': {}
 
