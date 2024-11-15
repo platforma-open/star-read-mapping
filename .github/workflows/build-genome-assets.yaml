@@ -5,14 +5,14 @@ on:
     branches:
       - "main"
     paths:
-      - "genomeFiles/**"
+      - "genomeFiles/package.json"
       - ".github/workflows/build-genome-assets.yaml"
 
   push:
     branches:
       - "main"
     paths:
-      - "genomeFiles/**"
+      - "genomeFiles/package.json"
       - ".github/workflows/build-genome-assets.yaml"
 
   workflow_dispatch: {}

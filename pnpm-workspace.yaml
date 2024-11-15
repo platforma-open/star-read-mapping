@@ -16,7 +16,9 @@ catalog:
   '@milaboratories/graph-maker': ^1.0.21
   '@milaboratories/software-pframes-conv': ^1.6.4
   '@platforma-open/milaboratories.software-small-binaries': ^1.13.1
-  '@platforma-open/milaboratories.star-read-mapping.genome-asset': ^1.0.5
+  '@platforma-open/milaboratories.software-subread': ^1.0.0
+  '@platforma-open/milaboratories.software-star': ^1.0.1
+  '@platforma-open/milaboratories.star-read-mapping.genome-asset': ^1.1.2
 
   '@ag-grid-community/core': ^32.2.2
   '@ag-grid-community/client-side-row-model': ^32.2.2
