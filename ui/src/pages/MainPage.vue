@@ -16,6 +16,7 @@ import { ColDef, GridApi, GridOptions, GridReadyEvent, ModuleRegistry } from '@a
 import { computed, reactive, shallowRef } from "vue";
 import { useApp } from "../app";
 import AlignmentStatsCell from './AlignmentStatsCell.vue';
+import FeatureCountsStatsCell from './FeatureCountsStatsCell.vue';
 import ReportPanel from './ReportPanel.vue';
 import { resultMap } from './results';
 
@@ -60,7 +61,8 @@ const results = computed<any[] | undefined>(() => {
       "sampleLabel": resultMap.value[id].sampleLabel,
       "star": resultMap.value[id].starProgressLine, // @TODO status?
       "subread": "Running", // @TODO status?
-      "starQc": resultMap.value[id].starQC
+      "starQc": resultMap.value[id].starQC,
+      "featureCountsQc": resultMap.value[id].featureCountsQC
     });
   }
 
@@ -95,8 +97,14 @@ const columnDefs: ColDef[] = [
   {
     colId: 'starQc',
     field: 'starQc',
-    headerName: 'Alignment score',
+    headerName: 'Read alignment',
     cellRenderer: 'AlignmentStatsCell'
+  },
+  {
+    colId: 'featureCountsQc',
+    field: 'featureCountsQc',
+    headerName: 'Features assigned',
+    cellRenderer: 'FeatureCountsStatsCell'
   }
 ];
 
@@ -108,6 +116,7 @@ const gridOptions: GridOptions = {
   },
   components: {
     AlignmentStatsCell,
+    FeatureCountsStatsCell
     //     ProgressCell,
     //     ChainsStatsCell
   }

@@ -18,16 +18,41 @@ const parts = computed(() => {
 
   return [
     {
-      color: 'red',
-      value: report?.numberOfInputReads - report?.uniquelyMapped,
-      label: "Not mapped",
+      color: 'grey',
+      value: report?.numberOfInputReads - 
+              report?.uniquelyMapped -
+              report?.mappedMultipleLoci -
+              report?.mappedTooManyLoci -
+              report?.unmappedTooShort - 
+              report?.unmappedOther
+              ,
+      label: "Other",
     },
     {
       color: 'green',
       value: report?.uniquelyMapped,
-      label: "Mapped",
+      label: "Uniquely mapped",
+    },
+    {
+      color: 'blue',
+      value: report?.mappedMultipleLoci,
+      label: "Mapped to multiple loci",
+    },
+    {
+      color: 'orange',
+      value: report?.mappedTooManyLoci,
+      label: "Mapped to too many loci",
+    },
+    {
+      color: 'red',
+      value: report?.unmappedTooShort,
+      label: "Unmapped: too short",
+    },
+    {
+      color: 'purple',
+      value: report?.unmappedOther,
+      label: "Unmapped: other",
     }
-
   ];
 });
 const legends = computed(() => parts.value.map(p => ({

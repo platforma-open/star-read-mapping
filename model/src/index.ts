@@ -139,7 +139,11 @@ export const model = BlockModel.create<BlockArgs>()
     );
   })
   .output("featureCountsQc", (wf) =>
-    wf.outputs?.resolve("featureCountsQc")?.getLastLogs(100)
+    parseResourceMap(
+      wf.outputs?.resolve("featureCountsQc"),
+      (acc) => acc.getFileContentAsString(),
+      false
+    )
   ) // Does this work with this type of file?
 
   /**

@@ -198,8 +198,8 @@ wf.body(func(args) {
 				]
 			},
 			data: starResults.output("rawCounts")
-		},
-		alignedBAM: starResults.output("alignedBAM")
+		}//,
+		//alignedBAM: starResults.output("alignedBAM")
 	}
 
 	return {

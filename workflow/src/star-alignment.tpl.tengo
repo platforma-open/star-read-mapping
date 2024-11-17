@@ -78,6 +78,7 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 	star = star.
 			arg("--readFilesCommand").arg("gunzip -c").
 			arg("--outFileNamePrefix").arg("sample_").
+			arg("--runThreadN").arg("4").
 			saveFile("sample_Aligned.sortedByCoord.out.bam").
 			saveFile("sample_Log.final.out").
 			printErrStreamToStdout().
@@ -107,6 +108,7 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 	featureCounts = featureCounts.
 					arg("-o").arg("rawCounts.tsv").
 					arg("sample_Aligned.sortedByCoord.out.bam").
+					arg("-T").arg("4").
 					saveFile("rawCounts.tsv").
 					saveFile("rawCounts.tsv.summary"). // featureCounts qc
 					printErrStreamToStdout().
@@ -160,7 +162,7 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 		starReport: file.exportFile(starReport),
 		alignedBAM: bamFile,
 		featureCountsLog: featureCountsLog,
-		countsReport: countsReport,
+		countsReport: file.exportFile(countsReport),
 		countMatrixImport: countMatrixImport
 	}
 
