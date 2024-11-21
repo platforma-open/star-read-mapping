@@ -10,11 +10,11 @@ catalog:
   '@platforma-sdk/model': ^1.10.2
   '@platforma-sdk/ui-vue': ^1.10.4
   '@platforma-sdk/tengo-builder': ^1.17.3
-  '@platforma-sdk/workflow-tengo': ^2.2.0
+  '@platforma-sdk/workflow-tengo': ^2.2.1
 
   "@platforma-sdk/test": ^1.10.4
   '@milaboratories/graph-maker': ^1.0.26
-  '@milaboratories/software-pframes-conv': ^2.0.3
+  '@milaboratories/software-pframes-conv': ^2.0.4
   '@platforma-open/milaboratories.software-small-binaries': ^1.14.6
   '@platforma-open/milaboratories.software-subread': ^1.0.0
   '@platforma-open/milaboratories.software-star': ^1.0.1

@@ -2,6 +2,7 @@ ll := import("@platforma-sdk/workflow-tengo:ll")
 
 getColumns := func(blockId, species) {
   return {
+    "commentLinePrefix": "#",
     "axes": [
       {
         "column": "Geneid",
