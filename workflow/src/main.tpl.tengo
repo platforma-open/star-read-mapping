@@ -61,7 +61,6 @@ wf.body(func(args) {
 
 
 	species := args.species
-	libraryType := args.libraryType
 	strandness := args.strandness
 
 	pfconvParams := pfconvParamsLib.getColumns(blockId, species)
@@ -97,7 +96,6 @@ wf.body(func(args) {
 		{
 			blockId: blockId,
 			species: species,
-			libraryType: libraryType,
 			strandness: strandness,
 			fileExtension: fileExtension
 		}

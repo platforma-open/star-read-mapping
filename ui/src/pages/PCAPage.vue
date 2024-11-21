@@ -48,13 +48,3 @@ const settings = {
     <graph-maker v-model="settings" :pFrame="app.model.outputs.pcaPf" />
   </div>
 </template>
-
-
-<style lang="css">
-.container {
-  margin-top: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-</style>

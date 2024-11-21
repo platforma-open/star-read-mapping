@@ -24,7 +24,6 @@ self.body(func(inputs) {
 	blockId := inputs.blockId
 	species := inputs.species
 	fileExtension := inputs.fileExtension
-	libraryType := inputs.libraryType
 	strandness := inputs.strandness
 
 
@@ -64,16 +63,21 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 		filesByRIndex[r] = inputFile
 	}
 
-	for rIndex in ["I1", "I2", "R1", "R2"] {
+	nReads := 0
+
+	for rIndex in ["R1", "R2"] {
 		inputFile := filesByRIndex[rIndex]
 		if is_undefined(inputFile) {
 			continue
 		}
+		nReads = nReads + 1
 		fileName := "input_" + rIndex + "." + fileExtension
 		ll.print("print fileName in loop", fileName)
 		star.addFile(fileName, inputFile).
 			arg(fileName)
 	}
+
+	ll.assert(nReads != 0, "No R read indexes")
 
 	star = star.
 			arg("--readFilesCommand").arg("gunzip -c").
@@ -101,7 +105,7 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 					arg("-s").arg(strandness).
 					arg("-a").arg("annotations.gtf")
 
-	if libraryType == "PairedEnd" {
+	if nReads == 2 {
 		featureCounts = featureCounts.arg("-p")
 	}
 

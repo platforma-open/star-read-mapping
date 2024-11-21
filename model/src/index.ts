@@ -24,11 +24,6 @@ export type BlockArgs = {
   species?: "homo-sapiens" | "mus-musculus" | "saccharomyces-cerevisiae";
 
   /**
-   * Library settings
-   */
-  libraryType?: "SingleEnd" | "PairedEnd";
-
-  /**
    * Strandness settings
    */
   strandness?: "0" | "1" | "2";
@@ -42,11 +37,10 @@ export type BlockArgs = {
 //   libraryTypeOptions?: string;
 // };
 
-export const model = BlockModel.create<BlockArgs>()
+export const model = BlockModel.create()
 
-  .initialArgs({
+  .withArgs<BlockArgs>({
     species: "homo-sapiens",
-    libraryType: "SingleEnd",
     strandness: "0",
   })
 

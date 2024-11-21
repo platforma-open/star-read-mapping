@@ -5,9 +5,10 @@ import {
   PlAgOverlayLoading,
   PlAgOverlayNoRows,
   PlBlockPage,
-  PlBtnPrimary,
+  PlBtnGhost,
   PlDropdown,
   PlDropdownRef,
+  PlMaskIcon24,
   PlSlideModal
 } from "@platforma-sdk/ui-vue";
 
@@ -31,11 +32,6 @@ const data = reactive<{
   sampleReportOpen: false,
   selectedSample: undefined,
 })
-
-const inputOptions = [
-  { text: "Single-end", value: "SingleEnd" },
-  { text: "Paired-end", value: "PairedEnd" },
-];
 
 const inputOptionsStr = [
   { text: "Unstranded", value: "0" },
@@ -128,7 +124,12 @@ const gridOptions: GridOptions = {
   <PlBlockPage>
     <template #title>STAR Read Mapping</template>
     <template #append>
-      <PlBtnPrimary :icon="'settings-2'" @click.stop="() => data.settingsOpen = true">Settings</PlBtnPrimary>
+      <PlBtnGhost @click.stop="() => data.settingsOpen = true">
+        Settings
+        <template #append>
+          <PlMaskIcon24 name="settings" />
+        </template>
+      </PlBtnGhost>
     </template>
 
     <AgGridVue :theme="AgGridTheme" :style="{ height: '100%' }" @grid-ready="onGridReady" :rowData="results"
@@ -144,7 +145,6 @@ const gridOptions: GridOptions = {
       clearable />
 
     <PlDropdown :options="speciesOptions" v-model="app.model.args.species" label="Select species" />
-    <PlDropdown :options="inputOptions" v-model="app.model.args.libraryType" label="Select library type" />
     <PlDropdown :options="inputOptionsStr" v-model="app.model.args.strandness" label="Select strandness" />
 
   </PlSlideModal>
