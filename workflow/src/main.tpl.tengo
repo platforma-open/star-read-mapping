@@ -173,7 +173,8 @@ wf.body(func(args) {
 				kind: "PColumn",
 				name: "countMatrix",
 				domain: {
-					"pl7.app/blockId": blockId
+					"pl7.app/blockId": blockId,
+					"pl7.app/species": species
 				},
 				valueType: "Double",
 				annotations: {
