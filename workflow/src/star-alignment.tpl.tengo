@@ -123,38 +123,11 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 
 	featureCountsLog := featureCounts.getStdoutStream()
 	countsReport := featureCounts.getFile("rawCounts.tsv.summary")
-
-	// From tsv to PColumn for rawCount
-	// How the tsv looks
-	// # some featureCounts command info
-	// Geneid				Chr	Start		End		Strand	Length	sample_Aligned.sortedByCoord.out.bam
-	// ENSMUSG00000104478	1	108344807	108347562	+	2756	0
-	// ...
-
-	// Modifying tsv
-	// Geneid	sample_Aligned.sortedByCoord.out.bam
-	// ENSMUSG00000104478	0
-	// ...
-
 	outputFeatureCounts := featureCounts.getFile("rawCounts.tsv")
-
-	// formatCountMatrix := exec.builder().
-	// 						cmd("/usr/bin/env").
-	// 						arg("bash").
-	// 						arg("-c").
-	// 						//arg("cut -f 1,7 rawCounts.tsv > cleanRawCounts.tsv").
-	// 						arg("sed '1d' rawCounts.tsv | cut -f 1,7 > cleanRawCounts.tsv").
-	// 						addFile("rawCounts.tsv", outputFeatureCounts).
-	// 						saveFile("cleanRawCounts.tsv").
-	// 						printErrStreamToStdout().
-	// 						saveStdoutContent().
-	// 						cache(24 * 60 * 60 * 1000).
-	// 						run()
-
 
 	tsvImportParams := pfconvParamsLib.getColumns(blockId, species)
 	countMatrixImport := xsv.importFile(featureCounts.getFile("rawCounts.tsv"), "tsv", tsvImportParams, { dataOnly: true })
-	//countMatrixImport := xsv.importFile(formatCountMatrix.getFile("cleanRawCounts.tsv"), "tsv", tsvImportParams, { dataOnly: true })
+
 	// PFrame
 	//   rawCounts.data
 	//   rawCounts.spec
