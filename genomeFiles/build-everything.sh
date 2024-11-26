@@ -7,5 +7,6 @@ JSON_FILE="${1}"
 
 jq -r 'keys[]' "${JSON_FILE}" | 
     while read -r species; do
-        ./run_star_index.sh "${species}" ./genomeFileUrls.json "./indexed_genome/${species}"
+         export PARENT_SCRIPT_PATH=$(dirname "$(realpath "$0")")
+        ./run_star_index.sh "${species}" ./genomeFileLocal.json "./indexed_genome/${species}"
     done
