@@ -35,6 +35,7 @@
           "type": "asset",
           "registry": "platforma-open",
           "root": "./indexed_genome/Mus_musculus"
+        }
       }
     }
   },
