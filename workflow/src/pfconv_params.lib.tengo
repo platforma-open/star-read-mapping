@@ -14,7 +14,8 @@ getColumns := func(blockId, species) {
             "pl7.app/species": species
           },
           "annotations": {
-            "pl7.app/label": "Ensembl Id"
+            "pl7.app/label": "Ensembl Id",
+            "pl7.app/axisNature": "heterogeneous"
           }
         }
       }
