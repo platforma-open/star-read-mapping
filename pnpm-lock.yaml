@@ -40,8 +40,8 @@ catalogs:
       specifier: ^1.0.0
       version: 1.0.0
     '@platforma-open/milaboratories.star-read-mapping.genome-asset':
-      specifier: ^1.1.2
-      version: 1.1.2
+      specifier: ^1.1.4
+      version: 1.1.4
     '@platforma-sdk/block-tools':
       specifier: ^2.3.25
       version: 2.3.25
@@ -203,7 +203,7 @@ importers:
         version: 1.0.0
       '@platforma-open/milaboratories.star-read-mapping.genome-asset':
         specifier: 'catalog:'
-        version: 1.1.2
+        version: 1.1.4
       '@platforma-sdk/tengo-builder':
         specifier: 'catalog:'
         version: 1.17.3
@@ -1001,8 +1001,8 @@ packages:
   '@platforma-open/milaboratories.software-subread@1.0.0':
     resolution: {integrity: sha512-UnIWO6J0/9fkcvPjpW6Z61TQlbA9eJxsapL0vPUpNtTZqeaRROUE4SepJ9O48PkrI47kScdKnYSHc/Y91NBocg==}
 
-  '@platforma-open/milaboratories.star-read-mapping.genome-asset@1.1.2':
-    resolution: {integrity: sha512-3Lbw1geMCTbA9f8SQWOjSL6KW3CSE0Ob0R9YrSi24ot/q3eGW8BvY3434wCEYGhFt34bqRqRI2yApe7d917lUw==}
+  '@platforma-open/milaboratories.star-read-mapping.genome-asset@1.1.4':
+    resolution: {integrity: sha512-T0TEk3YuV5LZta4XTXWLM6T9N4reW5+rEtOo4sDrAiu2g8IyDLz5B6BBsTF66GqD/dc/cffFCvbJ5M+sKKAp9Q==}
 
   '@platforma-sdk/block-tools@2.3.25':
     resolution: {integrity: sha512-U908yTA6HM21pdZnOwumEQ2uSPzmbih/dMZI/VcqmNEGgnNf9nMyDomTffLLTkAb2xGWMLIm0DR3qZUsevVKXg==}
@@ -5839,7 +5839,7 @@ snapshots:
 
   '@platforma-open/milaboratories.software-subread@1.0.0': {}
 
-  '@platforma-open/milaboratories.star-read-mapping.genome-asset@1.1.2': {}
+  '@platforma-open/milaboratories.star-read-mapping.genome-asset@1.1.4': {}
 
   '@platforma-sdk/block-tools@2.3.25':
     dependencies:
