@@ -43,6 +43,7 @@ const speciesOptions = [
   { text: "Homo sapiens (GRCh38)", value: "homo-sapiens" },
   { text: "Mus musculus (GRCm39)", value: "mus-musculus" },
   { text: "Saccharomyces cerevisiae (R64-1-1)", value: "saccharomyces-cerevisiae" },
+  { text: "Test genome (v1)", value: "test-species" },
 ];
 
 
