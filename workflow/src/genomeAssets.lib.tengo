@@ -13,11 +13,12 @@ getGenomeAsset := func(species) {
     // chickenAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:gallus-gallus")
     // cowAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:bos-taurus")
     // pigAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:sus_scrofa")
+    testAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:test-species")
 
     GenomeAssetsMap := ll.toStrict({
         "saccharomyces-cerevisiae": yeastAssets,
         // "homo-sapiens": humanAssets,
-        "mus-musculus": mouseAssets//,
+        "mus-musculus": mouseAssets,
         // "rattus-norvegicus": ratAssets,
         // "danio-rerio": zebrafishAssets,
         // "drosophila-melanogaster": fruitFlyAssets,
@@ -25,7 +26,8 @@ getGenomeAsset := func(species) {
         // "caenorhabditis-elegans": nematodeAssets,
         // "gallus-gallus": chickenAssets,
         // "bos-taurus": cowAssets,
-        // "sus_scrofa": pigAssets
+        // "sus_scrofa": pigAssets,
+        "test-species": testAssets
     })
 
     genomeAssets := GenomeAssetsMap[species]
