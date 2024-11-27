@@ -36,6 +36,7 @@
           "registry": "platforma-open",
           "root": "./indexed_genome/Mus_musculus"
       }
+    }
   },
   "license": "UNLICENSED",
   "devDependencies": {
