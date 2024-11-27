@@ -69,11 +69,11 @@ LOCAL_GTF_FILE=$(jq -r --arg species "$SPECIES" '.[$species].local_gtf_file' ${P
 
 # We always should have either urls or local files
 if [[ "$LOCAL_GENOME_FILE" != "null" && "$LOCAL_GTF_FILE" != "null" ]];then
-  echo "Found local files."
+  echo "Found local files: ${SPECIES}"
   LOCAL_FILES="true"
   REMOTE_FILES=""
 elif [[ "$GENOME_URL" != "null" && "$GTF_URL" != "null" ]];then
-  echo "Found url files"
+  echo "Found url files: ${SPECIES}"
   REMOTE_FILES="true"
   LOCAL_FILES=""
 else

@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.star-read-mapping.genome-asset",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "STAR indexed genome references",
   "scripts": {
     "build-skip": "echo 'This is fake build script for CI optimization'",
@@ -22,6 +22,20 @@
           "registry": "platforma-open",
           "root": "./indexed_genome/Test_species"
         }
+      },
+      "saccharomyces-cerevisiae": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "root": "./indexed_genome/Saccharomyces_cerevisiae"
+        }
+      },
+      "mus-musculus": {
+        "asset": {
+          "type": "asset",
+          "registry": "platforma-open",
+          "root": "./indexed_genome/Mus_musculus"
+        }
       }
     }
   },
@@ -35,6 +49,7 @@
         "asset": {
           "type": "asset",
           "registry": "platforma-open",
+	  "version": "1.0.0",
           "root": "./indexed_genome/Test_species"
         }
       },
