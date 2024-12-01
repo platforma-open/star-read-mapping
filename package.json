@@ -22,7 +22,7 @@
       "ui": "@platforma-open/milaboratories.star-read-mapping.ui/dist"
     },
     "meta": {
-      "title": "STAR read mapping",
+      "title": "STAR Read Mapping",
       "logo": "file:logos/block-logo.png",
       "url": "https://github.com/platforma/block-star-read-mapping",
       "docs": "https://github.com/platforma/block-star-read-mapping/docs",
