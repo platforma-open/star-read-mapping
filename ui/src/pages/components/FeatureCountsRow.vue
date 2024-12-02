@@ -18,22 +18,22 @@ const parts = computed(() => {
 
   return [
     {
-      color: 'green',
+      color: '#6BD67D',
       value: report?.assigned,
       label: "Assigned",
     },
     {
-      color: 'blue',
+      color: '#B8397A',
       value: report?.unassignedMappingQuality,
       label: "Unassigned: Mapping Quality",
     },
     {
-      color: 'orange',
+      color: '#E75B64',
       value: report?.unassignedNoFeatures,
       label: "Unassigned: No Features",
     },
     {
-      color: 'red',
+      color: '#FB9361',
       value: report?.unassignedAmbiguity,
       label: "Unassigned: Ambiguity",
     }

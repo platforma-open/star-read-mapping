@@ -4,6 +4,7 @@ import {
   AgGridTheme,
   PlAgOverlayLoading,
   PlAgOverlayNoRows,
+  PlAgTextAndButtonCell,
   PlBlockPage,
   PlBtnGhost,
   PlDropdown,
@@ -17,6 +18,7 @@ import { ColDef, GridApi, GridOptions, GridReadyEvent, ModuleRegistry } from '@a
 import { computed, reactive, shallowRef } from "vue";
 import { useApp } from "../app";
 import AlignmentStatsCell from './AlignmentStatsCell.vue';
+import ProgressCell from './components/ProgressCell.vue';
 import FeatureCountsStatsCell from './FeatureCountsStatsCell.vue';
 import ReportPanel from './ReportPanel.vue';
 import { resultMap } from './results';
@@ -73,35 +75,56 @@ const onGridReady = (params: GridReadyEvent) => {
   gridApi.value = params.api;
 };
 
+const defaultColDef: ColDef = {
+  suppressHeaderMenuButton: true,
+  lockPinned: true,
+  sortable: false
+};
+
 const columnDefs: ColDef[] = [
   {
     colId: 'label',
     field: 'sampleLabel',
-    headerName: "Sample"
+    headerName: 'Sample',
+    pinned: 'left',
+    lockPinned: true,
+    sortable: true,
+    cellRenderer: PlAgTextAndButtonCell,
+    cellRendererParams: {
+      invokeRowsOnDoubleClick: true
+    }
   },
   {
     colId: 'star',
     field: 'star',
-    // cellRenderer: 'ProgressCell',
-    headerName: "Star progress"
-  },
-  {
-    colId: 'subread',
-    field: 'subread',
-    // cellRenderer: 'AlignmentStatsCell',
-    headerName: "Feature counts",
+    cellRenderer: ProgressCell,
+    headerName: 'STAR Progress',
+    cellStyle: {
+      '--ag-cell-horizontal-padding': '0px',
+      '--ag-cell-vertical-padding': '0px'
+    },
   },
   {
     colId: 'starQc',
     field: 'starQc',
     headerName: 'Read alignment',
-    cellRenderer: 'AlignmentStatsCell'
+    cellRenderer: 'AlignmentStatsCell',
+    cellStyle: {
+      '--ag-cell-horizontal-padding': '0px',
+      '--ag-cell-vertical-padding': '0px'
+    },
+    flex: 1,
   },
   {
     colId: 'featureCountsQc',
     field: 'featureCountsQc',
     headerName: 'Features assigned',
-    cellRenderer: 'FeatureCountsStatsCell'
+    cellRenderer: FeatureCountsStatsCell,
+    cellStyle: {
+      '--ag-cell-horizontal-padding': '0px',
+      '--ag-cell-vertical-padding': '0px'
+    },
+    flex: 1,
   }
 ];
 
@@ -113,7 +136,9 @@ const gridOptions: GridOptions = {
   },
   components: {
     AlignmentStatsCell,
-    FeatureCountsStatsCell
+    FeatureCountsStatsCell,
+    PlAgTextAndButtonCell,
+    ProgressCell
     //     ProgressCell,
     //     ChainsStatsCell
   }
@@ -135,7 +160,8 @@ const gridOptions: GridOptions = {
 
     <AgGridVue :theme="AgGridTheme" :style="{ height: '100%' }" @grid-ready="onGridReady" :rowData="results"
       :columnDefs="columnDefs" :grid-options="gridOptions" :loadingOverlayComponentParams="{ notReady: true }"
-      :loadingOverlayComponent=PlAgOverlayLoading :noRowsOverlayComponent=PlAgOverlayNoRows />
+      :defaultColDef="defaultColDef" :loadingOverlayComponent=PlAgOverlayLoading
+      :noRowsOverlayComponent=PlAgOverlayNoRows />
 
 
   </PlBlockPage>

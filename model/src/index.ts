@@ -4,11 +4,12 @@ import {
   InferOutputsType,
   isPColumn,
   isPColumnSpec,
-  Ref,
+  parseResourceMap,
+  PlRef,
   ValueType,
 } from "@platforma-sdk/model";
-import { parseResourceMap } from "./helpers";
 
+import { GraphMakerState } from "@milaboratories/graph-maker/dist/GraphMaker/types";
 /**
  * Block arguments coming from the user interface
  */
@@ -16,7 +17,7 @@ export type BlockArgs = {
   /**
    * Reference to the fastq data
    */
-  ref?: Ref;
+  ref?: PlRef;
 
   /**
    * Species settings
@@ -27,21 +28,32 @@ export type BlockArgs = {
    * Strandness settings
    */
   strandness?: "0" | "1" | "2";
+
+  /**
+   * Block title
+   */
+  title?: string;
 };
 
-// /**
-//  * UI state
-//  */
-// export type UiState = {
-//   // selected chain
-//   libraryTypeOptions?: string;
-// };
+/**
+ * UI state
+ */
+export type UiState = {
+  pcaGraphState: GraphMakerState;
+};
 
 export const model = BlockModel.create()
 
   .withArgs<BlockArgs>({
     species: "homo-sapiens",
     strandness: "0",
+  })
+
+  .withUiState<UiState>({
+    pcaGraphState: {
+      template: "dots",
+      title: "Principal Components Analysis",
+    },
   })
 
   /**
@@ -151,6 +163,8 @@ export const model = BlockModel.create()
     return wf.createPFrame(pCols);
   })
 
+  .output("isRunning", (ctx) => ctx.outputs?.getIsReadyOrError() === false)
+
   .output("pcaPf", (wf) => {
     //return wf.outputs?.resolve("pf")?.resolve("rawCounts.data")?.listInputFields()
     const pCols = wf.outputs?.resolve("pcaComponents")?.getPColumns();
@@ -183,6 +197,12 @@ export const model = BlockModel.create()
     { type: "link", href: "/PCA", label: "Principal Component Analysis" },
     //    { type: "link", href: "/HC", label: "Hierarchical Clustering" },
   ])
+
+  .title((ctx) =>
+    ctx.args.title
+      ? `STAR Read Mapping - ${ctx.args.title}`
+      : "STAR Read Mapping "
+  )
 
   .done();
 

@@ -13,46 +13,46 @@ const props = defineProps<{
 
 const parts = computed(() => {
   const report = props.alignReport;
-  console.log(report);
+  // console.log(report);
   if (!report) return [];
 
   return [
     {
-      color: 'grey',
-      value: report?.numberOfInputReads - 
-              report?.uniquelyMapped -
-              report?.mappedMultipleLoci -
-              report?.mappedTooManyLoci -
-              report?.unmappedTooShort - 
-              report?.unmappedOther
-              ,
-      label: "Other",
-    },
-    {
-      color: 'green',
+      color: '#6BD67D',
       value: report?.uniquelyMapped,
       label: "Uniquely mapped",
     },
     {
-      color: 'blue',
+      color: '#B8397A',
       value: report?.mappedMultipleLoci,
       label: "Mapped to multiple loci",
     },
     {
-      color: 'orange',
+      color: '#FEBF51',
       value: report?.mappedTooManyLoci,
       label: "Mapped to too many loci",
     },
     {
-      color: 'red',
+      color: '#E75B64',
       value: report?.unmappedTooShort,
       label: "Unmapped: too short",
     },
     {
-      color: 'purple',
+      color: '#FB9361',
       value: report?.unmappedOther,
       label: "Unmapped: other",
-    }
+    },
+    {
+      color: 'grey',
+      value: report?.numberOfInputReads -
+        report?.uniquelyMapped -
+        report?.mappedMultipleLoci -
+        report?.mappedTooManyLoci -
+        report?.unmappedTooShort -
+        report?.unmappedOther
+      ,
+      label: "Other",
+    },
   ];
 });
 const legends = computed(() => parts.value.map(p => ({

@@ -4,7 +4,7 @@ import AlignmentRow from './components/AlignmentRow.vue';
 import { StarQC } from './results';
 
 defineProps<{
-    params: ICellRendererParams<{starQc: StarQC}>;
+    params: ICellRendererParams<{ starQc: StarQC }>;
 }>();
 </script>
 

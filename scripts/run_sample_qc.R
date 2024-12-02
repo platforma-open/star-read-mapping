@@ -40,8 +40,14 @@ processRawCounts <- function(raw_counts_path, output_folder) {
   colData <- data.frame(row.names = colnames(countsDataWide))
   dds <- DESeqDataSetFromMatrix(countData = countsDataWide, colData = DataFrame(condition = rep("none", ncol(countsDataWide))), design = ~ 1)
   
-  # Perform variance stabilizing transformation without fitting to a design
-  vstData <- vst(dds, blind = TRUE)
+  # Check dataset size and choose transformation
+  if (nrow(countsDataWide) < 1000) {
+    cat("Dataset has less than 1000 genes. Using varianceStabilizingTransformation.\n")
+    vstData <- varianceStabilizingTransformation(dds, blind = TRUE)
+  } else {
+    cat("Dataset has 1000 or more genes. Using vst.\n")
+    vstData <- vst(dds, blind = TRUE)
+  }
   
   # PCA on the VST data
   pcaRes <- prcomp(t(assay(vstData)))

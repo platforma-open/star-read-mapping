@@ -79,8 +79,11 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 
 	ll.assert(nReads != 0, "No R read indexes")
 
+	if fileExtension == "fastq.gz" || fileExtension == "fq.gz" {
+		star = star.arg("--readFilesCommand").arg("gunzip -c")
+	}
+
 	star = star.
-			arg("--readFilesCommand").arg("gunzip -c").
 			arg("--outFileNamePrefix").arg("sample_").
 			arg("--runThreadN").arg("4").
 			saveFile("sample_Aligned.sortedByCoord.out.bam").
@@ -103,6 +106,7 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 					arg("-t").arg("exon").
 					arg("-g").arg("gene_id").
 					arg("-s").arg(strandness).
+					arg("-T").arg("4").
 					arg("-a").arg("annotations.gtf")
 
 	if nReads == 2 {
@@ -112,7 +116,6 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 	featureCounts = featureCounts.
 					arg("-o").arg("rawCounts.tsv").
 					arg("sample_Aligned.sortedByCoord.out.bam").
-					arg("-T").arg("4").
 					saveFile("rawCounts.tsv").
 					saveFile("rawCounts.tsv.summary"). // featureCounts qc
 					printErrStreamToStdout().

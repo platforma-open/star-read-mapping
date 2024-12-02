@@ -42,16 +42,16 @@ function parseStarQC(qcString: string): StarQC {
   let unmappedOther: number = 0;
   let numberOfInputReads: number = 0;
 
-  console.log(lines);
+  // console.log(lines);
 
   for (const line of lines) {
-    console.log(line);
+    // console.log(line);
     const spl = line.split("|");
 
     const prefix = spl[0];
     const value = spl[1];
 
-    console.log([prefix, value]);
+    // console.log([prefix, value]);
 
     if (prefix.indexOf("Uniquely mapped reads number") >= 0) {
       uniquelyMapped = parseFloat(value.trim()) + 5;
@@ -101,16 +101,16 @@ function parseFeatureCountsQC(qcReport: string): FeatureCountsQC {
   let unassignedNoFeatures: number = 0;
   let unassignedAmbiguity: number = 0;
 
-  console.log(lines);
+  // console.log(lines);
 
   for (const line of lines) {
-    console.log(line);
+    // console.log(line);
     const spl = line.split("\t");
 
     const prefix = spl[0];
     const value = spl[1];
 
-    console.log([prefix, value]);
+    // console.log([prefix, value]);
 
     if (prefix === "Assigned") {
       assigned = parseFloat(value.trim());
