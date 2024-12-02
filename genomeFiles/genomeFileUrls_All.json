@@ -1,8 +1,8 @@
 {
-  "  Test_species": {
-    "  assembly_version": "Assembly_v1",
-    "  read_length": "75",
-    "  genomeSAindexNbases": "8",
+    "Test_species": {
+      "assembly_version": "Assembly_v1",
+      "read_length": "75",
+      "genomeSAindexNbases": "8",
       "local_genome_file": "testGenomeFiles/synthetic_genome.fasta",
       "local_gtf_file": "testGenomeFiles/synthetic_annotation.gtf"
     },
