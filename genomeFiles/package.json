@@ -1,5 +1,5 @@
 {
-  "name": "@platforma-open/milaboratories.star-read-mapping.genome-asset",
+  "name": "@platforma-open/milaboratories.star-read-mapping.genome-assets",
   "version": "1.1.5",
   "description": "STAR indexed genome references",
   "scripts": {
