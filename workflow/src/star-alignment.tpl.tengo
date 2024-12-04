@@ -1,22 +1,25 @@
 self := import("@platforma-sdk/workflow-tengo:tpl")
-pConstants := import("@platforma-sdk/workflow-tengo:pframes.constants")
-exec := import("@platforma-sdk/workflow-tengo:exec")
-file := import("@platforma-sdk/workflow-tengo:file")
-pframes := import("@platforma-sdk/workflow-tengo:pframes")
+
 json := import("json")
+
 ll := import("@platforma-sdk/workflow-tengo:ll")
 xsv := import("@platforma-sdk/workflow-tengo:pframes.xsv")
-pfconvParamsLib := import(":pfconv_params")
+exec := import("@platforma-sdk/workflow-tengo:exec")
+file := import("@platforma-sdk/workflow-tengo:file")
 assets := import("@platforma-sdk/workflow-tengo:assets")
-genomeAssetsLib := import(":genomeAssets")
+pframes := import("@platforma-sdk/workflow-tengo:pframes")
+pConstants := import("@platforma-sdk/workflow-tengo:pframes.constants")
+
+genomes := import(":genomes")
+pfCountsConv := import(":pf-counts-conv")
 
 
 self.defineOutputs("starLog",
-					"starReport",
-					"alignedBAM",
-					"featureCountsLog",
-					"countsReport",
-					"countMatrixImport")
+	"starReport",
+	"alignedBAM",
+	"featureCountsLog",
+	"countsReport",
+	"countMatrixImport")
 
 
 self.body(func(inputs) {
@@ -26,32 +29,30 @@ self.body(func(inputs) {
 	fileExtension := inputs.fileExtension
 	strandness := inputs.strandness
 
-
-//genomeAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-asset:saccharomyces-cerevisiae")
-genomeAssets := genomeAssetsLib.getGenomeAsset(species)
+	genomeAssets := genomes.getGenomeAsset(species)
 
 	star:= exec.builder().
-			software(assets.importSoftware("@platforma-open/milaboratories.software-star:star")).
-			mkDir("genomeIndex").
-			addAsset(genomeAssets, "genomeIndex", ["chrLength.txt"]).
-			addAsset(genomeAssets, "genomeIndex", ["chrName.txt"]).
-			addAsset(genomeAssets, "genomeIndex", ["chrNameLength.txt"]).
-			addAsset(genomeAssets, "genomeIndex", ["chrStart.txt"]).
-			addAsset(genomeAssets, "genomeIndex", ["exonGeTrInfo.tab"]).
-			addAsset(genomeAssets, "genomeIndex", ["exonInfo.tab"]).
-			addAsset(genomeAssets, "genomeIndex", ["geneInfo.tab"]).
-			addAsset(genomeAssets, "genomeIndex", ["Genome"]).
-			addAsset(genomeAssets, "genomeIndex", ["genomeParameters.txt"]).
-			//addAsset(genomeAssets, "genomeIndex", ["Log.out"]).
-			addAsset(genomeAssets, "genomeIndex", ["SA"]).
-			addAsset(genomeAssets, "genomeIndex", ["SAindex"]).
-			addAsset(genomeAssets, "genomeIndex", ["sjdbInfo.txt"]).
-			addAsset(genomeAssets, "genomeIndex", ["sjdbList.fromGTF.out.tab"]).
-			addAsset(genomeAssets, "genomeIndex", ["sjdbList.out.tab"]).
-			addAsset(genomeAssets, "genomeIndex", ["transcriptInfo.tab"]).
-			arg("--genomeDir").arg("genomeIndex").
-			arg("--outSAMtype").arg("BAM").arg("SortedByCoordinate").
-			arg("--readFilesIn")
+		software(assets.importSoftware("@platforma-open/milaboratories.software-star:star")).
+		mkDir("genomeIndex").
+		addAsset(genomeAssets, "genomeIndex", ["chrLength.txt"]).
+		addAsset(genomeAssets, "genomeIndex", ["chrName.txt"]).
+		addAsset(genomeAssets, "genomeIndex", ["chrNameLength.txt"]).
+		addAsset(genomeAssets, "genomeIndex", ["chrStart.txt"]).
+		addAsset(genomeAssets, "genomeIndex", ["exonGeTrInfo.tab"]).
+		addAsset(genomeAssets, "genomeIndex", ["exonInfo.tab"]).
+		addAsset(genomeAssets, "genomeIndex", ["geneInfo.tab"]).
+		addAsset(genomeAssets, "genomeIndex", ["Genome"]).
+		addAsset(genomeAssets, "genomeIndex", ["genomeParameters.txt"]).
+		//addAsset(genomeAssets, "genomeIndex", ["Log.out"]).
+		addAsset(genomeAssets, "genomeIndex", ["SA"]).
+		addAsset(genomeAssets, "genomeIndex", ["SAindex"]).
+		addAsset(genomeAssets, "genomeIndex", ["sjdbInfo.txt"]).
+		addAsset(genomeAssets, "genomeIndex", ["sjdbList.fromGTF.out.tab"]).
+		addAsset(genomeAssets, "genomeIndex", ["sjdbList.out.tab"]).
+		addAsset(genomeAssets, "genomeIndex", ["transcriptInfo.tab"]).
+		arg("--genomeDir").arg("genomeIndex").
+		arg("--outSAMtype").arg("BAM").arg("SortedByCoordinate").
+		arg("--readFilesIn")
 
 	filesByRIndex := {}
 	for sKey, inputFile in inputData.inputs() {
@@ -83,15 +84,16 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 		star = star.arg("--readFilesCommand").arg("gunzip -c")
 	}
 
+
 	star = star.
-			arg("--outFileNamePrefix").arg("sample_").
-			arg("--runThreadN").arg("4").
-			saveFile("sample_Aligned.sortedByCoord.out.bam").
-			saveFile("sample_Log.final.out").
-			printErrStreamToStdout().
-			saveStdoutContent().
-			cache(24 * 60 * 60 * 1000).
-			run()
+		arg("--outFileNamePrefix").arg("sample_").
+		arg("--runThreadN").arg("4").
+		saveFile("sample_Aligned.sortedByCoord.out.bam").
+		saveFile("sample_Log.final.out").
+		printErrStreamToStdout().
+		saveStdoutContent().
+		cache(24 * 60 * 60 * 1000).
+		run()
 
 
 	starLog := star.getStdoutStream()
@@ -100,35 +102,36 @@ genomeAssets := genomeAssetsLib.getGenomeAsset(species)
 
 	// Calculate counts from BAM file
 	featureCounts:= exec.builder().
-					software(assets.importSoftware("@platforma-open/milaboratories.software-subread:featureCounts")).
-					addFile("sample_Aligned.sortedByCoord.out.bam", bamFile).
-					addAsset(genomeAssets, ".", ["annotations.gtf"]).
-					arg("-t").arg("exon").
-					arg("-g").arg("gene_id").
-					arg("-s").arg(strandness).
-					arg("-T").arg("4").
-					arg("-a").arg("annotations.gtf")
+		software(assets.importSoftware("@platforma-open/milaboratories.software-subread:featureCounts")).
+		addFile("sample_Aligned.sortedByCoord.out.bam", bamFile).
+		addAsset(genomeAssets, ".", ["annotations.gtf"]).
+		arg("-t").arg("exon").
+		arg("-g").arg("gene_id").
+		arg("-s").arg(strandness).
+		arg("-T").arg("4").
+		arg("-a").arg("annotations.gtf")
 
 	if nReads == 2 {
 		featureCounts = featureCounts.arg("-p")
 	}
 
 	featureCounts = featureCounts.
-					arg("-o").arg("rawCounts.tsv").
-					arg("sample_Aligned.sortedByCoord.out.bam").
-					saveFile("rawCounts.tsv").
-					saveFile("rawCounts.tsv.summary"). // featureCounts qc
-					printErrStreamToStdout().
-					saveStdoutContent().
-					cache(24 * 60 * 60 * 1000).
-					run()
+		arg("-o").arg("rawCounts.tsv").
+		arg("sample_Aligned.sortedByCoord.out.bam").
+		saveFile("rawCounts.tsv").
+		saveFile("rawCounts.tsv.summary"). // featureCounts qc
+		printErrStreamToStdout().
+		saveStdoutContent().
+		cache(24 * 60 * 60 * 1000).
+		run()
 
 
 	featureCountsLog := featureCounts.getStdoutStream()
 	countsReport := featureCounts.getFile("rawCounts.tsv.summary")
 	outputFeatureCounts := featureCounts.getFile("rawCounts.tsv")
 
-	tsvImportParams := pfconvParamsLib.getColumns(blockId, species)
+	tsvImportParams := pfCountsConv.getColumns(blockId, species)
+
 	countMatrixImport := xsv.importFile(featureCounts.getFile("rawCounts.tsv"), "tsv", tsvImportParams, { dataOnly: true })
 
 	// PFrame

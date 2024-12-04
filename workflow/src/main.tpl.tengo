@@ -32,17 +32,19 @@
 //
 
 wf := import("@platforma-sdk/workflow-tengo:workflow")
+
 ll := import("@platforma-sdk/workflow-tengo:ll")
-render := import("@platforma-sdk/workflow-tengo:render")
-file := import("@platforma-sdk/workflow-tengo:file")
-llPFrames := import("@platforma-sdk/workflow-tengo:pframes.ll")
-pfconvParamsLib := import(":pfconv_params")
-assets := import("@platforma-sdk/workflow-tengo:assets")
-pframes := import("@platforma-sdk/workflow-tengo:pframes")
-pUtil := import("@platforma-sdk/workflow-tengo:pframes.util")
 xsv := import("@platforma-sdk/workflow-tengo:pframes.xsv")
 exec := import("@platforma-sdk/workflow-tengo:exec")
-pcaPfconvParamsLib := import(":pcaPfconv_params")
+file := import("@platforma-sdk/workflow-tengo:file")
+pSpec := import("@platforma-sdk/workflow-tengo:pframes.spec")
+render := import("@platforma-sdk/workflow-tengo:render")
+assets := import("@platforma-sdk/workflow-tengo:assets")
+pframes := import("@platforma-sdk/workflow-tengo:pframes")
+llPFrames := import("@platforma-sdk/workflow-tengo:pframes.ll")
+
+genomes := import(":genomes")
+pfPcaConv := import(":pf-pca-conv")
 
 starAlignmentTpl := assets.importTemplate(":star-alignment")
 
@@ -59,12 +61,9 @@ wf.body(func(args) {
 	input := args.resolvedInput
 	inputSpec := input.spec
 
-
 	species := args.species
 	strandness := args.strandness
-
-	pfconvParams := pfconvParamsLib.getColumns(blockId, species)
-
+	
 	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
 
 	aggregationTargets := [{
@@ -102,53 +101,53 @@ wf.body(func(args) {
 	)
 
 	pf := {
-			"rawCounts.spec":
-				{
-				kind: "PColumn",
-				name: "countMatrix",
-				domain: {
-					"pl7.app/blockId": blockId
-				},
-				valueType: "Double",
-				axesSpec: [
-					inputSpec.axesSpec[0],
-					{
-						"name": "pl7.app/rna-seq/geneId",
-						"type": "String",
-						"domain": {
-						"pl7.app/blockId": blockId,
-							"pl7.app/species": species
-						},
-						"annotations": {
-							"pl7.app/label": "Ensembl Id"
-						}
-					}
-				],
-				annotations: {"pl7.app/label": "Expression level"}
+		"rawCounts.spec":
+		{
+			kind: "PColumn",
+			name: "countMatrix",
+			domain: {
+				"pl7.app/blockId": blockId
 			},
-			"rawCounts.data": starResults.output("rawCounts")
-		}
-	
+			valueType: "Double",
+			axesSpec: [
+				inputSpec.axesSpec[0],
+				{
+					"name": "pl7.app/rna-seq/geneId",
+					"type": "String",
+					"domain": {
+						"pl7.app/blockId": blockId,
+						"pl7.app/species": species
+					},
+					"annotations": {
+						"pl7.app/label": "Ensembl Id"
+					}
+				}
+				],
+			annotations: {"pl7.app/label": "Expression level"}
+		},
+		"rawCounts.data": starResults.output("rawCounts")
+	}
+
 	// Convert pf to csv
 	csvCounts := xsv.exportFrame(pf, "csv", {})
 
 	// Run clustering QC on all samples
 	clusteringQC := exec.builder().
-					cmd("Rscript").
-					arg("/Users/poslavskysv/Projects/milab/platforma/blocks/star-read-mapping/scripts/run_sample_qc.R").
-					arg("rawCounts.csv").
-					arg(".").
-					addFile("rawCounts.csv", csvCounts).
-					saveFile("pca_results.csv").
-					saveFile("sample_distances.csv").
-					printErrStreamToStdout().
-					saveStdoutContent().
-					cache(24 * 60 * 60 * 1000).
-					run()
-	
-	PCAcsvImportParams := pcaPfconvParamsLib.getColumns(blockId, inputSpec)
+		cmd("Rscript").
+		arg("/Users/poslavskysv/Projects/milab/platforma/blocks/star-read-mapping/scripts/run_sample_qc.R").
+		arg("rawCounts.csv").
+		arg(".").
+		addFile("rawCounts.csv", csvCounts).
+		saveFile("pca_results.csv").
+		saveFile("sample_distances.csv").
+		printErrStreamToStdout().
+		saveStdoutContent().
+		cache(24 * 60 * 60 * 1000).
+		run()
+
+	PCAcsvImportParams := pfPcaConv.getColumns(blockId, inputSpec)
 	PCAComponents := xsv.importFile(clusteringQC.getFile("pca_results.csv"), "csv", PCAcsvImportParams)
-	
+
 	// HQtsvImportParams := hcPfconvParamsLib.getColumns(blockId, inputSpec)
 	// sampleDistances := xsv.importFile(clusteringQC.getFile("sample_distances.csv"), "tsv", HQtsvImportParams)
 
@@ -165,11 +164,15 @@ wf.body(func(args) {
 	}
 
 
+	sampleAxis := inputSpec.axesSpec[0]
+	trace := pSpec.makeTrace(inputSpec,
+		{type: "milaboratories.star-read-mapping", id: blockId, importance: 20, label: "STAR - " + genomes.getSpeciesName(species)}
+	)
+
 	// Count matrix export defined with sample from inputSpec + previous specs
 	exports := {
 		rawCount : {
-			spec:
-				{
+			spec: trace.inject({
 				kind: "PColumn",
 				name: "countMatrix",
 				domain: {
@@ -180,22 +183,22 @@ wf.body(func(args) {
 				annotations: {
 					"pl7.app/label": "Expression level",
 					"pl7.app/rna-seq/normalized": "false"
-					},
+				},
 				axesSpec: [
 					inputSpec.axesSpec[0],
 					{
 						"name": "pl7.app/rna-seq/geneId",
 						"type": "String",
 						"domain": {
-						"pl7.app/blockId": blockId,
+							"pl7.app/blockId": blockId,
 							"pl7.app/species": species
 						},
 						"annotations": {
 							"pl7.app/label": "Ensembl Id"
 						}
 					}
-				]
-			},
+					]
+			}),
 			data: starResults.output("rawCounts")
 		}//,
 		//alignedBAM: starResults.output("alignedBAM")

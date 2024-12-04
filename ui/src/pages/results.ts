@@ -84,7 +84,7 @@ function parseStarQC(qcString: string): StarQC {
     mappedMultipleLoci: mappedMultipleLoci,
     mappedTooManyLoci: mappedTooManyLoci,
     unmappedTooShort: unmappedTooShort,
-    unmappedOther: unmappedOther
+    unmappedOther: unmappedOther,
   };
 }
 
@@ -115,15 +115,15 @@ function parseFeatureCountsQC(qcReport: string): FeatureCountsQC {
     if (prefix === "Assigned") {
       assigned = parseFloat(value.trim());
     }
-  
+
     if (prefix === "Unassigned_MappingQuality") {
       unassignedMappingQuality = parseFloat(value.trim());
     }
-  
+
     if (prefix === "Unassigned_NoFeatures") {
       unassignedNoFeatures = parseFloat(value.trim());
     }
-  
+
     if (prefix === "Unassigned_Ambiguity") {
       unassignedAmbiguity = parseFloat(value.trim());
     }
@@ -133,7 +133,7 @@ function parseFeatureCountsQC(qcReport: string): FeatureCountsQC {
     assigned: assigned,
     unassignedMappingQuality: unassignedMappingQuality,
     unassignedNoFeatures: unassignedNoFeatures,
-    unassignedAmbiguity: unassignedAmbiguity
+    unassignedAmbiguity: unassignedAmbiguity,
   };
 }
 
@@ -152,13 +152,12 @@ export const resultMap = computed(
     if (featureCountsProgress === undefined) return undefined;
 
     const r: Record<string, ResultEntry> = {};
-    for (const id in labels) {
-      r[id] = {
-        sampleLabel: labels[id],
-      };
-    }
     for (const prog of starProgress.data) {
-      r[prog.key[0]].starProgress = prog.value;
+      const sampleId = prog.key[0];
+      r[sampleId] = {
+        sampleLabel: labels[sampleId],
+        starProgress: prog.value,
+      };
     }
 
     const starProgressLine = app.model.outputs.starProgressLine;

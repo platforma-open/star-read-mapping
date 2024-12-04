@@ -15,6 +15,7 @@ import {
 
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ColDef, GridApi, GridOptions, GridReadyEvent, ModuleRegistry } from '@ag-grid-community/core';
+import { PlRef } from '@platforma-sdk/model';
 import { computed, reactive, shallowRef } from "vue";
 import { useApp } from "../app";
 import AlignmentStatsCell from './AlignmentStatsCell.vue';
@@ -144,6 +145,19 @@ const gridOptions: GridOptions = {
   }
 };
 
+/* @deprecated Migrate to SDK method when will be published */
+function plRefsEqual(ref1: PlRef, ref2: PlRef) {
+  return ref1.blockId === ref2.blockId && ref1.name === ref2.name;
+}
+
+function setInput(inputRef?: PlRef) {
+  app.model.args.ref = inputRef;
+  if (inputRef)
+    app.model.args.title = app.model.outputs.dataOptions?.find(o => plRefsEqual(o.ref, inputRef))?.label
+  else
+    app.model.args.title = undefined;
+}
+
 </script>
 
 <template>
@@ -163,13 +177,12 @@ const gridOptions: GridOptions = {
       :defaultColDef="defaultColDef" :loadingOverlayComponent=PlAgOverlayLoading
       :noRowsOverlayComponent=PlAgOverlayNoRows />
 
-
   </PlBlockPage>
 
   <PlSlideModal v-model="data.settingsOpen">
     <template #title>Settings</template>
-    <PlDropdownRef :options="app.model.outputs.dataOptions ?? []" v-model="app.model.args.ref" label="Select dataset"
-      clearable />
+    <PlDropdownRef :options="app.model.outputs.dataOptions" v-model="app.model.args.ref" @update:model-value="setInput"
+      label="Select dataset" clearable />
 
     <PlDropdown :options="speciesOptions" v-model="app.model.args.species" label="Select species" />
     <PlDropdown :options="inputOptionsStr" v-model="app.model.args.strandness" label="Select strandness" />

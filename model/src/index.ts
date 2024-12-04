@@ -9,7 +9,7 @@ import {
   ValueType,
 } from "@platforma-sdk/model";
 
-import { GraphMakerState } from "@milaboratories/graph-maker/dist/GraphMaker/types";
+import { GraphMakerState } from "@milaboratories/graph-maker";
 /**
  * Block arguments coming from the user interface
  */
@@ -73,34 +73,18 @@ export const model = BlockModel.create()
     });
   })
 
-  .output("labels", (ctx): Record<string, string> | undefined => {
+  .output("labels", (ctx) => {
     const inputRef = ctx.args.ref;
     if (inputRef === undefined) return undefined;
 
-    const inputSpec = ctx.resultPool.getSpecByRef(inputRef);
-
+    const inputSpec = ctx.resultPool.getSpecByRef(inputRef); // @TODO use resultPool.getPColumnSpecByRef after updating SDK
     if (inputSpec === undefined || !isPColumnSpec(inputSpec)) return undefined;
 
-    const sampleLabelsObj = ctx.resultPool.findDataWithCompatibleSpec({
-      kind: "PColumn",
-      name: "pl7.app/label",
-      valueType: "String",
-      axesSpec: [inputSpec.axesSpec[0]], // samplesId axis
-      domain: inputSpec.domain,
-    });
+    const labels = ctx.findLabels(inputSpec.axesSpec[0]);
+    if (!labels) return undefined;
 
-    if (sampleLabelsObj.length === 0) return undefined;
-
-    // @TODO implement standard method for getting labels
-    const labels = Object.fromEntries(
-      Object.entries(
-        sampleLabelsObj[0].data.getDataAsJson<{
-          data: Record<string, string>;
-        }>().data
-      ).map((e) => [JSON.parse(e[0])[0], e[1]])
-    ) satisfies Record<string, string>;
-
-    return labels;
+    // @TODO change to return labels after next SDK update.
+    return Object.fromEntries(labels);
   })
 
   /**
@@ -144,13 +128,14 @@ export const model = BlockModel.create()
       false
     );
   })
+
   .output("featureCountsQc", (wf) =>
     parseResourceMap(
       wf.outputs?.resolve("featureCountsQc"),
       (acc) => acc.getFileContentAsString(),
       false
     )
-  ) // Does this work with this type of file?
+  )
 
   /**
    * P-frame with rawCounts
@@ -163,6 +148,9 @@ export const model = BlockModel.create()
     return wf.createPFrame(pCols);
   })
 
+  /**
+   * Returns true if the block is currently in "running" state
+   */
   .output("isRunning", (ctx) => ctx.outputs?.getIsReadyOrError() === false)
 
   .output("pcaPf", (wf) => {
@@ -193,15 +181,13 @@ export const model = BlockModel.create()
 
   .sections([
     { type: "link", href: "/", label: "Settings" },
-    //    { type: "link", href: "/QC", label: "Sequence Data QC" },
     { type: "link", href: "/PCA", label: "Principal Component Analysis" },
-    //    { type: "link", href: "/HC", label: "Hierarchical Clustering" },
   ])
 
   .title((ctx) =>
     ctx.args.title
       ? `STAR Read Mapping - ${ctx.args.title}`
-      : "STAR Read Mapping "
+      : "STAR Read Mapping"
   )
 
   .done();
