@@ -39,8 +39,6 @@ const defaultOptions: GraphMakerProps['defaultOptions'] = [
 </script>
 
 <template>
-
   <GraphMaker chartType="scatterplot" v-model="app.model.ui.pcaGraphState" :p-frame="app.model.outputs.pcaPf"
     :defaultOptions="defaultOptions" />
-
 </template>
