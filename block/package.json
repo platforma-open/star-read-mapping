@@ -1,0 +1,52 @@
+{
+  "name": "@platforma-open/milaboratories.star-read-mapping",
+  "version": "1.1.0",
+  "scripts": {
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json,vue}\"",
+    "build": "rm -rf ./block-pack && block-tools pack",
+    "mark-stable": "block-tools mark-stable -r 's3://milab-euce1-prod-pkgs-s3-block-registry/pub/releases/?region=eu-central-1'",
+    "prepublishOnly": "block-tools pack && block-tools publish -r 's3://milab-euce1-prod-pkgs-s3-block-registry/pub/releases/?region=eu-central-1'"
+  },
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@platforma-open/milaboratories.star-read-mapping.model": "workspace:*",
+    "@platforma-open/milaboratories.star-read-mapping.ui": "workspace:*",
+    "@platforma-open/milaboratories.star-read-mapping.workflow": "workspace:*",
+    "@platforma-sdk/model": "catalog:"
+  },
+  "block": {
+    "components": {
+      "workflow": "@platforma-open/milaboratories.star-read-mapping.workflow/dist/tengo/tpl/main.plj.gz",
+      "model": "@platforma-open/milaboratories.star-read-mapping.model/dist/model.json",
+      "ui": "@platforma-open/milaboratories.star-read-mapping.ui/dist"
+    },
+    "meta": {
+      "title": "STAR Read Mapping",
+      "logo": "file:../logos/block-logo.png",
+      "url": "https://github.com/platforma/block-star-read-mapping",
+      "docs": "https://github.com/platforma/block-star-read-mapping/docs",
+      "support": "mailto:support@organization.com",
+      "description": "Bulk RNA-seq data preprocessing using STAR aligner. It runs QC and produces a count matrix.",
+      "longDescription": "file:../docs/description.md",
+      "changelog": "file:../CHANGELOG.md",
+      "tags": [
+        "rna-seq",
+        "qc",
+        "upstream"
+      ],
+      "organization": {
+        "name": "MiLaboratories Inc",
+        "url": "https://organization.com",
+        "logo": "file:../logos/organization-logo.png"
+      },
+      "marketplaceRanking": 10000
+    }
+  },
+  "devDependencies": {
+    "@platforma-sdk/block-tools": "catalog:"
+  },
+  "packageManager": "pnpm@9.12.0"
+}

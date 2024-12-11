@@ -3,3 +3,6 @@ dist/
 block-pack/
 *.tgz
 log/
+.turbo
+vite.config.*.timestamp-*
+.DS_Store
