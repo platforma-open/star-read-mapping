@@ -30,6 +30,9 @@ catalogs:
     '@milaboratories/software-pframes-conv':
       specifier: ^2.1.2
       version: 2.1.2
+    '@platforma-open/milaboratories.runenv-r':
+      specifier: ^1.2.0
+      version: 1.2.0
     '@platforma-open/milaboratories.software-small-binaries':
       specifier: ^1.14.6
       version: 1.14.6
@@ -48,6 +51,9 @@ catalogs:
     '@platforma-sdk/model':
       specifier: ^1.14.1
       version: 1.14.1
+    '@platforma-sdk/package-builder':
+      specifier: ^2.11.1
+      version: 2.12.0
     '@platforma-sdk/tengo-builder':
       specifier: ^1.17.3
       version: 1.17.3
@@ -136,6 +142,15 @@ importers:
       vite:
         specifier: 'catalog:'
         version: 5.4.11(@types/node@22.5.4)
+
+  software:
+    devDependencies:
+      '@platforma-open/milaboratories.runenv-r':
+        specifier: 'catalog:'
+        version: 1.2.0
+      '@platforma-sdk/package-builder':
+        specifier: 'catalog:'
+        version: 2.12.0
 
   test:
     dependencies:
@@ -406,6 +421,12 @@ packages:
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@aws-sdk/client-sts': ^3.709.0
+
+  '@aws-sdk/lib-storage@3.712.0':
+    resolution: {integrity: sha512-wVIgJCHMn4Rgq0PR1Y5na2onSCZfcGKM4iseF8VN0v/hxiqckBu28OrwqFVbgAGvC2Vzfy6NwfaXSu3ibWTrGg==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      '@aws-sdk/client-s3': ^3.712.0
 
   '@aws-sdk/middleware-bucket-endpoint@3.696.0':
     resolution: {integrity: sha512-V07jishKHUS5heRNGFpCWCSTjRJyQLynS/ncUeE8ZYtG66StOOQWftTwDfFOSoXlIqrXgb4oT9atryzXq7Z4LQ==}
@@ -1171,6 +1192,9 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
+  '@platforma-open/milaboratories.runenv-r@1.2.0':
+    resolution: {integrity: sha512-97chAZ4tpfnbqx+3wzo5kcXV+EyeuY4eDVj9CKnyGo3D0KIUri7NwYuyuHMB94R6zFLCdwrNgREJJRZPKSGVnw==}
+
   '@platforma-open/milaboratories.software-small-binaries@1.14.6':
     resolution: {integrity: sha512-d7cbFNHb6/1O4wWNlvjTVlTTsIelafnt/niAe8AZNjxoM0ivbE8bR4jnTUXaXwURjUzwV/LI5sk39kJelZxsMA==}
 
@@ -1193,6 +1217,10 @@ packages:
 
   '@platforma-sdk/model@1.14.1':
     resolution: {integrity: sha512-jrp7vhykgGLGsu2iU7fp1fee86du3HXI82yVedAtfIt/jVhmmv3Jwou2tf3W2xxZsPBx5rRYQHRahYxEixcs7A==}
+
+  '@platforma-sdk/package-builder@2.12.0':
+    resolution: {integrity: sha512-ct1oIVy05WKtXl29zILhs3OB0otv4mvLaIeRDds/2obT2PthQHQ0n0Y5LUI3PLUIuw6KpVbHwKjNfZxVy4t5DQ==}
+    hasBin: true
 
   '@platforma-sdk/tengo-builder@1.17.3':
     resolution: {integrity: sha512-UQzDKlPpnwW6VIZoYrEn+rDE4yQfg6xWczMSf/Rl92FVusZ6SjQHOQ1WQtGrvyufLA6ut55XUHLXrOF2cSo3LQ==}
@@ -3367,6 +3395,9 @@ packages:
   buffer-fill@1.0.0:
     resolution: {integrity: sha512-T7zexNBwiiaCOGDg9xNX9PBmjrubblRkENuptryuI64URkXDFum9il/JGL8Lm8wYfAXpredVXXZz7eMHilimiQ==}
 
+  buffer@5.6.0:
+    resolution: {integrity: sha512-/gDYp/UtU0eA1ys8bOs9J6a+E/KWIY+DZ+Q2WESNUA0jFRsJOc0SNUO6xJ5SGA1xueg3NL65W6s+NY5l9cunuw==}
+
   buffer@5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
 
@@ -3708,6 +3739,10 @@ packages:
   estree-walker@3.0.3:
     resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
 
+  events@3.3.0:
+    resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
+    engines: {node: '>=0.8.x'}
+
   execa@5.1.1:
     resolution: {integrity: sha512-8uSpZZocAZRBAPIEINJj3Lo9HyGitllczc27Eh5YYojjMFMn8yHMDMaUHE2Jqfq05D/wucwI4JGURyXt1vchyg==}
     engines: {node: '>=10'}
@@ -4021,6 +4056,10 @@ packages:
 
   logform@2.6.1:
     resolution: {integrity: sha512-CdaO738xRapbKIMVn2m4F6KTj4j7ooJ8POVnebSgKo3KBz5axNXRAL7ZdRjIV6NOr2Uf4vjtRkxrFETOioCqSA==}
+    engines: {node: '>= 12.0.0'}
+
+  logform@2.7.0:
+    resolution: {integrity: sha512-TFYA4jnP7PVbmlBIfhlSe+WKxs9dklXMTEGcBCIvLhE/Tn3H6Gk1norupVW7m5Cnd4bLcr08AytbyV/xj7f/kQ==}
     engines: {node: '>= 12.0.0'}
 
   long@5.2.3:
@@ -4486,6 +4525,9 @@ packages:
   std-env@3.8.0:
     resolution: {integrity: sha512-Bc3YwwCB+OzldMxOXJIIvC6cPRWr/LxOp48CdQTOkPyk/t4JWWJbrilwBd7RJzKV8QW7tJkcgAmeuLLJugl5/w==}
 
+  stream-browserify@3.0.0:
+    resolution: {integrity: sha512-H73RAHsVBapbim0tU2JwwOiXUj+fikfiaoYAKHF3VJfA0pe2BCzkhAHBlLG6REzE+2WNZcxOXjK7lkso+9euLA==}
+
   streamx@2.20.0:
     resolution: {integrity: sha512-ZGd1LhDeGFucr1CUCTBOS58ZhEendd0ttpGT3usTvosS4ntIwKN9LJFp+OeCSprsCPL14BXVRZlHGRY1V9PVzQ==}
 
@@ -4875,8 +4917,16 @@ packages:
     resolution: {integrity: sha512-wQCXXVgfv/wUPOfb2x0ruxzwkcZfxcktz6JIMUaPLmcNhO4bZTwA/WtDWK74xV3F2dKu8YadrFv0qhwYjVEwhA==}
     engines: {node: '>= 12.0.0'}
 
+  winston-transport@4.9.0:
+    resolution: {integrity: sha512-8drMJ4rkgaPo1Me4zD/3WLfI/zPdA9o2IipKODunnGDcuqbHwjsbB79ylv04LCGGzU0xQ6vTznOMpQGaLhhm6A==}
+    engines: {node: '>= 12.0.0'}
+
   winston@3.16.0:
     resolution: {integrity: sha512-xz7+cyGN5M+4CmmD4Npq1/4T+UZaz7HaeTlAruFUTjk79CNMq+P6H30vlE4z0qfqJ01VHYQwd7OZo03nYm/+lg==}
+    engines: {node: '>= 12.0.0'}
+
+  winston@3.17.0:
+    resolution: {integrity: sha512-DLiFIXYC5fMPxaRg832S6F5mJYvePtmO5G9v9IgUFPhXm9/GkXarH/TUrBAVzhTCzAj9anE/+GjrgXp/54nOgw==}
     engines: {node: '>= 12.0.0'}
 
   wordwrap@1.0.0:
@@ -5669,6 +5719,17 @@ snapshots:
       '@aws-sdk/types': 3.709.0
       '@smithy/property-provider': 3.1.11
       '@smithy/types': 3.7.2
+      tslib: 2.7.0
+
+  '@aws-sdk/lib-storage@3.712.0(@aws-sdk/client-s3@3.712.0)':
+    dependencies:
+      '@aws-sdk/client-s3': 3.712.0
+      '@smithy/abort-controller': 3.1.9
+      '@smithy/middleware-endpoint': 3.2.5
+      '@smithy/smithy-client': 3.5.0
+      buffer: 5.6.0
+      events: 3.3.0
+      stream-browserify: 3.0.0
       tslib: 2.7.0
 
   '@aws-sdk/middleware-bucket-endpoint@3.696.0':
@@ -6770,6 +6831,8 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
+  '@platforma-open/milaboratories.runenv-r@1.2.0': {}
+
   '@platforma-open/milaboratories.software-small-binaries@1.14.6': {}
 
   '@platforma-open/milaboratories.software-star@1.0.1': {}
@@ -6825,6 +6888,19 @@ snapshots:
       '@milaboratories/pl-model-common': 1.8.0
       utility-types: 3.11.0
       zod: 3.23.8
+
+  '@platforma-sdk/package-builder@2.12.0':
+    dependencies:
+      '@aws-sdk/client-s3': 3.712.0
+      '@aws-sdk/lib-storage': 3.712.0(@aws-sdk/client-s3@3.712.0)
+      '@oclif/core': 4.0.37
+      canonicalize: 2.0.0
+      tar: 7.4.3
+      winston: 3.17.0
+      yaml: 2.6.1
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - aws-crt
 
   '@platforma-sdk/tengo-builder@1.17.3':
     dependencies:
@@ -9958,6 +10034,11 @@ snapshots:
 
   buffer-fill@1.0.0: {}
 
+  buffer@5.6.0:
+    dependencies:
+      base64-js: 1.5.1
+      ieee754: 1.2.1
+
   buffer@5.7.1:
     dependencies:
       base64-js: 1.5.1
@@ -10315,6 +10396,8 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.5
 
+  events@3.3.0: {}
+
   execa@5.1.1:
     dependencies:
       cross-spawn: 7.0.3
@@ -10615,6 +10698,15 @@ snapshots:
   lodash@4.17.21: {}
 
   logform@2.6.1:
+    dependencies:
+      '@colors/colors': 1.6.0
+      '@types/triple-beam': 1.3.5
+      fecha: 4.2.3
+      ms: 2.1.3
+      safe-stable-stringify: 2.5.0
+      triple-beam: 1.4.1
+
+  logform@2.7.0:
     dependencies:
       '@colors/colors': 1.6.0
       '@types/triple-beam': 1.3.5
@@ -11033,6 +11125,11 @@ snapshots:
 
   std-env@3.8.0: {}
 
+  stream-browserify@3.0.0:
+    dependencies:
+      inherits: 2.0.4
+      readable-stream: 3.6.2
+
   streamx@2.20.0:
     dependencies:
       fast-fifo: 1.3.2
@@ -11403,6 +11500,12 @@ snapshots:
       readable-stream: 3.6.2
       triple-beam: 1.4.1
 
+  winston-transport@4.9.0:
+    dependencies:
+      logform: 2.7.0
+      readable-stream: 3.6.2
+      triple-beam: 1.4.1
+
   winston@3.16.0:
     dependencies:
       '@colors/colors': 1.6.0
@@ -11416,6 +11519,20 @@ snapshots:
       stack-trace: 0.0.10
       triple-beam: 1.4.1
       winston-transport: 4.7.1
+
+  winston@3.17.0:
+    dependencies:
+      '@colors/colors': 1.6.0
+      '@dabh/diagnostics': 2.0.3
+      async: 3.2.6
+      is-stream: 2.0.1
+      logform: 2.7.0
+      one-time: 1.0.0
+      readable-stream: 3.6.2
+      safe-stable-stringify: 2.5.0
+      stack-trace: 0.0.10
+      triple-beam: 1.4.1
+      winston-transport: 4.9.0
 
   wordwrap@1.0.0: {}
 

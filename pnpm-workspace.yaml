@@ -1,4 +1,5 @@
 packages:
+  - software
   - workflow
   - model
   - ui
@@ -20,6 +21,7 @@ catalog:
   '@platforma-open/milaboratories.software-star': ^1.0.1
   '@platforma-open/milaboratories.star-read-mapping.genome-assets': ^1.1.5
   '@platforma-open/milaboratories.runenv-r': ^1.2.0
+  '@platforma-sdk/package-builder': ^2.11.1
 
   '@milaboratories/helpers': ^1.6.8
 
