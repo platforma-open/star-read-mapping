@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 1.2.1
+
+### Patch Changes
+
+- 1af91f7: Load fresh version of tengo SDK with bugfix for Rscript
+
 ## 1.2.0
 
 ### Minor Changes
