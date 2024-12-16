@@ -52,11 +52,11 @@ catalogs:
       specifier: ^1.14.1
       version: 1.14.1
     '@platforma-sdk/package-builder':
-      specifier: ^2.11.1
-      version: 2.12.0
+      specifier: ^2.13.0
+      version: 2.13.0
     '@platforma-sdk/tengo-builder':
-      specifier: ^1.17.3
-      version: 1.17.3
+      specifier: ^1.17.4
+      version: 1.17.4
     '@platforma-sdk/test':
       specifier: ^1.10.4
       version: 1.10.4
@@ -64,8 +64,8 @@ catalogs:
       specifier: ^1.14.11
       version: 1.14.11
     '@platforma-sdk/workflow-tengo':
-      specifier: ^2.6.0
-      version: 2.6.0
+      specifier: ^2.8.3
+      version: 2.8.3
     '@vitejs/plugin-vue':
       specifier: ^5.1.0
       version: 5.1.4
@@ -150,7 +150,7 @@ importers:
         version: 1.2.0
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.12.0
+        version: 2.13.0
 
   test:
     dependencies:
@@ -215,6 +215,10 @@ importers:
         version: 2.1.6(typescript@5.5.4)
 
   workflow:
+    dependencies:
+      '@platforma-open/milaboratories.run-sample-qc-r.software':
+        specifier: workspace:*
+        version: link:../software
     devDependencies:
       '@milaboratories/software-pframes-conv':
         specifier: 'catalog:'
@@ -233,10 +237,10 @@ importers:
         version: 1.1.5
       '@platforma-sdk/tengo-builder':
         specifier: 'catalog:'
-        version: 1.17.3
+        version: 1.17.4
       '@platforma-sdk/workflow-tengo':
         specifier: 'catalog:'
-        version: 2.6.0
+        version: 2.8.3
 
 packages:
 
@@ -1141,14 +1145,11 @@ packages:
   '@milaboratories/software-pframes-conv@2.0.1':
     resolution: {integrity: sha512-4OBgZGL1iVi3XGLJSryUz3ASJyhHaXYjPLTqMd7breHOccXkkdLMa7bD25ABADAV/Zcp1BcnC37ugreUwM/E4Q==}
 
-  '@milaboratories/software-pframes-conv@2.1.0':
-    resolution: {integrity: sha512-rubGWv1e5h5CVKxKVhJd7foGsoee0v7hFlMDwCpt4Nxlitw3u8KT6dImfEPfOC/yqAEdSssPAXMvfyWwGTA4PA==}
-
   '@milaboratories/software-pframes-conv@2.1.2':
     resolution: {integrity: sha512-wDQEurhw7XD74WmGt3YtBAT38A0zPsMrN4ayYvUBOCPl9wvhkttGWQyaF/ACEP2ZEpM3mQMHsyONS8+PdftmbQ==}
 
-  '@milaboratories/tengo-tester@1.4.6':
-    resolution: {integrity: sha512-smF6U5eEW7hzreRHfBH+9IklU1xfLKnijgElwA5pHjtiQycNUC74w2BuLmC/DpBKEonYF0ZMEiv3JJYHGGVs9A==}
+  '@milaboratories/tengo-tester@1.5.0':
+    resolution: {integrity: sha512-WBG9/aVBGePBU+7+cKzrmydEJGGWPGy+SSJrJ5XRm613hAeCGIp5I3MJBkgJjiovTYoaiD9peTQD6uhr5o1fNw==}
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -1176,10 +1177,6 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@oclif/core@4.0.33':
-    resolution: {integrity: sha512-NoTDwJ2L/ywpsSjcN7jAAHf3m70Px4Yim2SJrm16r70XpnfbNOdlj1x0HEJ0t95gfD+p/y5uy+qPT/VXTh/1gw==}
-    engines: {node: '>=18.0.0'}
-
   '@oclif/core@4.0.36':
     resolution: {integrity: sha512-Dk0bK2Abl/AJ3Fn6ountX037lbXGJY/xcTnBJs2SKDqex9wMcgkbnkKd6xXC/zJnRlfA+jE+niC3FnbxgTRcHg==}
     engines: {node: '>=18.0.0'}
@@ -1197,6 +1194,9 @@ packages:
 
   '@platforma-open/milaboratories.software-small-binaries@1.14.6':
     resolution: {integrity: sha512-d7cbFNHb6/1O4wWNlvjTVlTTsIelafnt/niAe8AZNjxoM0ivbE8bR4jnTUXaXwURjUzwV/LI5sk39kJelZxsMA==}
+
+  '@platforma-open/milaboratories.software-small-binaries@1.15.0':
+    resolution: {integrity: sha512-svYI5Sa0hEcMH5sVZ5AQ3oVYd7/jFnR/bC8/lsug4KGbg5lWdfcsm1wGvuXWmz4beQwKgaWknN+d6vQZ+wcngw==}
 
   '@platforma-open/milaboratories.software-star@1.0.1':
     resolution: {integrity: sha512-pKIj68iDcmAWbQhdXDprMo8xF9RhldkvrXGxbPRiuFTzr/1OBQycwTy5WzbKQ3n6BWji27lDjJCP/YoLyn6byg==}
@@ -1218,12 +1218,12 @@ packages:
   '@platforma-sdk/model@1.14.1':
     resolution: {integrity: sha512-jrp7vhykgGLGsu2iU7fp1fee86du3HXI82yVedAtfIt/jVhmmv3Jwou2tf3W2xxZsPBx5rRYQHRahYxEixcs7A==}
 
-  '@platforma-sdk/package-builder@2.12.0':
-    resolution: {integrity: sha512-ct1oIVy05WKtXl29zILhs3OB0otv4mvLaIeRDds/2obT2PthQHQ0n0Y5LUI3PLUIuw6KpVbHwKjNfZxVy4t5DQ==}
+  '@platforma-sdk/package-builder@2.13.0':
+    resolution: {integrity: sha512-9ux+e8pMhmLVwRKNkwSApZn1jJuqAaYRuw1LgIbtgtpis+nP4oDBxfXP/hbzixwLWojIMDnsNcxRqCBmQHJQgA==}
     hasBin: true
 
-  '@platforma-sdk/tengo-builder@1.17.3':
-    resolution: {integrity: sha512-UQzDKlPpnwW6VIZoYrEn+rDE4yQfg6xWczMSf/Rl92FVusZ6SjQHOQ1WQtGrvyufLA6ut55XUHLXrOF2cSo3LQ==}
+  '@platforma-sdk/tengo-builder@1.17.4':
+    resolution: {integrity: sha512-Co303Wco6TmpnmbEDLXwtPFaOb2RUy5Mez+/VTFfXbm/1EHKgzLf+hP6MWfw4DAZ2KYU/8dknKjaWZyMa3c3Gg==}
     hasBin: true
 
   '@platforma-sdk/test@1.10.4':
@@ -1235,8 +1235,8 @@ packages:
   '@platforma-sdk/workflow-tengo@2.2.0':
     resolution: {integrity: sha512-ZT+nRZhVFXnnl1TDlAAHdeLNLohLrbVk/vqUM0fKCVZvdKzyRiVGG+hKwwGjDHb7z1kZ5rasrE6a0vCXyuV+Fw==}
 
-  '@platforma-sdk/workflow-tengo@2.6.0':
-    resolution: {integrity: sha512-LyWvdqcoWLgcsNNpI4RSHMx4Kzsn7Tv6CX4NO+fsHwqBYHz5hrCjWJ7qFAOHeWQXYqHPxf5mzPJSKw8eBR9vzw==}
+  '@platforma-sdk/workflow-tengo@2.8.3':
+    resolution: {integrity: sha512-HZ2tIWpSaHlbm0qyWNbEyC/AwXsopvwJ+r0/AK6WzCzE6/lkxbFkB+FE3ZKDSoNh2L7Ioka+vhVIzzGiG99VpA==}
 
   '@protobuf-ts/grpc-transport@2.9.4':
     resolution: {integrity: sha512-CgjTR3utmkMkkThpfgtOz9tNR9ZARbNoQYL7TCKqFU2sgAX0LgzAkwOx+sfgtUsZn9J08+yvn307nNJdYocLRA==}
@@ -4054,10 +4054,6 @@ packages:
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
-  logform@2.6.1:
-    resolution: {integrity: sha512-CdaO738xRapbKIMVn2m4F6KTj4j7ooJ8POVnebSgKo3KBz5axNXRAL7ZdRjIV6NOr2Uf4vjtRkxrFETOioCqSA==}
-    engines: {node: '>= 12.0.0'}
-
   logform@2.7.0:
     resolution: {integrity: sha512-TFYA4jnP7PVbmlBIfhlSe+WKxs9dklXMTEGcBCIvLhE/Tn3H6Gk1norupVW7m5Cnd4bLcr08AytbyV/xj7f/kQ==}
     engines: {node: '>= 12.0.0'}
@@ -4913,16 +4909,8 @@ packages:
     resolution: {integrity: sha512-NsmoXalsWVDMGupxZ5R08ka9flZjjiLvHVAWYOKtiKM8ujtZWr9cRffak+uSE48+Ob8ObalXpwyeUiyDD6QFgg==}
     engines: {node: '>=8'}
 
-  winston-transport@4.7.1:
-    resolution: {integrity: sha512-wQCXXVgfv/wUPOfb2x0ruxzwkcZfxcktz6JIMUaPLmcNhO4bZTwA/WtDWK74xV3F2dKu8YadrFv0qhwYjVEwhA==}
-    engines: {node: '>= 12.0.0'}
-
   winston-transport@4.9.0:
     resolution: {integrity: sha512-8drMJ4rkgaPo1Me4zD/3WLfI/zPdA9o2IipKODunnGDcuqbHwjsbB79ylv04LCGGzU0xQ6vTznOMpQGaLhhm6A==}
-    engines: {node: '>= 12.0.0'}
-
-  winston@3.16.0:
-    resolution: {integrity: sha512-xz7+cyGN5M+4CmmD4Npq1/4T+UZaz7HaeTlAruFUTjk79CNMq+P6H30vlE4z0qfqJ01VHYQwd7OZo03nYm/+lg==}
     engines: {node: '>= 12.0.0'}
 
   winston@3.17.0:
@@ -6728,11 +6716,9 @@ snapshots:
 
   '@milaboratories/software-pframes-conv@2.0.1': {}
 
-  '@milaboratories/software-pframes-conv@2.1.0': {}
-
   '@milaboratories/software-pframes-conv@2.1.2': {}
 
-  '@milaboratories/tengo-tester@1.4.6': {}
+  '@milaboratories/tengo-tester@1.5.0': {}
 
   '@milaboratories/ts-helpers-oclif@1.1.12':
     dependencies:
@@ -6764,27 +6750,6 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
-
-  '@oclif/core@4.0.33':
-    dependencies:
-      ansi-escapes: 4.3.2
-      ansis: 3.3.2
-      clean-stack: 3.0.1
-      cli-spinners: 2.9.2
-      debug: 4.3.7(supports-color@8.1.1)
-      ejs: 3.1.10
-      get-package-type: 0.1.0
-      globby: 11.1.0
-      indent-string: 4.0.0
-      is-wsl: 2.2.0
-      lilconfig: 3.1.2
-      minimatch: 9.0.5
-      semver: 7.6.3
-      string-width: 4.2.3
-      supports-color: 8.1.1
-      widest-line: 3.1.0
-      wordwrap: 1.0.0
-      wrap-ansi: 7.0.0
 
   '@oclif/core@4.0.36':
     dependencies:
@@ -6834,6 +6799,8 @@ snapshots:
   '@platforma-open/milaboratories.runenv-r@1.2.0': {}
 
   '@platforma-open/milaboratories.software-small-binaries@1.14.6': {}
+
+  '@platforma-open/milaboratories.software-small-binaries@1.15.0': {}
 
   '@platforma-open/milaboratories.software-star@1.0.1': {}
 
@@ -6889,10 +6856,11 @@ snapshots:
       utility-types: 3.11.0
       zod: 3.23.8
 
-  '@platforma-sdk/package-builder@2.12.0':
+  '@platforma-sdk/package-builder@2.13.0':
     dependencies:
       '@aws-sdk/client-s3': 3.712.0
       '@aws-sdk/lib-storage': 3.712.0(@aws-sdk/client-s3@3.712.0)
+      '@milaboratories/resolve-helper': 1.0.2
       '@oclif/core': 4.0.37
       canonicalize: 2.0.0
       tar: 7.4.3
@@ -6902,12 +6870,12 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@platforma-sdk/tengo-builder@1.17.3':
+  '@platforma-sdk/tengo-builder@1.17.4':
     dependencies:
-      '@milaboratories/tengo-tester': 1.4.6
-      '@oclif/core': 4.0.33
+      '@milaboratories/tengo-tester': 1.5.0
+      '@oclif/core': 4.0.37
       canonicalize: 2.0.0
-      winston: 3.16.0
+      winston: 3.17.0
 
   '@platforma-sdk/test@1.10.4(@types/node@22.5.4)':
     dependencies:
@@ -6968,10 +6936,10 @@ snapshots:
       '@milaboratories/software-pframes-conv': 2.0.1
       '@platforma-open/milaboratories.software-small-binaries': 1.14.6
 
-  '@platforma-sdk/workflow-tengo@2.6.0':
+  '@platforma-sdk/workflow-tengo@2.8.3':
     dependencies:
-      '@milaboratories/software-pframes-conv': 2.1.0
-      '@platforma-open/milaboratories.software-small-binaries': 1.14.6
+      '@milaboratories/software-pframes-conv': 2.1.2
+      '@platforma-open/milaboratories.software-small-binaries': 1.15.0
 
   '@protobuf-ts/grpc-transport@2.9.4(@grpc/grpc-js@1.12.2)':
     dependencies:
@@ -9913,13 +9881,13 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.3.7(supports-color@8.1.1)
+      debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
 
   agent-base@7.1.1:
     dependencies:
-      debug: 4.3.7(supports-color@8.1.1)
+      debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
 
@@ -10242,11 +10210,9 @@ snapshots:
     dependencies:
       ms: 2.0.0
 
-  debug@4.3.7(supports-color@8.1.1):
+  debug@4.3.7:
     dependencies:
       ms: 2.1.3
-    optionalDependencies:
-      supports-color: 8.1.1
 
   debug@4.4.0(supports-color@8.1.1):
     dependencies:
@@ -10566,14 +10532,14 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.7(supports-color@8.1.1)
+      debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
 
   https-proxy-agent@7.0.5:
     dependencies:
       agent-base: 7.1.1
-      debug: 4.3.7(supports-color@8.1.1)
+      debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
 
@@ -10696,15 +10662,6 @@ snapshots:
   lodash.startcase@4.4.0: {}
 
   lodash@4.17.21: {}
-
-  logform@2.6.1:
-    dependencies:
-      '@colors/colors': 1.6.0
-      '@types/triple-beam': 1.3.5
-      fecha: 4.2.3
-      ms: 2.1.3
-      safe-stable-stringify: 2.5.0
-      triple-beam: 1.4.1
 
   logform@2.7.0:
     dependencies:
@@ -11298,7 +11255,7 @@ snapshots:
       cac: 6.7.14
       chokidar: 3.6.0
       consola: 3.2.3
-      debug: 4.3.7(supports-color@8.1.1)
+      debug: 4.3.7
       esbuild: 0.23.1
       execa: 5.1.1
       globby: 11.1.0
@@ -11375,7 +11332,7 @@ snapshots:
   vite-node@2.1.5(@types/node@22.5.4):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.7(supports-color@8.1.1)
+      debug: 4.3.7
       es-module-lexer: 1.5.4
       pathe: 1.1.2
       vite: 5.4.8(@types/node@22.5.4)
@@ -11418,7 +11375,7 @@ snapshots:
       '@vitest/spy': 2.1.5
       '@vitest/utils': 2.1.5
       chai: 5.1.2
-      debug: 4.3.7(supports-color@8.1.1)
+      debug: 4.3.7
       expect-type: 1.1.0
       magic-string: 0.30.13
       pathe: 1.1.2
@@ -11494,31 +11451,11 @@ snapshots:
     dependencies:
       string-width: 4.2.3
 
-  winston-transport@4.7.1:
-    dependencies:
-      logform: 2.6.1
-      readable-stream: 3.6.2
-      triple-beam: 1.4.1
-
   winston-transport@4.9.0:
     dependencies:
       logform: 2.7.0
       readable-stream: 3.6.2
       triple-beam: 1.4.1
-
-  winston@3.16.0:
-    dependencies:
-      '@colors/colors': 1.6.0
-      '@dabh/diagnostics': 2.0.3
-      async: 3.2.6
-      is-stream: 2.0.1
-      logform: 2.6.1
-      one-time: 1.0.0
-      readable-stream: 3.6.2
-      safe-stable-stringify: 2.5.0
-      stack-trace: 0.0.10
-      triple-beam: 1.4.1
-      winston-transport: 4.7.1
 
   winston@3.17.0:
     dependencies:
