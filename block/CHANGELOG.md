@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.4.0
+
+### Minor Changes
+
+- 916449a: chore: bump version
+
 ## 1.3.0
 
 ### Minor Changes
