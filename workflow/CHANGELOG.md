@@ -1,5 +1,12 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 1.3.1
+
+### Patch Changes
+
+- Updated dependencies [30da61a]
+  - @platforma-open/milaboratories.run-sample-qc-r.software@1.2.1
+
 ## 1.3.0
 
 ### Minor Changes
