@@ -134,8 +134,7 @@ wf.body(func(args) {
 
 	// Run clustering QC on all samples
 	clusteringQC := exec.builder().
-		cmd("Rscript").
-		arg("/Users/aiturbide/Blocks/block-star-read-mapping/scripts/run_sample_qc.R").
+		software(assets.importSoftware("@platforma-open/milaboratories.run-sample-qc-r.software:main")).
 		arg("rawCounts.csv").
 		arg(".").
 		addFile("rawCounts.csv", csvCounts).

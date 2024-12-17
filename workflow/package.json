@@ -1,11 +1,14 @@
 {
   "name": "@platforma-open/milaboratories.star-read-mapping.workflow",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "type": "module",
   "description": "Tengo-based template",
   "scripts": {
     "build": "rm -rf dist && pl-tengo check && pl-tengo build",
     "format": "/usr/bin/env emacs --script ./format.el"
+  },
+  "dependencies": {
+    "@platforma-open/milaboratories.run-sample-qc-r.software": "workspace:*"
   },
   "devDependencies": {
     "@platforma-sdk/tengo-builder": "catalog:",

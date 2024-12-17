@@ -1,0 +1,37 @@
+{
+  "name": "@platforma-open/milaboratories.run-sample-qc-r.software",
+  "version": "1.1.0",
+  "type": "module",
+  "description": "Block Software: Run Sample QC with R",
+  "scripts": {
+    "build": "pl-pkg build",
+    "test": "true",
+    "prepublishOnly": "pl-pkg publish"
+  },
+  "block-software": {
+    "entrypoints": {
+      "main": {
+        "binary": {
+          "artifact": {
+            "type": "R",
+            "registry": "platforma-open",
+            "environment": "@platforma-open/milaboratories.runenv-r:4.4.1",
+            "dependencies": {
+              "toolset": "renv",
+              "lockFile": "renv.lock"
+            },
+            "root": "./src"
+          },
+          "cmd": [
+            "Rscript",
+            "{pkg}/run_sample_qc.R"
+          ]
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@platforma-open/milaboratories.runenv-r": "catalog:",
+    "@platforma-sdk/package-builder": "catalog:"
+  }
+}
