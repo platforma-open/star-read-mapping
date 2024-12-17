@@ -22,12 +22,12 @@ export type BlockArgs = {
   /**
    * Species settings
    */
-  species?: "homo-sapiens" | "mus-musculus" | "saccharomyces-cerevisiae";
+  species?: string;
 
   /**
    * Strandness settings
    */
-  strandness?: "0" | "1" | "2";
+  strandness?: string;
 
   /**
    * Block title
@@ -140,13 +140,23 @@ export const model = BlockModel.create()
   /**
    * P-frame with rawCounts
    */
-  .output("pf", (wf) => {
+  .output("rawCountsPf", (wf) => {
     //return wf.outputs?.resolve("pf")?.resolve("rawCounts.data")?.listInputFields()
-    const pCols = wf.outputs?.resolve("pf")?.getPColumns();
+    const pCols = wf.outputs?.resolve("rawCountsPf")?.getPColumns();
     if (pCols === undefined) return undefined;
 
     return wf.createPFrame(pCols);
   })
+
+    /**
+   * P-frame with normCounts
+   */
+    .output("normCountsPf", (wf) => {
+      const pCols = wf.outputs?.resolve("normCountsPf")?.getPColumns();
+      if (pCols === undefined) return undefined;
+  
+      return wf.createPFrame(pCols);
+    })
 
   /**
    * Returns true if the block is currently in "running" state

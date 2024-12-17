@@ -1,13 +1,12 @@
 {
   "name": "@platforma-open/milaboratories.run-sample-qc-r.software",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "type": "module",
   "description": "Block Software: Run Sample QC with R",
   "scripts": {
     "build": "pl-pkg build",
-    "build:dev": "pl-pkg build --dev=local",
     "test": "true",
-    "prepublishOnly": "pl-pkg build; pl-pkg publish packages"
+    "prepublishOnly": "pl-pkg publish"
   },
   "block-software": {
     "entrypoints": {

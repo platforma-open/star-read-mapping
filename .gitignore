@@ -3,6 +3,8 @@ dist/
 block-pack/
 *.tgz
 log/
+renv/
+package.sw.json
 .turbo
 vite.config.*.timestamp-*
 .DS_Store

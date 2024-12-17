@@ -52,8 +52,8 @@ catalogs:
       specifier: ^1.14.1
       version: 1.14.1
     '@platforma-sdk/package-builder':
-      specifier: ^2.13.0
-      version: 2.13.0
+      specifier: ^2.14.2
+      version: 2.14.2
     '@platforma-sdk/tengo-builder':
       specifier: ^1.17.4
       version: 1.17.4
@@ -64,8 +64,8 @@ catalogs:
       specifier: ^1.14.11
       version: 1.14.11
     '@platforma-sdk/workflow-tengo':
-      specifier: ^2.8.3
-      version: 2.8.3
+      specifier: ^2.8.4
+      version: 2.8.4
     '@vitejs/plugin-vue':
       specifier: ^5.1.0
       version: 5.1.4
@@ -150,7 +150,7 @@ importers:
         version: 1.2.0
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.13.0
+        version: 2.14.2
 
   test:
     dependencies:
@@ -240,7 +240,7 @@ importers:
         version: 1.17.4
       '@platforma-sdk/workflow-tengo':
         specifier: 'catalog:'
-        version: 2.8.3
+        version: 2.8.4
 
 packages:
 
@@ -1218,8 +1218,8 @@ packages:
   '@platforma-sdk/model@1.14.1':
     resolution: {integrity: sha512-jrp7vhykgGLGsu2iU7fp1fee86du3HXI82yVedAtfIt/jVhmmv3Jwou2tf3W2xxZsPBx5rRYQHRahYxEixcs7A==}
 
-  '@platforma-sdk/package-builder@2.13.0':
-    resolution: {integrity: sha512-9ux+e8pMhmLVwRKNkwSApZn1jJuqAaYRuw1LgIbtgtpis+nP4oDBxfXP/hbzixwLWojIMDnsNcxRqCBmQHJQgA==}
+  '@platforma-sdk/package-builder@2.14.2':
+    resolution: {integrity: sha512-//N+bIM423gq8loTxgVk1AskZaVMWCM/d8ZEKeb/gzzCazGQUZiDGKfjP4XCAudc3o3ltjsVdpoKEZqTjYuhrA==}
     hasBin: true
 
   '@platforma-sdk/tengo-builder@1.17.4':
@@ -1235,8 +1235,8 @@ packages:
   '@platforma-sdk/workflow-tengo@2.2.0':
     resolution: {integrity: sha512-ZT+nRZhVFXnnl1TDlAAHdeLNLohLrbVk/vqUM0fKCVZvdKzyRiVGG+hKwwGjDHb7z1kZ5rasrE6a0vCXyuV+Fw==}
 
-  '@platforma-sdk/workflow-tengo@2.8.3':
-    resolution: {integrity: sha512-HZ2tIWpSaHlbm0qyWNbEyC/AwXsopvwJ+r0/AK6WzCzE6/lkxbFkB+FE3ZKDSoNh2L7Ioka+vhVIzzGiG99VpA==}
+  '@platforma-sdk/workflow-tengo@2.8.4':
+    resolution: {integrity: sha512-Reg1k5O0bk1rTVZ8FrqEejwDhfN99z76/2Jw8JK+SH/EiREJ0DSKFTRmaUwBT9b0mj4bS6ydRw0BTf42v1hSlQ==}
 
   '@protobuf-ts/grpc-transport@2.9.4':
     resolution: {integrity: sha512-CgjTR3utmkMkkThpfgtOz9tNR9ZARbNoQYL7TCKqFU2sgAX0LgzAkwOx+sfgtUsZn9J08+yvn307nNJdYocLRA==}
@@ -6856,7 +6856,7 @@ snapshots:
       utility-types: 3.11.0
       zod: 3.23.8
 
-  '@platforma-sdk/package-builder@2.13.0':
+  '@platforma-sdk/package-builder@2.14.2':
     dependencies:
       '@aws-sdk/client-s3': 3.712.0
       '@aws-sdk/lib-storage': 3.712.0(@aws-sdk/client-s3@3.712.0)
@@ -6934,9 +6934,9 @@ snapshots:
   '@platforma-sdk/workflow-tengo@2.2.0':
     dependencies:
       '@milaboratories/software-pframes-conv': 2.0.1
-      '@platforma-open/milaboratories.software-small-binaries': 1.14.6
+      '@platforma-open/milaboratories.software-small-binaries': 1.15.0
 
-  '@platforma-sdk/workflow-tengo@2.8.3':
+  '@platforma-sdk/workflow-tengo@2.8.4':
     dependencies:
       '@milaboratories/software-pframes-conv': 2.1.2
       '@platforma-open/milaboratories.software-small-binaries': 1.15.0

@@ -45,6 +45,7 @@ llPFrames := import("@platforma-sdk/workflow-tengo:pframes.ll")
 
 genomes := import(":genomes")
 pfPcaConv := import(":pf-pca-conv")
+pfNormCountsConv := import(":pf-norm-counts-conv")
 
 starAlignmentTpl := assets.importTemplate(":star-alignment")
 
@@ -100,7 +101,7 @@ wf.body(func(args) {
 		}
 	)
 
-	pf := {
+	rawCountsPf := {
 		"rawCounts.spec":
 		{
 			kind: "PColumn",
@@ -123,13 +124,13 @@ wf.body(func(args) {
 					}
 				}
 				],
-			annotations: {"pl7.app/label": "Expression level"}
+			annotations: {"pl7.app/label": "Raw gene expression"}
 		},
 		"rawCounts.data": starResults.output("rawCounts")
 	}
 
 	// Convert pf to csv
-	csvCounts := xsv.exportFrame(pf, "csv", {})
+	csvCounts := xsv.exportFrame(rawCountsPf, "csv", {})
 
 	// Run clustering QC on all samples
 	clusteringQC := exec.builder().
@@ -150,6 +151,21 @@ wf.body(func(args) {
 	// HQtsvImportParams := hcPfconvParamsLib.getColumns(blockId, inputSpec)
 	// sampleDistances := xsv.importFile(clusteringQC.getFile("sample_distances.csv"), "tsv", HQtsvImportParams)
 
+	countNorm := exec.builder().
+		cmd("Rscript").
+		arg("/Users/aiturbide/Blocks/block-star-read-mapping/scripts/normalize_counts.R").
+		arg("rawCounts.csv").arg(".").arg(species).
+		addFile("rawCounts.csv", csvCounts).
+		saveFile("normalized_counts.csv").
+		//saveFile("lognormalized_counts.csv").
+		printErrStreamToStdout().
+		saveStdoutContent().
+		cache(24 * 60 * 60 * 1000).
+		run()
+
+	normCountsImportParams := pfNormCountsConv.getColumns(blockId, inputSpec, species)
+	normCountsPf := xsv.importFile(countNorm.getFile("normalized_counts.csv"), "csv", normCountsImportParams)
+	//normCountsPfData := xsv.importFile(countNorm.getFile("normalized_counts.csv"), "csv", normCountsImportParams)
 
 	outputs := {
 		starProgress: starResults.output("starLog"),
@@ -157,8 +173,9 @@ wf.body(func(args) {
 		alignedBAM: starResults.output("alignedBAM"),
 		featureCountsProgress: starResults.output("featureCountsLog"),
 		featureCountsQc: starResults.output("countsReport"),
-		pf: pframes.exportFrame(pf),
-		pcaComponents: pframes.exportFrame(PCAComponents)//,
+		rawCountsPf: pframes.exportFrame(rawCountsPf),
+		pcaComponents: pframes.exportFrame(PCAComponents),
+		normCountsPf: pframes.exportFrame(normCountsPf)//,
 		// sampleDistances: pframes.exportFrame(sampleDistances)
 	}
 
@@ -180,7 +197,7 @@ wf.body(func(args) {
 				},
 				valueType: "Double",
 				annotations: {
-					"pl7.app/label": "Expression level",
+					"pl7.app/label": "Raw gene expression",
 					"pl7.app/rna-seq/normalized": "false"
 				},
 				axesSpec: [
@@ -199,7 +216,67 @@ wf.body(func(args) {
 					]
 			}),
 			data: starResults.output("rawCounts")
-		}//,
+	 	},
+	normCount : {
+			spec: trace.inject({
+				kind: "PColumn",
+				name: "countMatrix",
+				domain: {
+					"pl7.app/blockId": blockId,
+					"pl7.app/species": species
+				},
+				valueType: "Double",
+				annotations: {
+					"pl7.app/label": "Normalized gene expression",
+					"pl7.app/rna-seq/normalized": "true",
+					"pl7.app/table/hValue": "true"
+				},
+				axesSpec: [
+					inputSpec.axesSpec[0],
+					{
+						"name": "pl7.app/rna-seq/geneId",
+						"type": "String",
+						"domain": {
+							"pl7.app/blockId": blockId,
+							"pl7.app/species": species
+						},
+						"annotations": {
+							"pl7.app/label": "Ensembl Id"
+						}
+					}
+					]
+			}),
+			data: normCountsPf["normcounts.data"]
+		},
+	geneSymbols: {
+		spec: trace.inject({
+				kind: "PColumn",
+				name: "geneSymbols",
+				domain: {
+					"pl7.app/blockId": blockId,
+					"pl7.app/species": species
+				},
+				valueType: "String",
+				annotations: {
+					"pl7.app/label": "Gene Symbol"
+				},
+				axesSpec: [
+					inputSpec.axesSpec[0],
+					{
+						"name": "pl7.app/rna-seq/geneId",
+						"type": "String",
+						"domain": {
+							"pl7.app/blockId": blockId,
+							"pl7.app/species": species
+						},
+						"annotations": {
+							"pl7.app/label": "Ensembl Id"
+						}
+					}
+					]
+			}),
+			data: normCountsPf["genesymbol.data"]
+	}//,
 		//alignedBAM: starResults.output("alignedBAM")
 	}
 
