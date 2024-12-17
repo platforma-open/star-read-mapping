@@ -26,7 +26,7 @@
       "logo": "file:logos/block-logo.png",
       "url": "https://github.com/platforma/block-star-read-mapping",
       "docs": "https://github.com/platforma/block-star-read-mapping/docs",
-      "support": "mailto:support@organization.com",
+      "support": "mailto:support@milaboratories.com",
       "description": "Bulk RNA-seq data preprocessing using STAR aligner. It runs QC and produces a count matrix.",
       "longDescription": "file:./docs/description.md",
       "changelog": "file:CHANGELOG.md",
@@ -37,7 +37,7 @@
       ],
       "organization": {
         "name": "MiLaboratories Inc",
-        "url": "https://organization.com",
+        "url": "https://milaboratories.com",
         "logo": "file:logos/organization-logo.png"
       }
     }
