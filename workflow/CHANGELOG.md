@@ -1,5 +1,16 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 1.3.0
+
+### Minor Changes
+
+- c8d8131: Expanded available species
+
+### Patch Changes
+
+- Updated dependencies [c8d8131]
+  - @platforma-open/milaboratories.run-sample-qc-r.software@1.2.0
+
 ## 1.2.1
 
 ### Patch Changes
