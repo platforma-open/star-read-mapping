@@ -8,3 +8,5 @@ package.sw.json
 .turbo
 vite.config.*.timestamp-*
 .DS_Store
+software/**/*.sw.json
+software/*.tgz
