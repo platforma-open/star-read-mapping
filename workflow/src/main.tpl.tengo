@@ -153,7 +153,7 @@ wf.body(func(args) {
 
 	countNorm := exec.builder().
 		cmd("Rscript").
-		arg("/Users/aiturbide/Blocks/block-star-read-mapping/scripts/normalize_counts.R").
+		software(assets.importSoftware("@platforma-open/milaboratories.run-sample-qc-r.software:main")).
 		arg("rawCounts.csv").arg(".").arg(species).
 		addFile("rawCounts.csv", csvCounts).
 		saveFile("normalized_counts.csv").
