@@ -1,5 +1,13 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 1.3.2
+
+### Patch Changes
+
+- da90a0b: Use R script as software, not local command
+- Updated dependencies [da90a0b]
+  - @platforma-open/milaboratories.run-sample-qc-r.software@1.2.2
+
 ## 1.3.1
 
 ### Patch Changes
