@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 1.2.3
+
+### Patch Changes
+
+- b7bfdce: Update R runenv dependency
+
 ## 1.2.2
 
 ### Patch Changes

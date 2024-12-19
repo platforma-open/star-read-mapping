@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.4.6
+
+### Patch Changes
+
+- @platforma-open/milaboratories.star-read-mapping.workflow@1.3.3
+
 ## 1.4.5
 
 ### Patch Changes
