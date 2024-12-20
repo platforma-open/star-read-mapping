@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ICellRendererParams } from '@ag-grid-community/core';
+import { ICellRendererParams } from 'ag-grid-enterprise';
 import AlignmentRow from './components/AlignmentRow.vue';
 import { StarQC } from './results';
 

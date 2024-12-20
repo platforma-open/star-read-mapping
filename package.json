@@ -22,5 +22,10 @@
       "@platforma-sdk/workflow-tengo": "file:/Users/poslavskysv/Projects/milab/platforma/platforma-sdk/sdk/workflow-tengo/package.tgz",
       "@milaboratories/uikit": "file:/Users/poslavskysv/Projects/milab/platforma/platforma-sdk/lib/ui/uikit/package.tgz"
     }
+  },
+  "overrides": {
+    "vite": {
+      "esbuild": "0.24.0"
+    }
   }
 }
