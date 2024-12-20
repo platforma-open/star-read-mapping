@@ -1,5 +1,13 @@
 # @platforma-open/milaboratories.block-template.ui
 
+## 1.3.1
+
+### Patch Changes
+
+- 6c65b6d: Dependancy update
+- Updated dependencies [6c65b6d]
+  - @platforma-open/milaboratories.star-read-mapping.model@1.1.1
+
 ## 1.3.0
 
 ### Minor Changes
