@@ -1,15 +1,14 @@
-//  import { PlTableState } from "@milaboratory/pl-table";
 import {
   BlockModel,
-  InferOutputsType,
+  type InferOutputsType,
   isPColumn,
   isPColumnSpec,
   parseResourceMap,
-  PlRef,
-  ValueType,
+  type PlRef,
+  type ValueType,
 } from "@platforma-sdk/model";
 
-import { GraphMakerState } from "@milaboratories/graph-maker";
+import { type GraphMakerState } from "@milaboratories/graph-maker";
 /**
  * Block arguments coming from the user interface
  */
@@ -83,8 +82,7 @@ export const model = BlockModel.create()
     const labels = ctx.findLabels(inputSpec.axesSpec[0]);
     if (!labels) return undefined;
 
-    // @TODO change to return labels after next SDK update.
-    return Object.fromEntries(labels);
+    return labels;
   })
 
   /**

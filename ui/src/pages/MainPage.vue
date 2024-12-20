@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AgGridVue } from '@ag-grid-community/vue3';
+import { AgGridVue } from 'ag-grid-vue3';
 import {
   AgGridTheme,
   PlAgOverlayLoading,
@@ -13,8 +13,7 @@ import {
   PlSlideModal
 } from "@platforma-sdk/ui-vue";
 
-import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
-import { ColDef, GridApi, GridOptions, GridReadyEvent, ModuleRegistry } from '@ag-grid-community/core';
+import { ColDef, GridApi, GridOptions, GridReadyEvent, ModuleRegistry, ClientSideRowModelModule } from 'ag-grid-enterprise';
 import { PlRef } from '@platforma-sdk/model';
 import { computed, reactive, shallowRef } from "vue";
 import { useApp } from "../app";
@@ -31,7 +30,7 @@ const data = reactive<{
   sampleReportOpen: boolean,
   selectedSample: string | undefined
 }>({
-  settingsOpen: app.args.ref === undefined,
+  settingsOpen: app.model.args.ref === undefined,
   sampleReportOpen: false,
   selectedSample: undefined,
 })
