@@ -134,7 +134,7 @@ wf.body(func(args) {
 
 	// Run clustering QC on all samples
 	clusteringQC := exec.builder().
-		software(assets.importSoftware("@platforma-open/milaboratories.run-sample-qc-r.software:main")).
+		software(assets.importSoftware("@platforma-open/milaboratories.star-read-mapping.software:run-sample-qc")).
 		arg("rawCounts.csv").
 		arg(".").
 		addFile("rawCounts.csv", csvCounts).
@@ -152,8 +152,7 @@ wf.body(func(args) {
 	// sampleDistances := xsv.importFile(clusteringQC.getFile("sample_distances.csv"), "tsv", HQtsvImportParams)
 
 	countNorm := exec.builder().
-		cmd("Rscript").
-		software(assets.importSoftware("@platforma-open/milaboratories.run-sample-qc-r.software:main")).
+		software(assets.importSoftware("@platforma-open/milaboratories.star-read-mapping.software:normalize-counts")).
 		arg("rawCounts.csv").arg(".").arg(species).
 		addFile("rawCounts.csv", csvCounts).
 		saveFile("normalized_counts.csv").
