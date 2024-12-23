@@ -204,7 +204,7 @@ importers:
 
   workflow:
     dependencies:
-      '@platforma-open/milaboratories.run-sample-qc-r.software':
+      '@platforma-open/milaboratories.star-read-mapping.software':
         specifier: workspace:*
         version: link:../software
     devDependencies:

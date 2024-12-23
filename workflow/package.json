@@ -8,7 +8,7 @@
     "format": "/usr/bin/env emacs --script ./format.el"
   },
   "dependencies": {
-    "@platforma-open/milaboratories.run-sample-qc-r.software": "workspace:*"
+    "@platforma-open/milaboratories.star-read-mapping.software": "workspace:*"
   },
   "devDependencies": {
     "@platforma-sdk/tengo-builder": "catalog:",
