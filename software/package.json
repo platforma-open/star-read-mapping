@@ -1,5 +1,5 @@
 {
-  "name": "@platforma-open/milaboratories.run-sample-qc-r.software",
+  "name": "@platforma-open/milaboratories.star-read-mapping.software",
   "version": "1.2.3",
   "type": "module",
   "description": "Block Software: Run Sample QC with R",
@@ -10,7 +10,7 @@
   },
   "block-software": {
     "entrypoints": {
-      "main": {
+      "run-sample-qc": {
         "binary": {
           "artifact": {
             "type": "R",
@@ -20,11 +20,29 @@
               "toolset": "renv",
               "lockFile": "renv.lock"
             },
-            "root": "./src"
+            "root": "./src/run-sample-qc"
           },
           "cmd": [
             "Rscript",
             "{pkg}/run_sample_qc.R"
+          ]
+        }
+      },
+      "normalize-counts": {
+        "binary": {
+          "artifact": {
+            "type": "R",
+            "registry": "platforma-open",
+            "environment": "@platforma-open/milaboratories.runenv-r:4.4.1",
+            "dependencies": {
+              "toolset": "renv",
+              "lockFile": "renv.lock"
+            },
+            "root": "./src/normalize-counts"
+          },
+          "cmd": [
+            "Rscript",
+            "{pkg}/normalize_counts.R"
           ]
         }
       }
