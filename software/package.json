@@ -24,7 +24,7 @@
           },
           "cmd": [
             "Rscript",
-            "{pkg}/run-sample-qc/run_sample_qc.R"
+            "{pkg}/run_sample_qc.R"
           ]
         }
       },
@@ -42,7 +42,7 @@
           },
           "cmd": [
             "Rscript",
-            "{pkg}/normalize-counts/normalize_counts.R"
+            "{pkg}/normalize_counts.R"
           ]
         }
       }
