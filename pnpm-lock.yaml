@@ -49,8 +49,8 @@ catalogs:
       specifier: ^1.20.27
       version: 1.20.27
     '@platforma-sdk/ui-vue':
-      specifier: ^1.20.27
-      version: 1.20.27
+      specifier: ^1.20.30
+      version: 1.21.5
     '@platforma-sdk/workflow-tengo':
       specifier: ^2.8.6
       version: 2.8.6
@@ -178,7 +178,7 @@ importers:
         version: 1.20.27
       '@platforma-sdk/ui-vue':
         specifier: 'catalog:'
-        version: 1.20.27(typescript@5.6.3)
+        version: 1.21.5(typescript@5.6.3)
       ag-grid-enterprise:
         specifier: 'catalog:'
         version: 33.0.3
@@ -1113,6 +1113,9 @@ packages:
   '@milaboratories/uikit@2.2.39':
     resolution: {integrity: sha512-R9CzNxGDO06NNhwX7VJ8viCLovw536jdZpVJHZ84cLS3PXY9TMJsYPnWBa+4R/6nCHOEJKoZExxIbUEexQT2dg==}
 
+  '@milaboratories/uikit@2.2.41':
+    resolution: {integrity: sha512-VqhBMzruL6KSoJzLXomc201hNS2IOLMY5Oha+dlm/+r6HSTwzWmsv0FCApcX1U7mmZX0APuvZrqrzC9rF85Fdw==}
+
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -1191,6 +1194,9 @@ packages:
   '@platforma-sdk/model@1.20.27':
     resolution: {integrity: sha512-EEnoixOX+V3lFe3AVGBP4Qmp8qloW4roXJO3htaB3fq8o++KnfvDCVScBjo/32hxxLprcZKfvn7c8z7jJKLS7w==}
 
+  '@platforma-sdk/model@1.21.0':
+    resolution: {integrity: sha512-O938lNoZqYTSiL6CdSEROppx7oiu6ZC3YY5W1fYrdsybD9ZbZPdWHzHg1lES4s5v38+9kwc7dL2zsXjbbINPjw==}
+
   '@platforma-sdk/package-builder@2.14.2':
     resolution: {integrity: sha512-//N+bIM423gq8loTxgVk1AskZaVMWCM/d8ZEKeb/gzzCazGQUZiDGKfjP4XCAudc3o3ltjsVdpoKEZqTjYuhrA==}
     hasBin: true
@@ -1204,6 +1210,9 @@ packages:
 
   '@platforma-sdk/ui-vue@1.20.27':
     resolution: {integrity: sha512-rAXRcW0vk9CogB6o8cia3HGvuQ4I8pTSB/sXhAz3hFXcMxxcuT188iYBWpPFs8VOiFa40vHpOwe0GjtVxk1vzQ==}
+
+  '@platforma-sdk/ui-vue@1.21.5':
+    resolution: {integrity: sha512-+k1pIiwLL5eHcwCT3JEbxhQIY81sDdCDeJ+HyQlhUPcRtGi7xjjgdtMQUzeexsMsliDDbpoWMPIzVQX5CaPi3Q==}
 
   '@platforma-sdk/workflow-tengo@2.8.6':
     resolution: {integrity: sha512-nHDcafm/9+6ZvArNfht8PiqEBpsUhFKxM6exrMqQMV0k5wVvdGi96zl8YO7xSL/58PIgSuVfCCVZAWg3odWHNA==}
@@ -6146,6 +6155,12 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
+  '@milaboratories/uikit@2.2.41(typescript@5.6.3)':
+    dependencies:
+      vue: 3.5.13(typescript@5.6.3)
+    transitivePeerDependencies:
+      - typescript
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -6256,6 +6271,12 @@ snapshots:
       utility-types: 3.11.0
       zod: 3.23.8
 
+  '@platforma-sdk/model@1.21.0':
+    dependencies:
+      '@milaboratories/pl-model-common': 1.10.2
+      utility-types: 3.11.0
+      zod: 3.23.8
+
   '@platforma-sdk/package-builder@2.14.2':
     dependencies:
       '@aws-sdk/client-s3': 3.712.0
@@ -6312,6 +6333,18 @@ snapshots:
     dependencies:
       '@milaboratories/uikit': 2.2.39(typescript@5.6.3)
       '@platforma-sdk/model': 1.20.27
+      ag-grid-enterprise: 33.0.3
+      ag-grid-vue3: 33.0.3(vue@3.5.13(typescript@5.6.3))
+      canonicalize: 2.0.0
+      lru-cache: 11.0.2
+      vue: 3.5.13(typescript@5.6.3)
+    transitivePeerDependencies:
+      - typescript
+
+  '@platforma-sdk/ui-vue@1.21.5(typescript@5.6.3)':
+    dependencies:
+      '@milaboratories/uikit': 2.2.41(typescript@5.6.3)
+      '@platforma-sdk/model': 1.21.0
       ag-grid-enterprise: 33.0.3
       ag-grid-vue3: 33.0.3(vue@3.5.13(typescript@5.6.3))
       canonicalize: 2.0.0
