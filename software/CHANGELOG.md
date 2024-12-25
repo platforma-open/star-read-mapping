@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 1.2.4
+
+### Patch Changes
+
+- 1220041: Update workflow-tengo and runenv-r to make block work on linux
+
 ## 1.2.3
 
 ### Patch Changes
