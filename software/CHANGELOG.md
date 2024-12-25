@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 1.2.6
+
+### Patch Changes
+
+- 8245bac: Update R run environment
+
 ## 1.2.5
 
 ### Patch Changes
