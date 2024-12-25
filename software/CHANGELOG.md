@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 1.2.7
+
+### Patch Changes
+
+- 1f5e9fe: Update workflow-tengo (R bugfix)
+
 ## 1.2.6
 
 ### Patch Changes
