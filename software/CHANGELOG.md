@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 1.2.8
+
+### Patch Changes
+
+- b647071: Update R run environment (.so load issue fix)
+
 ## 1.2.7
 
 ### Patch Changes
