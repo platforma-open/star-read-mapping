@@ -1,0 +1,60 @@
+ll := import("@platforma-sdk/workflow-tengo:ll")
+
+// Function to new content into domain section of specs
+// specially important when you create more than one axis. These will have
+// same block ID in pl7.app/blockId, we need to add something unique to differentiate
+// them
+addDomain := func(axisSpec, domain) {
+	axisSpec = copy(axisSpec)
+	if is_undefined(axisSpec["domain"]) {
+		axisSpec["domain"] = {}
+	}
+
+	for k, v in domain {
+		axisSpec.domain[k] = v
+	}
+
+	return axisSpec
+}
+
+getColumns := func(blockId, inputSpec) {
+	return {
+		"axes": [
+
+			{
+				"column": "sample1",
+				"spec": addDomain(inputSpec.axesSpec[0], {"pl7.app/distance" : "left",
+															"pl7.app/label": "Sample"})
+			},
+			{
+				"column": "sample2",
+				"spec": addDomain(inputSpec.axesSpec[0], {"pl7.app/distance" : "right",
+															"pl7.app/label": "Sample"})
+			}
+			],
+		"columns": [ {
+					// file column ID, in this case transposed file id
+					"column": "value",
+					"id": "value",
+					"allowNA": false,
+					"spec": {
+						// Think proper name
+						"name": "pl7.app/rna-seq/pairdist",
+						"valueType": "Double",
+						"domain": {
+							"pl7.app/blockId": blockId
+						},
+						"annotations": {
+							"pl7.app/label": "Sample distance values"
+						}
+					}
+					} 
+				],
+		"storageFormat": "Binary",
+		"partitionKeyLength": 0
+	}
+}
+
+export ll.toStrict({
+	getColumns: getColumns
+})

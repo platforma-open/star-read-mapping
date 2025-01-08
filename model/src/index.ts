@@ -1,5 +1,6 @@
 import {
   BlockModel,
+  createPFrameForGraphs,
   type InferOutputsType,
   isPColumn,
   isPColumnSpec,
@@ -39,6 +40,7 @@ export type BlockArgs = {
  */
 export type UiState = {
   pcaGraphState: GraphMakerState;
+  sDistGraphState: GraphMakerState;
 };
 
 export const model = BlockModel.create()
@@ -52,6 +54,10 @@ export const model = BlockModel.create()
     pcaGraphState: {
       template: "dots",
       title: "Principal Components Analysis",
+    },
+    sDistGraphState: {
+      template: "heatmap",
+      title: "Sample Distances"
     },
   })
 
@@ -181,15 +187,52 @@ export const model = BlockModel.create()
       .entries.map((v) => v.obj)
       .filter(isPColumn)
       .filter((column) =>
-        valueTypes.find((valueType) => valueType === column.spec.valueType)
+        valueTypes.find((valueType) => (valueType === column.spec.valueType) && (
+                                          column.id.includes("metadata"))
+                                        )
       );
 
     return wf.createPFrame([...pCols, ...upstream]);
   })
 
+  .output("sampleDistancesSpec", (wf) => {
+    const pCols = wf.outputs?.resolve("sampleDistances")?.getPColumns();
+    if (pCols === undefined) return undefined;
+    return pCols[0].spec;
+
+  })
+
+  .output("sampleDistancesPf", (wf) => {
+    const pCols = wf.outputs?.resolve("sampleDistances")?.getPColumns();
+    if (pCols === undefined) return undefined;
+
+    //return wf.createPFrame(pCols);
+    // enriching with upstream data
+    const valueTypes = [
+      "Int",
+      "Long",
+      "Float",
+      "Double",
+      "String",
+      "Bytes",
+    ] as ValueType[];
+    const upstream = wf.resultPool
+      .getData()
+      .entries.map((v) => v.obj)
+      .filter(isPColumn)
+      .filter((column) =>
+        valueTypes.find((valueType) => (valueType === column.spec.valueType) && (
+                                          column.id.includes("metadata"))
+                                        )
+      );
+      
+    return createPFrameForGraphs(wf, [...pCols, ...upstream]);
+  })
+
   .sections([
     { type: "link", href: "/", label: "Settings" },
     { type: "link", href: "/PCA", label: "Principal Component Analysis" },
+    { type: "link", href: "/SDist", label: "Sample Distances" },
   ])
 
   .title((ctx) =>
