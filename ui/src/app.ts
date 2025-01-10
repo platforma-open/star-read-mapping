@@ -2,7 +2,6 @@ import { model } from "@platforma-open/milaboratories.star-read-mapping.model";
 import { defineApp } from "@platforma-sdk/ui-vue";
 import Settings from "./pages/MainPage.vue";
 import PrincipalComponentAnalysis from "./pages/PCAPage.vue";
-import SampleDistancesHeatmap from "./pages/SDistPage.vue";
 
 export const sdkPlugin = defineApp(model, (app) => {
   return {
@@ -13,7 +12,6 @@ export const sdkPlugin = defineApp(model, (app) => {
     routes: {
       "/": () => Settings,
       "/PCA": () => PrincipalComponentAnalysis,
-      "/SDist": () => SampleDistancesHeatmap,
     },
   };
 });
