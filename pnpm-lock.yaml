@@ -19,7 +19,7 @@ catalogs:
       specifier: ^2.1.5
       version: 2.1.5
     '@platforma-open/milaboratories.runenv-r':
-      specifier: ^1.2.11
+      specifier: ^1.2.10
       version: 1.2.11
     '@platforma-open/milaboratories.software-small-binaries':
       specifier: ^1.15.6
