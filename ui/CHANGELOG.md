@@ -1,5 +1,16 @@
 # @platforma-open/milaboratories.block-template.ui
 
+## 1.4.0
+
+### Minor Changes
+
+- a73a50a: Added a sample distances heatmap
+
+### Patch Changes
+
+- Updated dependencies [a73a50a]
+  - @platforma-open/milaboratories.star-read-mapping.model@1.2.0
+
 ## 1.3.2
 
 ### Patch Changes

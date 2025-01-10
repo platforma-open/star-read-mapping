@@ -1,5 +1,16 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 1.4.0
+
+### Minor Changes
+
+- a73a50a: Added a sample distances heatmap
+
+### Patch Changes
+
+- Updated dependencies [a73a50a]
+  - @platforma-open/milaboratories.star-read-mapping.software@1.3.0
+
 ## 1.3.8
 
 ### Patch Changes

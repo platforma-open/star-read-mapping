@@ -1,5 +1,14 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.4.15
+
+### Patch Changes
+
+- Updated dependencies [a73a50a]
+  - @platforma-open/milaboratories.star-read-mapping.workflow@1.4.0
+  - @platforma-open/milaboratories.star-read-mapping.model@1.2.0
+  - @platforma-open/milaboratories.star-read-mapping.ui@1.4.0
+
 ## 1.4.14
 
 ### Patch Changes

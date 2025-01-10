@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.model
 
+## 1.2.0
+
+### Minor Changes
+
+- a73a50a: Added a sample distances heatmap
+
 ## 1.1.1
 
 ### Patch Changes

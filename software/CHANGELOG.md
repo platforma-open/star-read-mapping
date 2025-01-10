@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 1.3.0
+
+### Minor Changes
+
+- a73a50a: Added a sample distances heatmap
+
 ## 1.2.8
 
 ### Patch Changes
