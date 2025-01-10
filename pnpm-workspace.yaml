@@ -9,18 +9,18 @@ packages:
 catalog:
   '@platforma-sdk/block-tools': ^2.5.3
   '@platforma-sdk/model': ^1.21.20
-  '@platforma-sdk/ui-vue': ^1.21.21
+  '@platforma-sdk/ui-vue': ^1.21.23
   '@platforma-sdk/tengo-builder': ^1.17.5
   '@platforma-sdk/workflow-tengo': ^2.9.6
 
-  '@platforma-sdk/test': ^1.21.20
+  '@platforma-sdk/test': ^1.21.22
   '@milaboratories/graph-maker': ^1.1.21
   '@milaboratories/software-pframes-conv': ^2.1.5
   '@platforma-open/milaboratories.software-small-binaries': ^1.15.6
   '@platforma-open/milaboratories.software-subread': ^1.0.0
   '@platforma-open/milaboratories.software-star': ^1.0.1
   '@platforma-open/milaboratories.star-read-mapping.genome-assets': ^1.1.6
-  '@platforma-open/milaboratories.runenv-r': ^1.2.11
+  '@platforma-open/milaboratories.runenv-r': ^1.2.10
   '@platforma-sdk/package-builder': ^2.15.0
 
   '@milaboratories/helpers': ^1.6.11
@@ -35,7 +35,7 @@ catalog:
   'tsup': ~8.3.5
   'turbo': ^2.3.3
 
-  'vite': ^6.0.6
+  'vite': ^6.0.7
   'vitest': ^2.1.8
   '@vitejs/plugin-vue': ^5.2.1
 
