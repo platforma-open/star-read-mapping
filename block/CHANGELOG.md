@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.4.14
+
+### Patch Changes
+
+- a6ea860: Dependancy update
+
 ## 1.4.13
 
 ### Patch Changes
