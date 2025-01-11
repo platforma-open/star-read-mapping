@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.4.16
+
+### Patch Changes
+
+- 109b3f7: chore: fix path to CHANGELOG in block folder
+
 ## 1.4.15
 
 ### Patch Changes
