@@ -56,7 +56,7 @@ export const model = BlockModel.create()
       title: "Principal Components Analysis",
     },
     sDistGraphState: {
-      template: "heatmap",
+      template: "heatmapClustered",
       title: "Sample Distances"
     },
   })

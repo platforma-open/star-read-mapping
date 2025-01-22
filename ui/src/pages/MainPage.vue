@@ -14,7 +14,7 @@ import {
 } from "@platforma-sdk/ui-vue";
 
 import { ColDef, GridApi, GridOptions, GridReadyEvent, ModuleRegistry, ClientSideRowModelModule } from 'ag-grid-enterprise';
-import { PlRef } from '@platforma-sdk/model';
+import { PlRef, plRefsEqual } from '@platforma-sdk/model';
 import { computed, reactive, shallowRef } from "vue";
 import { useApp } from "../app";
 import AlignmentStatsCell from './AlignmentStatsCell.vue';
@@ -151,11 +151,6 @@ const gridOptions: GridOptions = {
     //     ChainsStatsCell
   }
 };
-
-/* @deprecated Migrate to SDK method when will be published */
-function plRefsEqual(ref1: PlRef, ref2: PlRef) {
-  return ref1.blockId === ref2.blockId && ref1.name === ref2.name;
-}
 
 function setInput(inputRef?: PlRef) {
   app.model.args.ref = inputRef;

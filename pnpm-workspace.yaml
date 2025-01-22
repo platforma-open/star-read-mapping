@@ -14,13 +14,13 @@ catalog:
   '@platforma-sdk/workflow-tengo': ^2.9.6
 
   '@platforma-sdk/test': ^1.21.22
-  '@milaboratories/graph-maker': ^1.1.21
+  '@milaboratories/graph-maker': ^1.1.29
   '@milaboratories/software-pframes-conv': ^2.1.5
   '@platforma-open/milaboratories.software-small-binaries': ^1.15.6
   '@platforma-open/milaboratories.software-subread': ^1.0.0
   '@platforma-open/milaboratories.software-star': ^1.0.1
   '@platforma-open/milaboratories.star-read-mapping.genome-assets': ^1.1.6
-  '@platforma-open/milaboratories.runenv-r': ^1.2.10
+  '@platforma-open/milaboratories.runenv-r': ^1.2.9
   '@platforma-sdk/package-builder': ^2.15.0
 
   '@milaboratories/helpers': ^1.6.11
