@@ -20,7 +20,7 @@ catalog:
   '@platforma-open/milaboratories.software-subread': ^1.0.0
   '@platforma-open/milaboratories.software-star': ^1.0.1
   '@platforma-open/milaboratories.star-read-mapping.genome-assets': ^1.1.6
-  '@platforma-open/milaboratories.runenv-r': ^1.2.9
+  '@platforma-open/milaboratories.runenv-r': ^1.2.10
   '@platforma-sdk/package-builder': ^2.15.0
 
   '@milaboratories/helpers': ^1.6.11
