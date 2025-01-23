@@ -267,7 +267,8 @@ wf.body(func(args) {
 				},
 				valueType: "String",
 				annotations: {
-					"pl7.app/label": "Gene Symbol"
+					"pl7.app/label": "Gene Symbol",
+					"pl7.app/axisNature": "scaleCompatible"
 				},
 				axesSpec: [
 					inputSpec.axesSpec[0],
