@@ -30,9 +30,11 @@ getColumns := func(blockId, species) {
 					"valueType": "Double",
 					"annotations": {
 						"pl7.app/label": "Expression level",
-						"pl7.app/rna-seq/normalized": "false",
 						"pl7.app/table/hValue": "true"
-					}
+					}//,
+					// "domain": {
+					// 	"pl7.app/rna-seq/normalized": "false"
+					// }
 				}
 			}
 			],
