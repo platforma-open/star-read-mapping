@@ -106,7 +106,7 @@ wf.body(func(args) {
 		"rawCounts.spec":
 		{
 			kind: "PColumn",
-			name: "countMatrix",
+			name: "pl7.app/rna-seq/countMatrix",
 			domain: {
 				"pl7.app/blockId": blockId
 			},
@@ -198,15 +198,15 @@ wf.body(func(args) {
 		rawCount : {
 			spec: trace.inject({
 				kind: "PColumn",
-				name: "countMatrix",
+				name: "pl7.app/rna-seq/countMatrix",
 				domain: {
 					"pl7.app/blockId": blockId,
-					"pl7.app/species": species
+					"pl7.app/species": species,
+					"pl7.app/rna-seq/normalized": "false"
 				},
 				valueType: "Double",
 				annotations: {
-					"pl7.app/label": "Raw gene expression",
-					"pl7.app/rna-seq/normalized": "false"
+					"pl7.app/label": "Raw gene expression"
 				},
 				axesSpec: [
 					inputSpec.axesSpec[0],
@@ -228,15 +228,16 @@ wf.body(func(args) {
 	normCount : {
 			spec: trace.inject({
 				kind: "PColumn",
-				name: "countMatrix",
+				name: "pl7.app/rna-seq/countMatrix",
 				domain: {
 					"pl7.app/blockId": blockId,
-					"pl7.app/species": species
+					"pl7.app/species": species,
+					"pl7.app/rna-seq/normalized": "true"
+
 				},
 				valueType: "Double",
 				annotations: {
 					"pl7.app/label": "Normalized gene expression",
-					"pl7.app/rna-seq/normalized": "true",
 					"pl7.app/table/hValue": "true"
 				},
 				axesSpec: [
@@ -266,7 +267,8 @@ wf.body(func(args) {
 				},
 				valueType: "String",
 				annotations: {
-					"pl7.app/label": "Gene Symbol"
+					"pl7.app/label": "Gene Symbol",
+					"pl7.app/axisNature": "scaleCompatible"
 				},
 				axesSpec: [
 					inputSpec.axesSpec[0],
