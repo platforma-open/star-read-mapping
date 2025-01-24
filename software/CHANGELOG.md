@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.0.0
+
+### Major Changes
+
+- 50cf3c1: Update Pcolumns to follow right nomenclature
+
 ## 1.3.0
 
 ### Minor Changes

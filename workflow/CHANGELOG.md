@@ -1,5 +1,16 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.0.0
+
+### Major Changes
+
+- 50cf3c1: Update Pcolumns to follow right nomenclature
+
+### Patch Changes
+
+- Updated dependencies [50cf3c1]
+  - @platforma-open/milaboratories.star-read-mapping.software@2.0.0
+
 ## 1.4.0
 
 ### Minor Changes
