@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.1.0
+
+### Minor Changes
+
+- d436f1a: Corrected Gene symbol axis nature
+
 ## 2.0.0
 
 ### Major Changes
