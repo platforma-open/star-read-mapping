@@ -19,8 +19,8 @@ catalogs:
       specifier: ^2.1.5
       version: 2.1.5
     '@platforma-open/milaboratories.runenv-r':
-      specifier: ^1.2.16
-      version: 1.2.16
+      specifier: ^1.2.17
+      version: 1.2.17
     '@platforma-open/milaboratories.software-small-binaries':
       specifier: ^1.15.6
       version: 1.15.6
@@ -141,7 +141,7 @@ importers:
     devDependencies:
       '@platforma-open/milaboratories.runenv-r':
         specifier: 'catalog:'
-        version: 1.2.16
+        version: 1.2.17
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
         version: 2.15.0
@@ -1141,8 +1141,8 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@platforma-open/milaboratories.runenv-r@1.2.16':
-    resolution: {integrity: sha512-jx8113y7IBIUl7hYvvJA2ZsZVtVnYDxsM7twpcjnTjXORrZ3uM68mZ/biKKsmEGF67TV6RYeFuxVmVNOaZ+zfQ==}
+  '@platforma-open/milaboratories.runenv-r@1.2.17':
+    resolution: {integrity: sha512-XkZn1j5RJ2svseuFQHzKeelMLXYkn8NVo1Lu/D3O+ncJSPriLtXqpZ9v/zcd6FOp/xi9xD5v3ULQF+23Np60jQ==}
 
   '@platforma-open/milaboratories.software-small-binaries.guided-command@1.0.4':
     resolution: {integrity: sha512-LD8XQDnR+L9oRD7JXE0VWGmv1/0cm+J71flrwBUWeIbuaenPC8Nsza8oy7JjLJ8AX+bm8XAyyJALuqBBqkL95Q==}
@@ -6236,7 +6236,7 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@platforma-open/milaboratories.runenv-r@1.2.16': {}
+  '@platforma-open/milaboratories.runenv-r@1.2.17': {}
 
   '@platforma-open/milaboratories.software-small-binaries.guided-command@1.0.4': {}
 
