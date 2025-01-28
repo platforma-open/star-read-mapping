@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.0.2
+
+### Patch Changes
+
+- 29db244: chore: update runenv-r to 1.2.17
+
 ## 2.0.1
 
 ### Patch Changes
