@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.0.1
+
+### Patch Changes
+
+- 207acab: choreL update rrunenv-r deps
+
 ## 2.0.0
 
 ### Major Changes
