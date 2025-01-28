@@ -15,7 +15,7 @@
           "artifact": {
             "type": "R",
             "registry": "platforma-open",
-            "environment": "@platforma-open/milaboratories.runenv-r:4.4.1",
+            "environment": "@platforma-open/milaboratories.runenv-r:4.4.2",
             "dependencies": {
               "toolset": "renv",
               "lockFile": "renv.lock"
@@ -33,7 +33,7 @@
           "artifact": {
             "type": "R",
             "registry": "platforma-open",
-            "environment": "@platforma-open/milaboratories.runenv-r:4.4.1",
+            "environment": "@platforma-open/milaboratories.runenv-r:4.4.2",
             "dependencies": {
               "toolset": "renv",
               "lockFile": "renv.lock"
