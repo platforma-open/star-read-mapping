@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { AgGridVue } from 'ag-grid-vue3';
 import {
   AgGridTheme,
+  makeRowNumberColDef,
   PlAgOverlayLoading,
   PlAgOverlayNoRows,
   PlAgTextAndButtonCell,
@@ -12,9 +12,10 @@ import {
   PlMaskIcon24,
   PlSlideModal
 } from "@platforma-sdk/ui-vue";
+import { AgGridVue } from 'ag-grid-vue3';
 
-import { ColDef, GridApi, GridOptions, GridReadyEvent, ModuleRegistry, ClientSideRowModelModule } from 'ag-grid-enterprise';
 import { PlRef, plRefsEqual } from '@platforma-sdk/model';
+import { ClientSideRowModelModule, ColDef, GridApi, GridOptions, GridReadyEvent, ModuleRegistry } from 'ag-grid-enterprise';
 import { computed, reactive, shallowRef } from "vue";
 import { useApp } from "../app";
 import AlignmentStatsCell from './AlignmentStatsCell.vue';
@@ -90,6 +91,7 @@ const defaultColDef: ColDef = {
 };
 
 const columnDefs: ColDef[] = [
+  makeRowNumberColDef(),
   {
     colId: 'label',
     field: 'sampleLabel',
