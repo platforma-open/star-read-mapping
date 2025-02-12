@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ICellRendererParams } from 'ag-grid-enterprise';
+import type { ICellRendererParams } from 'ag-grid-enterprise';
 import { computed, unref } from 'vue';
-import { PlAgCellProgress, PlProgressCellProps } from '@platforma-sdk/ui-vue';
+import type { PlProgressCellProps } from '@platforma-sdk/ui-vue';
+import { PlAgCellProgress } from '@platforma-sdk/ui-vue';
 
 const props = defineProps<{
   params: ICellRendererParams;
@@ -23,7 +24,7 @@ const parsed = computed<Parsed>(() => {
   const raw = unref(progressString);
 
   const res: Parsed = {
-    raw
+    raw,
   };
 
   if (!raw) {
@@ -67,7 +68,7 @@ const ProgressProps = computed<PlProgressCellProps>(() => {
     stage: parsed.value.stage === 'Queued' ? 'not_started' : 'running',
     step: parsed.value.stage || '',
     progress: parsed.value.percentage ? +parsed.value.percentage : 0,
-    progressString: parsed.value.percentageLabel || ''
+    progressString: parsed.value.percentageLabel || '',
   };
 });
 </script>

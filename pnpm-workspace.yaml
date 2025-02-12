@@ -12,6 +12,7 @@ catalog:
   '@platforma-sdk/ui-vue': ^1.21.23
   '@platforma-sdk/tengo-builder': ^1.17.5
   '@platforma-sdk/workflow-tengo': ^2.9.6
+  '@platforma-sdk/eslint-config': ^1.0.1
 
   '@platforma-sdk/test': ^1.21.22
   '@milaboratories/graph-maker': ^1.1.32

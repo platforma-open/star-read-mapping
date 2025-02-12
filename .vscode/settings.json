@@ -1,0 +1,13 @@
+{
+  "[typescript]": {
+      "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[vue]": {
+      "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "cSpell.words": [
+      "datasource",
+      "pframe",
+      "prerun"
+  ],
+}

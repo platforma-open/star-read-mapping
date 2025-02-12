@@ -7,9 +7,9 @@ import {
   parseResourceMap,
   type PlRef,
   type ValueType,
-} from "@platforma-sdk/model";
+} from '@platforma-sdk/model';
 
-import { type GraphMakerState } from "@milaboratories/graph-maker";
+import { type GraphMakerState } from '@milaboratories/graph-maker';
 /**
  * Block arguments coming from the user interface
  */
@@ -46,39 +46,39 @@ export type UiState = {
 export const model = BlockModel.create()
 
   .withArgs<BlockArgs>({
-    species: "homo-sapiens",
-    strandness: "0",
+    species: 'homo-sapiens',
+    strandness: '0',
   })
 
   .withUiState<UiState>({
     pcaGraphState: {
-      template: "dots",
-      title: "Principal Components Analysis",
+      template: 'dots',
+      title: 'Principal Components Analysis',
     },
     sDistGraphState: {
-      template: "heatmapClustered",
-      title: "Sample Distances"
+      template: 'heatmapClustered',
+      title: 'Sample Distances',
     },
   })
 
   /**
    * Find possible options for the fastq input
    */
-  .output("dataOptions", (ctx) => {
+  .output('dataOptions', (ctx) => {
     return ctx.resultPool.getOptions((v) => {
       if (!isPColumnSpec(v)) return false;
       const domain = v.domain;
       return (
-        v.name === "pl7.app/sequencing/data" &&
-        (v.valueType as string) === "File" &&
-        domain !== undefined &&
-        (domain["pl7.app/fileExtension"] === "fastq" ||
-          domain["pl7.app/fileExtension"] === "fastq.gz")
+        v.name === 'pl7.app/sequencing/data'
+        && (v.valueType as string) === 'File'
+        && domain !== undefined
+        && (domain['pl7.app/fileExtension'] === 'fastq'
+          || domain['pl7.app/fileExtension'] === 'fastq.gz')
       );
     });
   })
 
-  .output("labels", (ctx) => {
+  .output('labels', (ctx) => {
     const inputRef = ctx.args.ref;
     if (inputRef === undefined) return undefined;
 
@@ -94,93 +94,93 @@ export const model = BlockModel.create()
   /**
    * Preprocessing progress
    */
-  .output("starProgress", (wf) => {
+  .output('starProgress', (wf) => {
     return parseResourceMap(
-      wf.outputs?.resolve("starProgress"),
+      wf.outputs?.resolve('starProgress'),
       (acc) => acc.getLogHandle(),
-      false
+      false,
     );
   })
 
   /**
    * Last line from StAR output
    */
-  .output("starProgressLine", (wf) => {
+  .output('starProgressLine', (wf) => {
     return parseResourceMap(
-      wf.outputs?.resolve("starProgress"),
+      wf.outputs?.resolve('starProgress'),
       (acc) => acc.getLastLogs(1),
-      false
+      false,
     );
   })
 
-  .output("starQc", (wf) =>
+  .output('starQc', (wf) =>
     parseResourceMap(
-      wf.outputs?.resolve("starQc"),
+      wf.outputs?.resolve('starQc'),
       (acc) => acc.getFileContentAsString(),
-      false
-    )
+      false,
+    ),
   )
 
-  .output("alignedBAM", (wf) =>
-    wf.outputs?.resolve("alignedBAM")?.getLastLogs(1)
+  .output('alignedBAM', (wf) =>
+    wf.outputs?.resolve('alignedBAM')?.getLastLogs(1),
   )
 
-  .output("featureCountsProgress", (wf) => {
+  .output('featureCountsProgress', (wf) => {
     return parseResourceMap(
-      wf.outputs?.resolve("featureCountsProgress"),
+      wf.outputs?.resolve('featureCountsProgress'),
       (acc) => acc.getLogHandle(),
-      false
+      false,
     );
   })
 
-  .output("featureCountsQc", (wf) =>
+  .output('featureCountsQc', (wf) =>
     parseResourceMap(
-      wf.outputs?.resolve("featureCountsQc"),
+      wf.outputs?.resolve('featureCountsQc'),
       (acc) => acc.getFileContentAsString(),
-      false
-    )
+      false,
+    ),
   )
 
   /**
    * P-frame with rawCounts
    */
-  .output("rawCountsPf", (wf) => {
-    //return wf.outputs?.resolve("pf")?.resolve("rawCounts.data")?.listInputFields()
-    const pCols = wf.outputs?.resolve("rawCountsPf")?.getPColumns();
+  .output('rawCountsPf', (wf) => {
+    // return wf.outputs?.resolve("pf")?.resolve("rawCounts.data")?.listInputFields()
+    const pCols = wf.outputs?.resolve('rawCountsPf')?.getPColumns();
     if (pCols === undefined) return undefined;
 
     return wf.createPFrame(pCols);
   })
 
-    /**
+/**
    * P-frame with normCounts
    */
-    .output("normCountsPf", (wf) => {
-      const pCols = wf.outputs?.resolve("normCountsPf")?.getPColumns();
-      if (pCols === undefined) return undefined;
-  
-      return wf.createPFrame(pCols);
-    })
+  .output('normCountsPf', (wf) => {
+    const pCols = wf.outputs?.resolve('normCountsPf')?.getPColumns();
+    if (pCols === undefined) return undefined;
+
+    return wf.createPFrame(pCols);
+  })
 
   /**
    * Returns true if the block is currently in "running" state
    */
-  .output("isRunning", (ctx) => ctx.outputs?.getIsReadyOrError() === false)
+  .output('isRunning', (ctx) => ctx.outputs?.getIsReadyOrError() === false)
 
-  .output("pcaPf", (wf) => {
-    //return wf.outputs?.resolve("pf")?.resolve("rawCounts.data")?.listInputFields()
-    const pCols = wf.outputs?.resolve("pcaComponents")?.getPColumns();
+  .output('pcaPf', (wf) => {
+    // return wf.outputs?.resolve("pf")?.resolve("rawCounts.data")?.listInputFields()
+    const pCols = wf.outputs?.resolve('pcaComponents')?.getPColumns();
     if (pCols === undefined) return undefined;
 
-    //return wf.createPFrame(pCols);
+    // return wf.createPFrame(pCols);
     // enriching with upstream data
     const valueTypes = [
-      "Int",
-      "Long",
-      "Float",
-      "Double",
-      "String",
-      "Bytes",
+      'Int',
+      'Long',
+      'Float',
+      'Double',
+      'String',
+      'Bytes',
     ] as ValueType[];
     const upstream = wf.resultPool
       .getData()
@@ -188,33 +188,32 @@ export const model = BlockModel.create()
       .filter(isPColumn)
       .filter((column) =>
         valueTypes.find((valueType) => (valueType === column.spec.valueType) && (
-                                          column.id.includes("metadata"))
-                                        )
+          column.id.includes('metadata')),
+        ),
       );
 
     return wf.createPFrame([...pCols, ...upstream]);
   })
 
-  .output("sampleDistancesSpec", (wf) => {
-    const pCols = wf.outputs?.resolve("sampleDistances")?.getPColumns();
+  .output('sampleDistancesSpec', (wf) => {
+    const pCols = wf.outputs?.resolve('sampleDistances')?.getPColumns();
     if (pCols === undefined) return undefined;
     return pCols[0].spec;
-
   })
 
-  .output("sampleDistancesPf", (wf) => {
-    const pCols = wf.outputs?.resolve("sampleDistances")?.getPColumns();
+  .output('sampleDistancesPf', (wf) => {
+    const pCols = wf.outputs?.resolve('sampleDistances')?.getPColumns();
     if (pCols === undefined) return undefined;
 
-    //return wf.createPFrame(pCols);
+    // return wf.createPFrame(pCols);
     // enriching with upstream data
     const valueTypes = [
-      "Int",
-      "Long",
-      "Float",
-      "Double",
-      "String",
-      "Bytes",
+      'Int',
+      'Long',
+      'Float',
+      'Double',
+      'String',
+      'Bytes',
     ] as ValueType[];
     const upstream = wf.resultPool
       .getData()
@@ -222,23 +221,23 @@ export const model = BlockModel.create()
       .filter(isPColumn)
       .filter((column) =>
         valueTypes.find((valueType) => (valueType === column.spec.valueType) && (
-                                          column.id.includes("metadata"))
-                                        )
+          column.id.includes('metadata')),
+        ),
       );
-      
+
     return createPFrameForGraphs(wf, [...pCols, ...upstream]);
   })
 
   .sections([
-    { type: "link", href: "/", label: "Settings" },
-    { type: "link", href: "/PCA", label: "Principal Component Analysis" },
-    { type: "link", href: "/SDist", label: "Sample Distances" },
+    { type: 'link', href: '/', label: 'Settings' },
+    { type: 'link', href: '/PCA', label: 'Principal Component Analysis' },
+    { type: 'link', href: '/SDist', label: 'Sample Distances' },
   ])
 
   .title((ctx) =>
     ctx.args.title
       ? `STAR Read Mapping - ${ctx.args.title}`
-      : "STAR Read Mapping"
+      : 'STAR Read Mapping',
   )
 
   .done();
