@@ -1,5 +1,13 @@
 # @platforma-open/milaboratories.block-template.ui
 
+## 2.0.1
+
+### Patch Changes
+
+- f0dd520: Use @platforma-sdk/eslint-config
+- Updated dependencies [f0dd520]
+  - @platforma-open/milaboratories.star-read-mapping.model@2.0.1
+
 ## 2.0.0
 
 ### Major Changes

@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.model
 
+## 2.0.1
+
+### Patch Changes
+
+- f0dd520: Use @platforma-sdk/eslint-config
+
 ## 2.0.0
 
 ### Major Changes
