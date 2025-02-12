@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ICellRendererParams } from 'ag-grid-enterprise';
+import type { ICellRendererParams } from 'ag-grid-enterprise';
 import FeatureCountsRow from './components/FeatureCountsRow.vue';
-import { FeatureCountsQC } from './results';
+import type { FeatureCountsQC } from './results';
 import { PlAgCellProgress } from '@platforma-sdk/ui-vue';
 
 defineProps<{

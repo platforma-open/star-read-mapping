@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { FeatureCountsQC } from '../results';
+import type { FeatureCountsQC } from '../results';
 import AlignmentLegend from './AlignmentLegend.vue';
 import StackedRow from './StackedRow.vue';
 
@@ -9,7 +9,6 @@ const props = defineProps<{
   size?: 'large';
   showFractionInLabel?: boolean;
 }>();
-
 
 const parts = computed(() => {
   const report = props.alignReport;
@@ -20,28 +19,28 @@ const parts = computed(() => {
     {
       color: '#6BD67D',
       value: report?.assigned,
-      label: "Assigned",
+      label: 'Assigned',
     },
     {
       color: '#B8397A',
       value: report?.unassignedMappingQuality,
-      label: "Unassigned: Mapping Quality",
+      label: 'Unassigned: Mapping Quality',
     },
     {
       color: '#E75B64',
       value: report?.unassignedNoFeatures,
-      label: "Unassigned: No Features",
+      label: 'Unassigned: No Features',
     },
     {
       color: '#FB9361',
       value: report?.unassignedAmbiguity,
-      label: "Unassigned: Ambiguity",
-    }
+      label: 'Unassigned: Ambiguity',
+    },
   ];
 });
-const legends = computed(() => parts.value.map(p => ({
+const legends = computed(() => parts.value.map((p) => ({
   color: p.color,
-  text: p.label
+  text: p.label,
 })));
 </script>
 

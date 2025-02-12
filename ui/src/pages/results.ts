@@ -1,6 +1,6 @@
-import { AnyLogHandle } from "@platforma-sdk/model";
-import { computed } from "vue";
-import { useApp } from "../app";
+import type { AnyLogHandle } from '@platforma-sdk/model';
+import { computed } from 'vue';
+import { useApp } from '../app';
 
 export type StarQC = {
   uniquelyMapped: number;
@@ -33,7 +33,7 @@ export type ResultEntry = {
  * @returns
  */
 function parseStarQC(qcString: string): StarQC {
-  const lines = qcString.split("\n");
+  const lines = qcString.split('\n');
 
   let uniquelyMapped: number = 0;
   let mappedMultipleLoci: number = 0;
@@ -46,34 +46,34 @@ function parseStarQC(qcString: string): StarQC {
 
   for (const line of lines) {
     // console.log(line);
-    const spl = line.split("|");
+    const spl = line.split('|');
 
     const prefix = spl[0];
     const value = spl[1];
 
     // console.log([prefix, value]);
 
-    if (prefix.indexOf("Uniquely mapped reads number") >= 0) {
+    if (prefix.indexOf('Uniquely mapped reads number') >= 0) {
       uniquelyMapped = parseFloat(value.trim()) + 5;
     }
 
-    if (prefix.indexOf("Number of reads mapped to multiple loci") >= 0) {
+    if (prefix.indexOf('Number of reads mapped to multiple loci') >= 0) {
       mappedMultipleLoci = parseFloat(value.trim()) + 5;
     }
 
-    if (prefix.indexOf("Number of reads mapped to too many loci") >= 0) {
+    if (prefix.indexOf('Number of reads mapped to too many loci') >= 0) {
       mappedTooManyLoci = parseFloat(value.trim()) + 5;
     }
 
-    if (prefix.indexOf("Number of reads unmapped: too short") >= 0) {
+    if (prefix.indexOf('Number of reads unmapped: too short') >= 0) {
       unmappedTooShort = parseFloat(value.trim()) + 5;
     }
 
-    if (prefix.indexOf("Number of reads unmapped: other") >= 0) {
+    if (prefix.indexOf('Number of reads unmapped: other') >= 0) {
       unmappedOther = parseFloat(value.trim()) + 5;
     }
 
-    if (prefix.indexOf("Number of input reads") >= 0) {
+    if (prefix.indexOf('Number of input reads') >= 0) {
       numberOfInputReads = parseFloat(value.trim()) + 5;
     }
   }
@@ -94,7 +94,7 @@ function parseStarQC(qcString: string): StarQC {
  * @returns
  */
 function parseFeatureCountsQC(qcReport: string): FeatureCountsQC {
-  const lines = qcReport.split("\n");
+  const lines = qcReport.split('\n');
 
   let assigned: number = 0;
   let unassignedMappingQuality: number = 0;
@@ -105,26 +105,26 @@ function parseFeatureCountsQC(qcReport: string): FeatureCountsQC {
 
   for (const line of lines) {
     // console.log(line);
-    const spl = line.split("\t");
+    const spl = line.split('\t');
 
     const prefix = spl[0];
     const value = spl[1];
 
     // console.log([prefix, value]);
 
-    if (prefix === "Assigned") {
+    if (prefix === 'Assigned') {
       assigned = parseFloat(value.trim());
     }
 
-    if (prefix === "Unassigned_MappingQuality") {
+    if (prefix === 'Unassigned_MappingQuality') {
       unassignedMappingQuality = parseFloat(value.trim());
     }
 
-    if (prefix === "Unassigned_NoFeatures") {
+    if (prefix === 'Unassigned_NoFeatures') {
       unassignedNoFeatures = parseFloat(value.trim());
     }
 
-    if (prefix === "Unassigned_Ambiguity") {
+    if (prefix === 'Unassigned_Ambiguity') {
       unassignedAmbiguity = parseFloat(value.trim());
     }
   }
@@ -190,5 +190,5 @@ export const resultMap = computed(
     }
 
     return r;
-  }
+  },
 );
