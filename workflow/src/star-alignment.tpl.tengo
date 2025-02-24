@@ -16,7 +16,6 @@ pfCountsConv := import(":pf-counts-conv")
 
 self.defineOutputs("starLog",
 	"starReport",
-	"alignedBAM",
 	"featureCountsLog",
 	"countsReport",
 	"countMatrixImport")
@@ -144,7 +143,6 @@ self.body(func(inputs) {
 	output := {
 		starLog: starLog,
 		starReport: file.exportFile(starReport),
-		alignedBAM: bamFile,
 		featureCountsLog: featureCountsLog,
 		countsReport: file.exportFile(countsReport),
 		countMatrixImport: countMatrixImport

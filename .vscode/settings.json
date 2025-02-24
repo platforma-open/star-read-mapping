@@ -12,5 +12,7 @@
   ],
   "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "always"
-    }
+    },
+    "eslint.enable": true,
+    "eslint.format.enable": true
 }
