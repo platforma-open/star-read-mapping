@@ -74,10 +74,8 @@ wf.body(func(args) {
 	}, {
 		type: "Resource",
 		name: "starReport"
-	}, {
-		type: "Resource",
-		name: "alignedBAM"
-	}, {
+	}, 
+	{
 		type: "Resource",
 		name: "featureCountsLog"
 	}, {
@@ -179,7 +177,6 @@ wf.body(func(args) {
 	outputs := {
 		starProgress: starResults.output("starLog"),
 		starQc: starResults.output("starReport"),
-		alignedBAM: starResults.output("alignedBAM"),
 		featureCountsProgress: starResults.output("featureCountsLog"),
 		featureCountsQc: starResults.output("countsReport"),
 		rawCountsPf: pframes.exportFrame(rawCountsPf),
@@ -287,8 +284,7 @@ wf.body(func(args) {
 					]
 			}),
 			data: normCountsPf["genesymbol.data"]
-	}//,
-		//alignedBAM: starResults.output("alignedBAM")
+	}
 	}
 
 	return {

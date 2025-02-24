@@ -121,10 +121,6 @@ export const model = BlockModel.create()
     ),
   )
 
-  .output('alignedBAM', (wf) =>
-    wf.outputs?.resolve('alignedBAM')?.getLastLogs(1),
-  )
-
   .output('featureCountsProgress', (wf) => {
     return parseResourceMap(
       wf.outputs?.resolve('featureCountsProgress'),
