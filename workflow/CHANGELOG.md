@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.2.0
+
+### Minor Changes
+
+- 455bbea: Updated block outputs
+
 ## 2.1.2
 
 ### Patch Changes

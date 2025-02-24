@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.model
 
+## 2.1.0
+
+### Minor Changes
+
+- 455bbea: Updated block outputs
+
 ## 2.0.1
 
 ### Patch Changes
