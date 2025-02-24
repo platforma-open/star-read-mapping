@@ -10,4 +10,7 @@
       "pframe",
       "prerun"
   ],
+  "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "always"
+    }
 }
