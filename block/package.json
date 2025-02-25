@@ -26,10 +26,10 @@
     "meta": {
       "title": "STAR Read Mapping",
       "logo": "file:../logos/block-logo.png",
-      "url": "https://github.com/platforma/block-star-read-mapping",
-      "docs": "https://github.com/platforma/block-star-read-mapping/docs",
-      "support": "mailto:support@organization.com",
-      "description": "Bulk RNA-seq data preprocessing using STAR aligner. It runs QC and produces a count matrix.",
+      "url": "https://github.com/platforma-open/star-read-mapping",
+      "docs": "https://github.com/platforma-open/star-read-mapping/docs",
+      "support": "mailto:support@milaboratories.com",
+      "description": "Bulk RNA-seq raw sequencing data preprocessing using STAR aligner. It runs QC and produces a count matrix.",
       "longDescription": "file:../docs/description.md",
       "changelog": "file:./CHANGELOG.md",
       "tags": [

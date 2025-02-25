@@ -1,3 +1,2 @@
-# Description
-
-This block aligns reads from fastq files to a genome of interest using STAR. Calculates gene counts with featureCounts from Subread package and exports count matrix to be used by downstream blocks.
+# Overview
+This block aligns reads from FASTQ files to a genome of interest using STAR. It calculates gene counts with featureCounts from Subread package and exports the count matrix to be used by downstream blocks. Principal Component Analysis (PCA) and Sample Distances are calculated to visually evaluate sample quality.
