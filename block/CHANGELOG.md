@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.5.0
+
+### Minor Changes
+
+- 249dc7b: Metadata updated
+
 ## 1.4.23
 
 ### Patch Changes
