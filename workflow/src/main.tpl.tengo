@@ -88,8 +88,22 @@ wf.body(func(args) {
 		partitionKeyLength: 0 // [geneId]
 	}]
 
+	aggIndices := undefined
+	if len(inputSpec.axesSpec) == 1 { // Fasta
+		aggIndices = []
+	} else if len(inputSpec.axesSpec) == 2 { // Fastq
+		ll.assert(inputSpec.axesSpec[1].name == "pl7.app/sequencing/readIndex", "unexpected axis name " + inputSpec.axesSpec[1].name)
+		aggIndices = [1]
+	} else if len(inputSpec.axesSpec) == 3 { // MultilaneFastq
+		ll.assert(inputSpec.axesSpec[1].name == "pl7.app/sequencing/lane", "unexpected axis name " + inputSpec.axesSpec[1].name)
+		ll.assert(inputSpec.axesSpec[2].name == "pl7.app/sequencing/readIndex", "unexpected axi name " + inputSpec.axesSpec[2].name)
+		aggIndices = [1, 2]
+	} else {
+		ll.panic("unexpected structure of input PColumn with sequencing data")
+	}
+
 	starResults := llPFrames.aggregate(
-		input.data, [1], starAlignmentTpl,
+		input.data, aggIndices, starAlignmentTpl,
 		aggregationTargets,
 		false,
 		{
