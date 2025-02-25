@@ -93,7 +93,6 @@ wf.body(func(args) {
 		aggregationTargets,
 		false,
 		{
-			blockId: blockId,
 			species: species,
 			strandness: strandness,
 			fileExtension: fileExtension

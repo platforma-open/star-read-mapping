@@ -23,7 +23,6 @@ self.defineOutputs("starLog",
 
 self.body(func(inputs) {
 	inputData := inputs[pConstants.VALUE_FIELD_NAME]
-	blockId := inputs.blockId
 	species := inputs.species
 	fileExtension := inputs.fileExtension
 	strandness := inputs.strandness
@@ -129,7 +128,7 @@ self.body(func(inputs) {
 	countsReport := featureCounts.getFile("rawCounts.tsv.summary")
 	outputFeatureCounts := featureCounts.getFile("rawCounts.tsv")
 
-	tsvImportParams := pfCountsConv.getColumns(blockId, species)
+	tsvImportParams := pfCountsConv.getColumns(species)
 
 	countMatrixImport := xsv.importFile(featureCounts.getFile("rawCounts.tsv"), "tsv", tsvImportParams, { dataOnly: true })
 
