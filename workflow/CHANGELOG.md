@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.3.0
+
+### Minor Changes
+
+- 372a197: Fixed deduplication
+
 ## 2.2.0
 
 ### Minor Changes
