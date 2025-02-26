@@ -9,6 +9,7 @@ file := import("@platforma-sdk/workflow-tengo:file")
 assets := import("@platforma-sdk/workflow-tengo:assets")
 pframes := import("@platforma-sdk/workflow-tengo:pframes")
 pConstants := import("@platforma-sdk/workflow-tengo:pframes.constants")
+slices := import("@platforma-sdk/workflow-tengo:slices")
 
 genomes := import(":genomes")
 
@@ -21,6 +22,8 @@ self.defineOutputs("starLog",
 
 self.body(func(inputs) {
 	inputData := inputs[pConstants.VALUE_FIELD_NAME]
+	aggregationAxesNames := inputs[pConstants.AGGREGATION_AXES_NAMES_FIELD_NAME]
+
 	species := inputs.species
 	fileExtension := inputs.fileExtension
 	strandness := inputs.strandness
@@ -115,26 +118,9 @@ self.body(func(inputs) {
 			return int(numStr)  // Convert "01" → 1
 		}
 
-		// Manual Bubble Sort
-		bubbleSort := func(arr) {
-			n := len(arr)
-			for i := 0; i < n-1; i++ {
-				for j := 0; j < n-1-i; j++ {
-					if extractLaneNumber(arr[j]) > extractLaneNumber(arr[j+1]) {
-						// Swap arr[j] and arr[j+1]
-						temp := arr[j]
-						arr[j] = arr[j+1]
-						arr[j+1] = temp
-					}
-				}
-			}
-			return arr
-		}
-
-		// Sort files by lane number to ensure R1 and R2 are aligned
-		sortedR1 := bubbleSort(fileLists["R1"])
-		sortedR2 := bubbleSort(fileLists["R2"])
-
+		// Sort files by lane number using simple quickSort - default string ordering works for file names
+		sortedR1 := slices.quickSort(fileLists["R1"])
+		sortedR2 := slices.quickSort(fileLists["R2"])
 
 		// Function to manually join a list into a comma-separated string
 		join := func(arr) {
@@ -159,6 +145,7 @@ self.body(func(inputs) {
 				continue
 			}
 			nReads = nReads + 1
+
 		}
 		ll.assert(nReads != 0, "No R read indexes")
 	}
@@ -224,7 +211,7 @@ self.body(func(inputs) {
 	//   rawCounts.spec
 	// after we add { dataOnly: true }
 	//   rawCounts [ containing value from rawCounts.data ]
-	ll.print("print import params", tsvImportParams)
+	// ll.print("print import params", tsvImportParams)
 
 	output := {
 		starLog: starLog,

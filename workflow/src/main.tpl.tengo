@@ -69,7 +69,7 @@ wf.body(func(args) {
 
 	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
 
-	rawCountsConvertSettings := pfCountsConv.getColumns(species)
+	rawCountsConvertSettings := pfCountsConv.getColumns(species, blockId)
 
 	targetOutputs := [{
 		type: "Resource",
@@ -116,10 +116,11 @@ wf.body(func(args) {
 		},
 		name: "countsReport"
 	}, {
-		type: "BinaryPartitioned",
+		type: "Xsv",
+		xsvType: "tsv",
+		settings: rawCountsConvertSettings,
 		name: "rawCounts",
-		path: ["countMatrixImport", "rawCounts"],
-		partitionKeyLength: 0 // [geneId]
+		path: ["rawCountsTsv"]
 	}]
 
 	// aggIndices := undefined
@@ -136,7 +137,7 @@ wf.body(func(args) {
 	// 	ll.panic("unexpected structure of input PColumn with sequencing data")
 	// }
 
-	starResults := llPFrames.aggregate(
+	starResults := pframes.processColumn(
 		{ spec: inputSpec, data: input.data }, starAlignmentTpl,
 		targetOutputs,
 		{
@@ -163,31 +164,8 @@ wf.body(func(args) {
 	)
 
 	rawCountsPf := {
-		"rawCounts.spec":
-		{
-			kind: "PColumn",
-			name: "pl7.app/rna-seq/countMatrix",
-			domain: {
-				"pl7.app/blockId": blockId
-			},
-			valueType: "Double",
-			axesSpec: [
-				inputSpec.axesSpec[0],
-				{
-					"name": "pl7.app/rna-seq/geneId",
-					"type": "String",
-					"domain": {
-						"pl7.app/blockId": blockId,
-						"pl7.app/species": species
-					},
-					"annotations": {
-						"pl7.app/label": "Ensembl Id"
-					}
-				}
-				],
-			annotations: {"pl7.app/label": "Raw gene expression"}
-		},
-		"rawCounts.data": starResults.output("rawCounts")
+		"rawCounts.spec": starResults.outputSpec("rawCounts"),
+		"rawCounts.data": starResults.outpuData("rawCounts")
 	}
 
 	// Convert pf to csv

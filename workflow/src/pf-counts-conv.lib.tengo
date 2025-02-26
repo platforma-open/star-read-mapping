@@ -1,6 +1,6 @@
 ll := import("@platforma-sdk/workflow-tengo:ll")
 
-getColumns := func(species) {
+getColumns := func(species, blockId) {
 	return {
 		"commentLinePrefix": "#",
 		"axes": [
@@ -26,6 +26,9 @@ getColumns := func(species) {
 				"allowNA": true,
 				"spec": {
 					"name": "pl7.app/rna-seq/rawCount",
+					"domain": {
+						"pl7.app/blockId": blockId
+					},
 					"valueType": "Double",
 					"annotations": {
 						"pl7.app/label": "Expression level",
