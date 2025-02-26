@@ -20,7 +20,6 @@ addDomain := func(axisSpec, domain) {
 getColumns := func(blockId, inputSpec) {
 	return {
 		"axes": [
-
 			{
 				"column": "sample1",
 				"spec": addDomain(inputSpec.axesSpec[0], {"pl7.app/distance" : "left",
@@ -48,7 +47,7 @@ getColumns := func(blockId, inputSpec) {
 							"pl7.app/label": "Sample distance values"
 						}
 					}
-					} 
+					}
 				],
 		"storageFormat": "Binary",
 		"partitionKeyLength": 0
