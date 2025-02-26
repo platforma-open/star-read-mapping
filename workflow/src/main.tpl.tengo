@@ -44,6 +44,7 @@ pframes := import("@platforma-sdk/workflow-tengo:pframes")
 llPFrames := import("@platforma-sdk/workflow-tengo:pframes.ll")
 
 genomes := import(":genomes")
+pfCountsConv := import(":pf-counts-conv")
 pfPcaConv := import(":pf-pca-conv")
 hcPfconvParams := import(":pf-hcparams-conv")
 pfNormCountsConv := import(":pf-norm-counts-conv")
@@ -65,21 +66,54 @@ wf.body(func(args) {
 
 	species := args.species
 	strandness := args.strandness
-	
+
 	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
 
-	aggregationTargets := [{
+	rawCountsConvertSettings := pfCountsConv.getColumns(species)
+
+	targetOutputs := [{
 		type: "Resource",
+		spec: {
+			kind: "PColumn",
+			name: "github.com/alexdobin/STAR/log",
+			domain: {
+				"pl7.app/blockId": blockId
+			},
+			valueType: "Log"
+		},
 		name: "starLog"
 	}, {
 		type: "Resource",
+		spec: {
+			kind: "PColumn",
+			name: "github.com/alexdobin/STAR/report",
+			domain: {
+				"pl7.app/blockId": blockId
+			},
+			valueType: "File"
+		},
 		name: "starReport"
-	}, 
-	{
+	}, {
 		type: "Resource",
+		spec: {
+			kind: "PColumn",
+			name: "github.com/alexdobin/STAR/featureCounts/log",
+			domain: {
+				"pl7.app/blockId": blockId
+			},
+			valueType: "Log"
+		},
 		name: "featureCountsLog"
 	}, {
 		type: "Resource",
+		spec: {
+			kind: "PColumn",
+			name: "github.com/alexdobin/STAR/featureCounts/report",
+			domain: {
+				"pl7.app/blockId": blockId
+			},
+			valueType: "File"
+		},
 		name: "countsReport"
 	}, {
 		type: "BinaryPartitioned",
@@ -88,28 +122,43 @@ wf.body(func(args) {
 		partitionKeyLength: 0 // [geneId]
 	}]
 
-	aggIndices := undefined
-	if len(inputSpec.axesSpec) == 1 { // Fasta
-		aggIndices = []
-	} else if len(inputSpec.axesSpec) == 2 { // Fastq
-		ll.assert(inputSpec.axesSpec[1].name == "pl7.app/sequencing/readIndex", "unexpected axis name " + inputSpec.axesSpec[1].name)
-		aggIndices = [1]
-	} else if len(inputSpec.axesSpec) == 3 { // MultilaneFastq
-		ll.assert(inputSpec.axesSpec[1].name == "pl7.app/sequencing/lane", "unexpected axis name " + inputSpec.axesSpec[1].name)
-		ll.assert(inputSpec.axesSpec[2].name == "pl7.app/sequencing/readIndex", "unexpected axi name " + inputSpec.axesSpec[2].name)
-		aggIndices = [1, 2]
-	} else {
-		ll.panic("unexpected structure of input PColumn with sequencing data")
-	}
+	// aggIndices := undefined
+	// if len(inputSpec.axesSpec) == 1 { // Fasta
+	// 	aggIndices = []
+	// } else if len(inputSpec.axesSpec) == 2 { // Fastq
+	// 	ll.assert(inputSpec.axesSpec[1].name == "pl7.app/sequencing/readIndex", "unexpected axis name " + inputSpec.axesSpec[1].name)
+	// 	aggIndices = [1]
+	// } else if len(inputSpec.axesSpec) == 3 { // MultilaneFastq
+	// 	ll.assert(inputSpec.axesSpec[1].name == "pl7.app/sequencing/lane", "unexpected axis name " + inputSpec.axesSpec[1].name)
+	// 	ll.assert(inputSpec.axesSpec[2].name == "pl7.app/sequencing/readIndex", "unexpected axi name " + inputSpec.axesSpec[2].name)
+	// 	aggIndices = [1, 2]
+	// } else {
+	// 	ll.panic("unexpected structure of input PColumn with sequencing data")
+	// }
 
 	starResults := llPFrames.aggregate(
-		input.data, aggIndices, starAlignmentTpl,
-		aggregationTargets,
-		false,
+		{ spec: inputSpec, data: input.data }, starAlignmentTpl,
+		targetOutputs,
 		{
-			species: species,
-			strandness: strandness,
-			fileExtension: fileExtension
+			aggregate: [{
+				name: "pl7.app/sequencing/lane",
+				optional: true
+			}, {
+				name: "pl7.app/sequencing/readIndex",
+				optional: true
+			}],
+			// resulting aggregation axes names will be checked against supported combinations
+			// in the body template
+			passAggregationAxesNames: true,
+
+			// will be automatically propagated to all output specs
+			traceSteps: [{type: "milaboratories.star-read-mapping", id: blockId, importance: 20, label: "STAR - " + genomes.getSpeciesName(species)}],
+
+			extra: {
+				species: species,
+				strandness: strandness,
+				fileExtension: fileExtension
+			}
 		}
 	)
 
@@ -161,10 +210,10 @@ wf.body(func(args) {
 	PCAComponents := xsv.importFile(clusteringQC.getFile("pca_results.csv"), "csv", PCAcsvImportParams)
 
 	HQtsvImportParams := hcPfconvParams.getColumns(blockId, inputSpec)
-	// Load data matrix and transpose it converting the first axis (Sample) into 
-	// sample1 column, the second axis (previous columns) into sample2 columns, 
+	// Load data matrix and transpose it converting the first axis (Sample) into
+	// sample1 column, the second axis (previous columns) into sample2 columns,
 	// and the distance values in the "value" column
-	sampleDistances := xsv.importFile(clusteringQC.getFile("sample_distances.csv"), "csv", HQtsvImportParams, 
+	sampleDistances := xsv.importFile(clusteringQC.getFile("sample_distances.csv"), "csv", HQtsvImportParams,
 												{transpose: {
 													pAxisIdx: 0,
 													pAxisNameOverride: "sample1",
@@ -197,11 +246,6 @@ wf.body(func(args) {
 		normCountsPf: pframes.exportFrame(normCountsPf),
 		sampleDistances: pframes.exportFrame(sampleDistances)
 	}
-
-
-	trace := pSpec.makeTrace(inputSpec,
-		{type: "milaboratories.star-read-mapping", id: blockId, importance: 20, label: "STAR - " + genomes.getSpeciesName(species)}
-	)
 
 	// Count matrix export defined with sample from inputSpec + previous specs
 	exports := {

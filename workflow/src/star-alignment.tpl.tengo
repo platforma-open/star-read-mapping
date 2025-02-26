@@ -11,8 +11,6 @@ pframes := import("@platforma-sdk/workflow-tengo:pframes")
 pConstants := import("@platforma-sdk/workflow-tengo:pframes.constants")
 
 genomes := import(":genomes")
-pfCountsConv := import(":pf-counts-conv")
-
 
 self.defineOutputs("starLog",
 	"starReport",
@@ -77,7 +75,7 @@ self.body(func(inputs) {
 		}
 		ll.assert(nReads != 0, "No R read indexes")
 	} else if inputDataMeta.keyLength == 2 {
-		fileLists := {}  
+		fileLists := {}
 		for sKey, inputFile in inputData.inputs() {
 			key := json.decode(sKey)
 			lane := key[0]
@@ -93,7 +91,7 @@ self.body(func(inputs) {
 
 			// Initialize as an empty array if key does not exist
 			if fileLists[r] == undefined {
-				fileLists[r] = [] 
+				fileLists[r] = []
 			}
     		fileLists[r] = append(fileLists[r], fileName)
 
@@ -104,7 +102,7 @@ self.body(func(inputs) {
 		extractLaneNumber := func(file) {
 			prefix := "input_L"  // Extract number from "input_L01_R1.fastq.gz"
 			start := len(prefix)  // Position after "input_L"
-			
+
 			numStr := ""
 			for i := start; i < len(file); i++ {
 				char := file[i]
@@ -215,9 +213,11 @@ self.body(func(inputs) {
 	countsReport := featureCounts.getFile("rawCounts.tsv.summary")
 	outputFeatureCounts := featureCounts.getFile("rawCounts.tsv")
 
-	tsvImportParams := pfCountsConv.getColumns(species)
+	// tsvImportParams := pfCountsConv.getColumns(species)
 
-	countMatrixImport := xsv.importFile(featureCounts.getFile("rawCounts.tsv"), "tsv", tsvImportParams, { dataOnly: true })
+	// countMatrixImport := xsv.importFile(featureCounts.getFile("rawCounts.tsv"), "tsv", tsvImportParams, { dataOnly: true })
+
+	rawCountsTsv := featureCounts.getFile("rawCounts.tsv")
 
 	// PFrame
 	//   rawCounts.data
@@ -231,7 +231,7 @@ self.body(func(inputs) {
 		starReport: file.exportFile(starReport),
 		featureCountsLog: featureCountsLog,
 		countsReport: file.exportFile(countsReport),
-		countMatrixImport: countMatrixImport
+		rawCountsTsv: rawCountsTsv
 	}
 
 	return output

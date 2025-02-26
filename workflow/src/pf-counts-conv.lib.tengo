@@ -30,13 +30,10 @@ getColumns := func(species) {
 					"annotations": {
 						"pl7.app/label": "Expression level",
 						"pl7.app/table/hValue": "true"
-					}//,
-					// "domain": {
-					// 	"pl7.app/rna-seq/normalized": "false"
-					// }
+					}
 				}
 			}
-			],
+		],
 		"storageFormat": "Binary",
 		"partitionKeyLength": 0
 	}
