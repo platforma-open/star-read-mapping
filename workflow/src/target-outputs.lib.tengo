@@ -1,0 +1,59 @@
+ll := import("@platforma-sdk/workflow-tengo:ll")
+
+getTargetOutputs := func(blockId, rawCountsConvertSettings) {
+    return [{
+        type: "Resource",
+        spec: {
+            kind: "PColumn",
+            name: "github.com/alexdobin/STAR/log",
+            domain: {
+                "pl7.app/blockId": blockId
+            },
+            valueType: "Log"
+        },
+        name: "starLog"
+    }, {
+        type: "Resource",
+        spec: {
+            kind: "PColumn",
+            name: "github.com/alexdobin/STAR/report",
+            domain: {
+                "pl7.app/blockId": blockId
+            },
+            valueType: "File"
+        },
+        name: "starReport"
+    }, {
+        type: "Resource",
+        spec: {
+            kind: "PColumn",
+            name: "github.com/alexdobin/STAR/featureCounts/log",
+            domain: {
+                "pl7.app/blockId": blockId
+            },
+            valueType: "Log"
+        },
+        name: "featureCountsLog"
+    }, {
+        type: "Resource",
+        spec: {
+            kind: "PColumn",
+            name: "github.com/alexdobin/STAR/featureCounts/report",
+            domain: {
+                "pl7.app/blockId": blockId
+            },
+            valueType: "File"
+        },
+        name: "countsReport"
+    }, {
+        type: "Xsv",
+        xsvType: "tsv",
+        settings: rawCountsConvertSettings,
+        name: "rawCounts",
+        path: ["rawCountsTsv"]
+    }]
+}
+
+export ll.toStrict({
+    getTargetOutputs: getTargetOutputs
+}) 

@@ -17,7 +17,7 @@ getColumns := func(blockId, inputSpec, species) {
 						},
 						"annotations": {
 							"pl7.app/label": "Ensembl Id",
-              "pl7.app/table/visibility": "optional"
+              "pl7.app/axisNature": "scaleCompatible"
 						}
 					}
       }
@@ -28,14 +28,14 @@ getColumns := func(blockId, inputSpec, species) {
         "id": "genesymbol",
         "allowNA": true,
         "spec": {
-          "name": "pl7.app/rna-seq/genesymbol",
+          "name": "pl7.app/rna-seq/geneSymbols",
           "valueType": "String",
           "domain": {
-            "pl7.app/blockId": blockId
+            "pl7.app/blockId": blockId,
+            "pl7.app/species": species
           },
           "annotations": {
-            "pl7.app/label": "Gene symbol",
-            "pl7.app/table/orderPriority": "100000"
+            "pl7.app/label": "Gene Symbol"
           }
         }
       }, {
@@ -43,13 +43,15 @@ getColumns := func(blockId, inputSpec, species) {
         "id": "normcounts",
         "allowNA": false,
         "spec": {
-          "name": "pl7.app/rna-seq/normcounts",
+          "name": "pl7.app/rna-seq/countMatrix",
           "valueType": "Double",
           "domain": {
-            "pl7.app/blockId": blockId
+            "pl7.app/blockId": blockId,
+            "pl7.app/species": species,
+						"pl7.app/rna-seq/normalized": "true"
           },
           "annotations": {
-            "pl7.app/label": "Normalized counts",
+            "pl7.app/label": "Normalized gene expression",
             "pl7.app/table/hValue": "true"
           }
         }

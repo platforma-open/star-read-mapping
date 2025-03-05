@@ -48,6 +48,7 @@ pfCountsConv := import(":pf-counts-conv")
 pfPcaConv := import(":pf-pca-conv")
 hcPfconvParams := import(":pf-hcparams-conv")
 pfNormCountsConv := import(":pf-norm-counts-conv")
+targetOutputs := import(":target-outputs")
 
 starAlignmentTpl := assets.importTemplate(":star-alignment")
 
@@ -71,71 +72,7 @@ wf.body(func(args) {
 
 	rawCountsConvertSettings := pfCountsConv.getColumns(species, blockId)
 
-	targetOutputs := [{
-		type: "Resource",
-		spec: {
-			kind: "PColumn",
-			name: "github.com/alexdobin/STAR/log",
-			domain: {
-				"pl7.app/blockId": blockId
-			},
-			valueType: "Log"
-		},
-		name: "starLog"
-	}, {
-		type: "Resource",
-		spec: {
-			kind: "PColumn",
-			name: "github.com/alexdobin/STAR/report",
-			domain: {
-				"pl7.app/blockId": blockId
-			},
-			valueType: "File"
-		},
-		name: "starReport"
-	}, {
-		type: "Resource",
-		spec: {
-			kind: "PColumn",
-			name: "github.com/alexdobin/STAR/featureCounts/log",
-			domain: {
-				"pl7.app/blockId": blockId
-			},
-			valueType: "Log"
-		},
-		name: "featureCountsLog"
-	}, {
-		type: "Resource",
-		spec: {
-			kind: "PColumn",
-			name: "github.com/alexdobin/STAR/featureCounts/report",
-			domain: {
-				"pl7.app/blockId": blockId
-			},
-			valueType: "File"
-		},
-		name: "countsReport"
-	}, {
-		type: "Xsv",
-		xsvType: "tsv",
-		settings: rawCountsConvertSettings,
-		name: "rawCounts",
-		path: ["rawCountsTsv"]
-	}]
-
-	// aggIndices := undefined
-	// if len(inputSpec.axesSpec) == 1 { // Fasta
-	// 	aggIndices = []
-	// } else if len(inputSpec.axesSpec) == 2 { // Fastq
-	// 	ll.assert(inputSpec.axesSpec[1].name == "pl7.app/sequencing/readIndex", "unexpected axis name " + inputSpec.axesSpec[1].name)
-	// 	aggIndices = [1]
-	// } else if len(inputSpec.axesSpec) == 3 { // MultilaneFastq
-	// 	ll.assert(inputSpec.axesSpec[1].name == "pl7.app/sequencing/lane", "unexpected axis name " + inputSpec.axesSpec[1].name)
-	// 	ll.assert(inputSpec.axesSpec[2].name == "pl7.app/sequencing/readIndex", "unexpected axi name " + inputSpec.axesSpec[2].name)
-	// 	aggIndices = [1, 2]
-	// } else {
-	// 	ll.panic("unexpected structure of input PColumn with sequencing data")
-	// }
+	targetOutputs := targetOutputs.getTargetOutputs(blockId, rawCountsConvertSettings)
 
 	starResults := pframes.processColumn(
 		{ spec: inputSpec, data: input.data }, starAlignmentTpl,
@@ -188,6 +125,7 @@ wf.body(func(args) {
 	PCAComponents := xsv.importFile(clusteringQC.getFile("pca_results.csv"), "csv", PCAcsvImportParams)
 
 	HQtsvImportParams := hcPfconvParams.getColumns(blockId, inputSpec)
+
 	// Load data matrix and transpose it converting the first axis (Sample) into
 	// sample1 column, the second axis (previous columns) into sample2 columns,
 	// and the distance values in the "value" column
@@ -212,13 +150,12 @@ wf.body(func(args) {
 
 	normCountsImportParams := pfNormCountsConv.getColumns(blockId, inputSpec, species)
 	normCountsPf := xsv.importFile(countNorm.getFile("normalized_counts.csv"), "csv", normCountsImportParams)
-	//normCountsPfData := xsv.importFile(countNorm.getFile("normalized_counts.csv"), "csv", normCountsImportParams)
 
 	outputs := {
-		starProgress: starResults.output("starLog"),
-		starQc: starResults.output("starReport"),
-		featureCountsProgress: starResults.output("featureCountsLog"),
-		featureCountsQc: starResults.output("countsReport"),
+		starProgress: starResults.outputData("starLog"),
+		starQc: starResults.outputData("starReport"),
+		featureCountsProgress: starResults.outputData("featureCountsLog"),
+		featureCountsQc: starResults.outputData("countsReport"),
 		rawCountsPf: pframes.exportFrame(rawCountsPf),
 		pcaComponents: pframes.exportFrame(PCAComponents),
 		normCountsPf: pframes.exportFrame(normCountsPf),
@@ -229,72 +166,19 @@ wf.body(func(args) {
 		{type: "milaboratories.star-read-mapping", id: blockId, importance: 20, label: "STAR - " + genomes.getSpeciesName(species)}
 	)
 
-	// Count matrix export defined with sample from inputSpec + previous specs
 	exports := {
-		rawCount : pframes.exportFrame(rawCountsPf),
-	normCount : {
-			spec: trace.inject({
-				kind: "PColumn",
-				name: "pl7.app/rna-seq/countMatrix",
-				domain: {
-					"pl7.app/blockId": blockId,
-					"pl7.app/species": species,
-					"pl7.app/rna-seq/normalized": "true"
-
+		rawCount: {
+			spec: rawCountsPf["rawCounts.spec"], 
+			data: rawCountsPf["rawCounts.data"]
+			},
+		normCount : {
+				spec: trace.inject(normCountsPf["normcounts.spec"]),
+				data: normCountsPf["normcounts.data"]
 				},
-				valueType: "Double",
-				annotations: {
-					"pl7.app/label": "Normalized gene expression",
-					"pl7.app/table/hValue": "true"
-				},
-				axesSpec: [
-					inputSpec.axesSpec[0],
-					{
-						"name": "pl7.app/rna-seq/geneId",
-						"type": "String",
-						"domain": {
-							"pl7.app/blockId": blockId,
-							"pl7.app/species": species
-						},
-						"annotations": {
-							"pl7.app/label": "Ensembl Id"
-						}
-					}
-					]
-			}),
-			data: normCountsPf["normcounts.data"]
-		},
-	geneSymbols: {
-		spec: trace.inject({
-				kind: "PColumn",
-				name: "geneSymbols",
-				domain: {
-					"pl7.app/blockId": blockId,
-					"pl7.app/species": species
-				},
-				valueType: "String",
-				annotations: {
-					"pl7.app/label": "Gene Symbol"
-				},
-				axesSpec: [
-					inputSpec.axesSpec[0],
-					{
-						"name": "pl7.app/rna-seq/geneId",
-						"type": "String",
-						"domain": {
-							"pl7.app/blockId": blockId,
-							"pl7.app/species": species
-						},
-						"annotations": {
-							"pl7.app/label": "Ensembl Id",
-							"pl7.app/axisNature": "scaleCompatible"//,
-							// "pl7.app/table/orderPriority": "10"
-						}
-					}
-					]
-			}),
+		geneSymbols: {
+			spec: trace.inject(normCountsPf["genesymbol.spec"]),
 			data: normCountsPf["genesymbol.data"]
-	}
+		}
 	}
 
 	return {
