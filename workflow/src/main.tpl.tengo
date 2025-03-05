@@ -164,8 +164,8 @@ wf.body(func(args) {
 	)
 
 	rawCountsPf := {
-		"rawCounts.spec": starResults.outputSpec("rawCounts"),
-		"rawCounts.data": starResults.outpuData("rawCounts")
+		"rawCounts.spec": starResults.outputSpec("rawCounts", "rawCounts"),
+		"rawCounts.data": starResults.outputData("rawCounts", "rawCounts")
 	}
 
 	// Convert pf to csv
@@ -225,38 +225,13 @@ wf.body(func(args) {
 		sampleDistances: pframes.exportFrame(sampleDistances)
 	}
 
+	trace := pSpec.makeTrace(inputSpec,
+		{type: "milaboratories.star-read-mapping", id: blockId, importance: 20, label: "STAR - " + genomes.getSpeciesName(species)}
+	)
+
 	// Count matrix export defined with sample from inputSpec + previous specs
 	exports := {
-		rawCount : {
-			spec: trace.inject({
-				kind: "PColumn",
-				name: "pl7.app/rna-seq/countMatrix",
-				domain: {
-					"pl7.app/blockId": blockId,
-					"pl7.app/species": species,
-					"pl7.app/rna-seq/normalized": "false"
-				},
-				valueType: "Double",
-				annotations: {
-					"pl7.app/label": "Raw gene expression"
-				},
-				axesSpec: [
-					inputSpec.axesSpec[0],
-					{
-						"name": "pl7.app/rna-seq/geneId",
-						"type": "String",
-						"domain": {
-							"pl7.app/blockId": blockId,
-							"pl7.app/species": species
-						},
-						"annotations": {
-							"pl7.app/label": "Ensembl Id"
-						}
-					}
-					]
-			}),
-			data: starResults.output("rawCounts")
-	 	},
+		rawCount : pframes.exportFrame(rawCountsPf),
 	normCount : {
 			spec: trace.inject({
 				kind: "PColumn",
