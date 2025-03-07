@@ -22,7 +22,7 @@ catalog:
   '@platforma-open/milaboratories.software-star': ^1.0.1
   '@platforma-open/milaboratories.genome-assets': 1.2.0
   '@platforma-open/milaboratories.runenv-r': ^1.2.18
-  '@platforma-sdk/package-builder': ^2.15.4
+  '@platforma-sdk/package-builder': 2.15.2
 
   '@milaboratories/helpers': ^1.6.11
 
