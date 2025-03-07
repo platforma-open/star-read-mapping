@@ -17,6 +17,6 @@
     "@platforma-open/milaboratories.software-small-binaries": "catalog:",
     "@platforma-open/milaboratories.software-star": "catalog:",
     "@platforma-open/milaboratories.software-subread": "catalog:",
-    "@platforma-open/milaboratories.star-read-mapping.genome-assets": "catalog:"
+    "@platforma-open/milaboratories.genome-assets": "catalog:"
   }
 }

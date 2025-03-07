@@ -1,6 +1,7 @@
 ll := import("@platforma-sdk/workflow-tengo:ll")
+convParams := import(":pf-params")
 
-getTargetOutputs := func(blockId, rawCountsConvertSettings) {
+getTargetOutputs := func(species, blockId) {
     return [{
         type: "Resource",
         spec: {
@@ -48,7 +49,7 @@ getTargetOutputs := func(blockId, rawCountsConvertSettings) {
     }, {
         type: "Xsv",
         xsvType: "tsv",
-        settings: rawCountsConvertSettings,
+        settings: convParams.getRawCountsConvParams(species, blockId),
         name: "rawCounts",
         path: ["rawCountsTsv"]
     }]
@@ -56,4 +57,4 @@ getTargetOutputs := func(blockId, rawCountsConvertSettings) {
 
 export ll.toStrict({
     getTargetOutputs: getTargetOutputs
-}) 
+})

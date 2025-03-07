@@ -5,7 +5,6 @@ json := import("json")
 ll := import("@platforma-sdk/workflow-tengo:ll")
 xsv := import("@platforma-sdk/workflow-tengo:pframes.xsv")
 exec := import("@platforma-sdk/workflow-tengo:exec")
-file := import("@platforma-sdk/workflow-tengo:file")
 assets := import("@platforma-sdk/workflow-tengo:assets")
 pframes := import("@platforma-sdk/workflow-tengo:pframes")
 pConstants := import("@platforma-sdk/workflow-tengo:pframes.constants")
@@ -58,6 +57,7 @@ self.body(func(inputs) {
 	nReads := 0
 	filesByRIndex := {}
 	if inputDataMeta.keyLength == 1 {
+		ll.assert(aggregationAxesNames == ["pl7.app/sequencing/readIndex"], "unexpected aggregation axes names")
 		for sKey, inputFile in inputData.inputs() {
 			key := json.decode(sKey)
 			r := key[0]
@@ -78,6 +78,7 @@ self.body(func(inputs) {
 		}
 		ll.assert(nReads != 0, "No R read indexes")
 	} else if inputDataMeta.keyLength == 2 {
+		ll.assert(aggregationAxesNames == ["pl7.app/sequencing/lane", "pl7.app/sequencing/readIndex"], "unexpected aggregation axes names")
 		fileLists := {}
 		for sKey, inputFile in inputData.inputs() {
 			key := json.decode(sKey)
@@ -148,6 +149,8 @@ self.body(func(inputs) {
 
 		}
 		ll.assert(nReads != 0, "No R read indexes")
+	} else {
+		ll.panic("unexpected aggregation axes structure: %v", aggregationAxesNames)
 	}
 
 	if fileExtension == "fastq.gz" || fileExtension == "fq.gz" {
@@ -200,24 +203,13 @@ self.body(func(inputs) {
 	countsReport := featureCounts.getFile("rawCounts.tsv.summary")
 	outputFeatureCounts := featureCounts.getFile("rawCounts.tsv")
 
-	// tsvImportParams := pfCountsConv.getColumns(species)
-
-	// countMatrixImport := xsv.importFile(featureCounts.getFile("rawCounts.tsv"), "tsv", tsvImportParams, { dataOnly: true })
-
 	rawCountsTsv := featureCounts.getFile("rawCounts.tsv")
-
-	// PFrame
-	//   rawCounts.data
-	//   rawCounts.spec
-	// after we add { dataOnly: true }
-	//   rawCounts [ containing value from rawCounts.data ]
-	// ll.print("print import params", tsvImportParams)
 
 	output := {
 		starLog: starLog,
-		starReport: file.exportFile(starReport),
+		starReport: starReport,
 		featureCountsLog: featureCountsLog,
-		countsReport: file.exportFile(countsReport),
+		countsReport: countsReport,
 		rawCountsTsv: rawCountsTsv
 	}
 

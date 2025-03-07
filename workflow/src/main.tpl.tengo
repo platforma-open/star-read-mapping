@@ -44,10 +44,7 @@ pframes := import("@platforma-sdk/workflow-tengo:pframes")
 llPFrames := import("@platforma-sdk/workflow-tengo:pframes.ll")
 
 genomes := import(":genomes")
-pfCountsConv := import(":pf-counts-conv")
-pfPcaConv := import(":pf-pca-conv")
-hcPfconvParams := import(":pf-hcparams-conv")
-pfNormCountsConv := import(":pf-norm-counts-conv")
+convParams := import(":pf-params")
 targetOutputs := import(":target-outputs")
 
 starAlignmentTpl := assets.importTemplate(":star-alignment")
@@ -65,14 +62,15 @@ wf.body(func(args) {
 	input := args.resolvedInput
 	inputSpec := input.spec
 
+	sampleAxisSpec := inputSpec.axesSpec[0]
+	ll.assert(sampleAxisSpec.name == "pl7.app/sampleId", "Unexpected input axes structure")
+
 	species := args.species
 	strandness := args.strandness
 
 	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
 
-	rawCountsConvertSettings := pfCountsConv.getColumns(species, blockId)
-
-	targetOutputs := targetOutputs.getTargetOutputs(blockId, rawCountsConvertSettings)
+	targetOutputs := targetOutputs.getTargetOutputs(species, blockId)
 
 	starResults := pframes.processColumn(
 		{ spec: inputSpec, data: input.data }, starAlignmentTpl,
@@ -121,10 +119,10 @@ wf.body(func(args) {
 		cache(24 * 60 * 60 * 1000).
 		run()
 
-	PCAcsvImportParams := pfPcaConv.getColumns(blockId, inputSpec)
-	PCAComponents := xsv.importFile(clusteringQC.getFile("pca_results.csv"), "csv", PCAcsvImportParams)
+	pcaCsvImportParams := convParams.getPCAConvParams(blockId, sampleAxisSpec)
+	pcaComponents := xsv.importFile(clusteringQC.getFile("pca_results.csv"), "csv", pcaCsvImportParams)
 
-	HQtsvImportParams := hcPfconvParams.getColumns(blockId, inputSpec)
+	HQtsvImportParams := convParams.getDistanceConvParams(blockId, sampleAxisSpec)
 
 	// Load data matrix and transpose it converting the first axis (Sample) into
 	// sample1 column, the second axis (previous columns) into sample2 columns,
@@ -148,16 +146,16 @@ wf.body(func(args) {
 		cache(24 * 60 * 60 * 1000).
 		run()
 
-	normCountsImportParams := pfNormCountsConv.getColumns(blockId, inputSpec, species)
+	normCountsImportParams := convParams.getNormCountsConvParams(blockId, sampleAxisSpec, species)
 	normCountsPf := xsv.importFile(countNorm.getFile("normalized_counts.csv"), "csv", normCountsImportParams)
 
 	outputs := {
 		starProgress: starResults.outputData("starLog"),
-		starQc: starResults.outputData("starReport"),
+		starQc: pframes.exportColumnData(starResults.outputData("starReport")),
 		featureCountsProgress: starResults.outputData("featureCountsLog"),
-		featureCountsQc: starResults.outputData("countsReport"),
+		featureCountsQc: pframes.exportColumnData(starResults.outputData("countsReport")),
 		rawCountsPf: pframes.exportFrame(rawCountsPf),
-		pcaComponents: pframes.exportFrame(PCAComponents),
+		pcaComponents: pframes.exportFrame(pcaComponents),
 		normCountsPf: pframes.exportFrame(normCountsPf),
 		sampleDistances: pframes.exportFrame(sampleDistances)
 	}
@@ -168,13 +166,13 @@ wf.body(func(args) {
 
 	exports := {
 		rawCount: {
-			spec: rawCountsPf["rawCounts.spec"], 
+			spec: rawCountsPf["rawCounts.spec"],
 			data: rawCountsPf["rawCounts.data"]
-			},
+		},
 		normCount : {
-				spec: trace.inject(normCountsPf["normcounts.spec"]),
-				data: normCountsPf["normcounts.data"]
-				},
+			spec: trace.inject(normCountsPf["normcounts.spec"]),
+			data: normCountsPf["normcounts.data"]
+		},
 		geneSymbols: {
 			spec: trace.inject(normCountsPf["genesymbol.spec"]),
 			data: normCountsPf["genesymbol.data"]
