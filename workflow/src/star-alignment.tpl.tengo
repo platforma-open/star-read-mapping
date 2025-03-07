@@ -97,7 +97,7 @@ self.body(func(inputs) {
 			if fileLists[r] == undefined {
 				fileLists[r] = []
 			}
-    		fileLists[r] = append(fileLists[r], fileName)
+			fileLists[r] = append(fileLists[r], fileName)
 
 			filesByRIndex[r] = inputFile
 		}

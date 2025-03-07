@@ -2,59 +2,59 @@ ll := import("@platforma-sdk/workflow-tengo:ll")
 convParams := import(":pf-params")
 
 getTargetOutputs := func(species, blockId) {
-    return [{
-        type: "Resource",
-        spec: {
-            kind: "PColumn",
-            name: "github.com/alexdobin/STAR/log",
-            domain: {
-                "pl7.app/blockId": blockId
-            },
-            valueType: "Log"
-        },
-        name: "starLog"
-    }, {
-        type: "Resource",
-        spec: {
-            kind: "PColumn",
-            name: "github.com/alexdobin/STAR/report",
-            domain: {
-                "pl7.app/blockId": blockId
-            },
-            valueType: "File"
-        },
-        name: "starReport"
-    }, {
-        type: "Resource",
-        spec: {
-            kind: "PColumn",
-            name: "github.com/alexdobin/STAR/featureCounts/log",
-            domain: {
-                "pl7.app/blockId": blockId
-            },
-            valueType: "Log"
-        },
-        name: "featureCountsLog"
-    }, {
-        type: "Resource",
-        spec: {
-            kind: "PColumn",
-            name: "github.com/alexdobin/STAR/featureCounts/report",
-            domain: {
-                "pl7.app/blockId": blockId
-            },
-            valueType: "File"
-        },
-        name: "countsReport"
-    }, {
-        type: "Xsv",
-        xsvType: "tsv",
-        settings: convParams.getRawCountsConvParams(species, blockId),
-        name: "rawCounts",
-        path: ["rawCountsTsv"]
-    }]
+	return [ {
+		type: "Resource",
+		spec: {
+			kind: "PColumn",
+			name: "github.com/alexdobin/STAR/log",
+			domain: {
+				"pl7.app/blockId": blockId
+			},
+			valueType: "Log"
+		},
+		name: "starLog"
+	}, {
+		type: "Resource",
+		spec: {
+			kind: "PColumn",
+			name: "github.com/alexdobin/STAR/report",
+			domain: {
+				"pl7.app/blockId": blockId
+			},
+			valueType: "File"
+		},
+		name: "starReport"
+	}, {
+		type: "Resource",
+		spec: {
+			kind: "PColumn",
+			name: "github.com/alexdobin/STAR/featureCounts/log",
+			domain: {
+				"pl7.app/blockId": blockId
+			},
+			valueType: "Log"
+		},
+		name: "featureCountsLog"
+	}, {
+		type: "Resource",
+		spec: {
+			kind: "PColumn",
+			name: "github.com/alexdobin/STAR/featureCounts/report",
+			domain: {
+				"pl7.app/blockId": blockId
+			},
+			valueType: "File"
+		},
+		name: "countsReport"
+	}, {
+		type: "Xsv",
+		xsvType: "tsv",
+		settings: convParams.getRawCountsConvParams(species, blockId),
+		name: "rawCounts",
+		path: ["rawCountsTsv"]
+	} ]
 }
 
 export ll.toStrict({
-    getTargetOutputs: getTargetOutputs
+	getTargetOutputs: getTargetOutputs
 })

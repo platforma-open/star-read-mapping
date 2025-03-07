@@ -128,12 +128,12 @@ wf.body(func(args) {
 	// sample1 column, the second axis (previous columns) into sample2 columns,
 	// and the distance values in the "value" column
 	sampleDistances := xsv.importFile(clusteringQC.getFile("sample_distances.csv"), "csv", HQtsvImportParams,
-												{transpose: {
-													pAxisIdx: 0,
-													pAxisNameOverride: "sample1",
-													sAxisName: "sample2",
-													valueName: "value"
-												}})
+		{ transpose: {
+			pAxisIdx: 0,
+			pAxisNameOverride: "sample1",
+			sAxisName: "sample2",
+			valueName: "value"
+		} } )
 
 	countNorm := exec.builder().
 		software(assets.importSoftware("@platforma-open/milaboratories.star-read-mapping.software:normalize-counts")).
