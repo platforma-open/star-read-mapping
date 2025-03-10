@@ -11,18 +11,20 @@ catalog:
   '@platforma-sdk/model': ^1.22.59
   '@platforma-sdk/ui-vue': ^1.22.64
   '@platforma-sdk/tengo-builder': ^1.19.1
-  '@platforma-sdk/workflow-tengo': ^2.15.1
+  '@platforma-sdk/workflow-tengo': ^2.15.2
   '@platforma-sdk/eslint-config': ^1.0.1
 
   '@platforma-sdk/test': ^1.22.77
   '@milaboratories/graph-maker': ^1.1.51
+
   '@milaboratories/software-pframes-conv': ^2.1.13
   '@platforma-open/milaboratories.software-small-binaries': ^1.15.13
   '@platforma-open/milaboratories.software-subread': ^1.0.0
   '@platforma-open/milaboratories.software-star': ^1.0.1
   '@platforma-open/milaboratories.genome-assets': 1.2.0
-  '@platforma-open/milaboratories.runenv-r': ^1.2.18
-  '@platforma-sdk/package-builder': 2.15.2
+  '@platforma-open/milaboratories.runenv-r-normalize-counts': ^1.0.3
+  '@platforma-open/milaboratories.runenv-r-sample-qc': ^1.0.3
+  '@platforma-sdk/package-builder': ^2.15.2
 
   '@milaboratories/helpers': ^1.6.11
 

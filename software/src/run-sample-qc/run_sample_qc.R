@@ -2,21 +2,6 @@
 
 # This script was tested with R version 4.3.3 and DESeq2 version 1.42.0
 
-# Install DESeq2 if necessary
-if (!requireNamespace("DESeq2", quietly = TRUE)) {
-  cat("Installing DESeq2 from Bioconductor...\n")
-  if (!requireNamespace("BiocManager", quietly = TRUE)) {
-    install.packages("BiocManager", repos = "https://cloud.r-project.org/")
-  }
-  BiocManager::install("DESeq2")
-}
-
-# Install reshape2 if necessary
-if (!requireNamespace("reshape2", quietly = TRUE)) {
-  cat("reshape2 package not found. Installing reshape2...\n")
-  install.packages("reshape2", repos = "https://cloud.r-project.org/")
-}
-
 # Load libraries
 library(DESeq2)
 library(reshape2)

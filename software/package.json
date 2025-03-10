@@ -15,11 +15,7 @@
           "artifact": {
             "type": "R",
             "registry": "platforma-open",
-            "environment": "@platforma-open/milaboratories.runenv-r:4.4.2",
-            "dependencies": {
-              "toolset": "renv",
-              "lockFile": "renv.lock"
-            },
+            "environment": "@platforma-open/milaboratories.runenv-r-sample-qc:main",
             "root": "./src/run-sample-qc"
           },
           "cmd": [
@@ -33,11 +29,7 @@
           "artifact": {
             "type": "R",
             "registry": "platforma-open",
-            "environment": "@platforma-open/milaboratories.runenv-r:4.4.2",
-            "dependencies": {
-              "toolset": "renv",
-              "lockFile": "renv.lock"
-            },
+            "environment": "@platforma-open/milaboratories.runenv-r-normalize-counts:main",
             "root": "./src/normalize-counts"
           },
           "cmd": [
@@ -49,7 +41,8 @@
     }
   },
   "devDependencies": {
-    "@platforma-open/milaboratories.runenv-r": "catalog:",
+    "@platforma-open/milaboratories.runenv-r-sample-qc": "catalog:",
+    "@platforma-open/milaboratories.runenv-r-normalize-counts": "catalog:",
     "@platforma-sdk/package-builder": "catalog:"
   }
 }
