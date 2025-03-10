@@ -1,5 +1,12 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.4.0
+
+### Minor Changes
+
+- 55ebea7: Update to include fastqs for the same sample sequenced on multiple lanes.
+- 1a85c96: Updated workflow to accept more input file configurations
+
 ## 2.3.0
 
 ### Minor Changes
