@@ -10,7 +10,7 @@ getGeneAxisSpec := func(species) {
 		},
 		annotations: {
 			"pl7.app/label": "Ensembl Id",
-			"pl7.app/axisNature": "scaleCompatible",
+			// "pl7.app/axisNature": "scaleCompatible",
 			"pl7.app/table/visibility": "optional"
 		}
 	}
