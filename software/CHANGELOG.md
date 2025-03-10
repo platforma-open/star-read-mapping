@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.0.3
+
+### Patch Changes
+
+- e229046: Use new custom block R run environment
+
 ## 2.0.2
 
 ### Patch Changes
