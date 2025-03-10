@@ -1,0 +1,181 @@
+ll := import("@platforma-sdk/workflow-tengo:ll")
+maps := import("@platforma-sdk/workflow-tengo:maps")
+
+getGeneAxisSpec := func(species) {
+	return {
+		name: "pl7.app/rna-seq/geneId",
+		type: "String",
+		domain: {
+			"pl7.app/species": species
+		},
+		annotations: {
+			"pl7.app/label": "Ensembl Id",
+			// "pl7.app/axisNature": "scaleCompatible",
+			"pl7.app/table/visibility": "optional"
+		}
+	}
+}
+
+getRawCountsConvParams := func(species, blockId) {
+	return {
+		commentLinePrefix: "#",
+		axes: [ {
+			column: "Geneid",
+			spec: getGeneAxisSpec(species)
+		} ],
+		columns: [ {
+			column: "sample_Aligned.sortedByCoord.out.bam",
+			id: "rawCounts",
+			allowNA: true,
+			spec: {
+				name: "pl7.app/rna-seq/countMatrix",
+				valueType: "Double",
+				domain: {
+					"pl7.app/blockId": blockId,
+					"pl7.app/rna-seq/normalized": "false"
+				},
+				annotations: {
+					"pl7.app/label": "Raw gene expression",
+					"pl7.app/table/hValue": "true"
+				}
+			}
+		} ],
+		storageFormat: "Binary",
+		partitionKeyLength: 0
+	}
+}
+
+getNormCountsConvParams := func(blockId, sampleAxisSpec, species) {
+	return {
+		axes: [ {
+			column: "Sample",
+			spec: sampleAxisSpec
+		}, {
+			column: "Geneid",
+			spec: getGeneAxisSpec(species)
+		} ],
+		columns: [ {
+			// TODO should be a separate column geneId -> gene symbol, gene symbol don't change with the sample
+			column: "SYMBOL",
+			id: "genesymbol",
+			allowNA: true,
+			spec: {
+				name: "pl7.app/rna-seq/geneSymbols",
+				valueType: "String",
+				domain: {
+					"pl7.app/species": species
+				},
+				annotations: {
+					"pl7.app/label": "Gene Symbol"
+				}
+			}
+		}, {
+			column: "NormCounts",
+			id: "normcounts",
+			allowNA: false,
+			spec: {
+				name: "pl7.app/rna-seq/countMatrix",
+				valueType: "Double",
+				domain: {
+					"pl7.app/blockId": blockId,
+					"pl7.app/rna-seq/normalized": "true"
+				},
+				annotations: {
+					"pl7.app/label": "Normalized gene expression",
+					"pl7.app/table/hValue": "true"
+				}
+			}
+		} ],
+		storageFormat: "Binary",
+		partitionKeyLength: 1 // partitioned by sample
+	}
+}
+
+getDistanceConvParams := func(blockId, sampleAxisSpec) {
+	return {
+		axes: [ {
+			column: "sample1",
+			spec: maps.deepMerge(sampleAxisSpec, {
+				domain: {
+					"pl7.app/distance" : "left"
+				},
+				annotations: {
+					"pl7.app/label": "Left Sample"
+				}
+			})
+		}, {
+			column: "sample2",
+			spec: maps.deepMerge(sampleAxisSpec, {
+				domain: {
+					"pl7.app/distance" : "right"
+				},
+				annotations: {
+					"pl7.app/label": "Right Sample"
+				}
+			})
+		} ],
+		columns: [ {
+			// file column ID, in this case transposed file id
+			column: "value",
+			id: "value",
+			allowNA: false,
+			spec: {
+				// Think proper name
+				name: "pl7.app/rna-seq/pairdist",
+				valueType: "Double",
+				domain: {
+					"pl7.app/blockId": blockId
+				},
+				annotations: {
+					"pl7.app/label": "Sample distance values"
+				}
+			}
+		} ],
+		storageFormat: "Binary",
+		partitionKeyLength: 0
+	}
+}
+
+getPCAConvParams := func(blockId, sampleAxisSpec) {
+	return {
+		axes: [ {
+			column: "Sample",
+			spec: sampleAxisSpec
+		} ],
+		columns: [ {
+			column: "PC1",
+			id: "pc1",
+			allowNA: false,
+			spec: {
+				name: "pl7.app/rna-seq/pc1",
+				valueType: "Double",
+				domain: {
+					"pl7.app/blockId": blockId
+				},
+				annotations: {
+					"pl7.app/label": "Principal Component 1"
+				}
+			}
+		}, {
+			column: "PC2",
+			id: "pc2",
+			allowNA: false,
+			spec: {
+				name: "pl7.app/rna-seq/pc2",
+				valueType: "Double",
+				annotations: {
+					"pl7.app/label": "Principal component 2"
+				}
+			}
+		} ],
+		storageFormat: "Binary",
+		partitionKeyLength: 0
+	}
+}
+
+export ll.toStrict({
+	getRawCountsConvParams: getRawCountsConvParams,
+	getNormCountsConvParams: getNormCountsConvParams,
+	getDistanceConvParams: getDistanceConvParams,
+	getPCAConvParams: getPCAConvParams
+})

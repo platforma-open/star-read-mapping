@@ -44,9 +44,8 @@ pframes := import("@platforma-sdk/workflow-tengo:pframes")
 llPFrames := import("@platforma-sdk/workflow-tengo:pframes.ll")
 
 genomes := import(":genomes")
-pfPcaConv := import(":pf-pca-conv")
-hcPfconvParams := import(":pf-hcparams-conv")
-pfNormCountsConv := import(":pf-norm-counts-conv")
+convParams := import(":pf-params")
+targetOutputs := import(":target-outputs")
 
 starAlignmentTpl := assets.importTemplate(":star-alignment")
 
@@ -63,68 +62,45 @@ wf.body(func(args) {
 	input := args.resolvedInput
 	inputSpec := input.spec
 
+	sampleAxisSpec := inputSpec.axesSpec[0]
+	ll.assert(sampleAxisSpec.name == "pl7.app/sampleId", "Unexpected input axes structure")
+
 	species := args.species
 	strandness := args.strandness
-	
+
 	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
 
-	aggregationTargets := [{
-		type: "Resource",
-		name: "starLog"
-	}, {
-		type: "Resource",
-		name: "starReport"
-	}, 
-	{
-		type: "Resource",
-		name: "featureCountsLog"
-	}, {
-		type: "Resource",
-		name: "countsReport"
-	}, {
-		type: "BinaryPartitioned",
-		name: "rawCounts",
-		path: ["countMatrixImport", "rawCounts"],
-		partitionKeyLength: 0 // [geneId]
-	}]
+	targetOutputs := targetOutputs.getTargetOutputs(species, blockId)
 
-	starResults := llPFrames.aggregate(
-		input.data, [1], starAlignmentTpl,
-		aggregationTargets,
-		false,
+	starResults := pframes.processColumn(
+		{ spec: inputSpec, data: input.data }, starAlignmentTpl,
+		targetOutputs,
 		{
-			species: species,
-			strandness: strandness,
-			fileExtension: fileExtension
+			aggregate: [{
+				name: "pl7.app/sequencing/lane",
+				optional: true
+			}, {
+				name: "pl7.app/sequencing/readIndex",
+				optional: true
+			}],
+			// resulting aggregation axes names will be checked against supported combinations
+			// in the body template
+			passAggregationAxesNames: true,
+
+			// will be automatically propagated to all output specs
+			traceSteps: [{type: "milaboratories.star-read-mapping", id: blockId, importance: 20, label: "STAR - " + genomes.getSpeciesName(species)}],
+
+			extra: {
+				species: species,
+				strandness: strandness,
+				fileExtension: fileExtension
+			}
 		}
 	)
 
 	rawCountsPf := {
-		"rawCounts.spec":
-		{
-			kind: "PColumn",
-			name: "pl7.app/rna-seq/countMatrix",
-			domain: {
-				"pl7.app/blockId": blockId
-			},
-			valueType: "Double",
-			axesSpec: [
-				inputSpec.axesSpec[0],
-				{
-					"name": "pl7.app/rna-seq/geneId",
-					"type": "String",
-					"domain": {
-						"pl7.app/blockId": blockId,
-						"pl7.app/species": species
-					},
-					"annotations": {
-						"pl7.app/label": "Ensembl Id"
-					}
-				}
-				],
-			annotations: {"pl7.app/label": "Raw gene expression"}
-		},
-		"rawCounts.data": starResults.output("rawCounts")
+		"rawCounts.spec": starResults.outputSpec("rawCounts", "rawCounts"),
+		"rawCounts.data": starResults.outputData("rawCounts", "rawCounts")
 	}
 
 	// Convert pf to csv
@@ -143,20 +119,21 @@ wf.body(func(args) {
 		cache(24 * 60 * 60 * 1000).
 		run()
 
-	PCAcsvImportParams := pfPcaConv.getColumns(blockId, inputSpec)
-	PCAComponents := xsv.importFile(clusteringQC.getFile("pca_results.csv"), "csv", PCAcsvImportParams)
+	pcaCsvImportParams := convParams.getPCAConvParams(blockId, sampleAxisSpec)
+	pcaComponents := xsv.importFile(clusteringQC.getFile("pca_results.csv"), "csv", pcaCsvImportParams)
 
-	HQtsvImportParams := hcPfconvParams.getColumns(blockId, inputSpec)
-	// Load data matrix and transpose it converting the first axis (Sample) into 
-	// sample1 column, the second axis (previous columns) into sample2 columns, 
+	HQtsvImportParams := convParams.getDistanceConvParams(blockId, sampleAxisSpec)
+
+	// Load data matrix and transpose it converting the first axis (Sample) into
+	// sample1 column, the second axis (previous columns) into sample2 columns,
 	// and the distance values in the "value" column
-	sampleDistances := xsv.importFile(clusteringQC.getFile("sample_distances.csv"), "csv", HQtsvImportParams, 
-												{transpose: {
-													pAxisIdx: 0,
-													pAxisNameOverride: "sample1",
-													sAxisName: "sample2",
-													valueName: "value"
-												}})
+	sampleDistances := xsv.importFile(clusteringQC.getFile("sample_distances.csv"), "csv", HQtsvImportParams,
+		{ transpose: {
+			pAxisIdx: 0,
+			pAxisNameOverride: "sample1",
+			sAxisName: "sample2",
+			valueName: "value"
+		} } )
 
 	countNorm := exec.builder().
 		software(assets.importSoftware("@platforma-open/milaboratories.star-read-mapping.software:normalize-counts")).
@@ -169,121 +146,37 @@ wf.body(func(args) {
 		cache(24 * 60 * 60 * 1000).
 		run()
 
-	normCountsImportParams := pfNormCountsConv.getColumns(blockId, inputSpec, species)
+	normCountsImportParams := convParams.getNormCountsConvParams(blockId, sampleAxisSpec, species)
 	normCountsPf := xsv.importFile(countNorm.getFile("normalized_counts.csv"), "csv", normCountsImportParams)
-	//normCountsPfData := xsv.importFile(countNorm.getFile("normalized_counts.csv"), "csv", normCountsImportParams)
 
 	outputs := {
-		starProgress: starResults.output("starLog"),
-		starQc: starResults.output("starReport"),
-		featureCountsProgress: starResults.output("featureCountsLog"),
-		featureCountsQc: starResults.output("countsReport"),
+		starProgress: starResults.outputData("starLog"),
+		starQc: pframes.exportColumnData(starResults.outputData("starReport")),
+		featureCountsProgress: starResults.outputData("featureCountsLog"),
+		featureCountsQc: pframes.exportColumnData(starResults.outputData("countsReport")),
 		rawCountsPf: pframes.exportFrame(rawCountsPf),
-		pcaComponents: pframes.exportFrame(PCAComponents),
+		pcaComponents: pframes.exportFrame(pcaComponents),
 		normCountsPf: pframes.exportFrame(normCountsPf),
 		sampleDistances: pframes.exportFrame(sampleDistances)
 	}
-
 
 	trace := pSpec.makeTrace(inputSpec,
 		{type: "milaboratories.star-read-mapping", id: blockId, importance: 20, label: "STAR - " + genomes.getSpeciesName(species)}
 	)
 
-	// Count matrix export defined with sample from inputSpec + previous specs
 	exports := {
-		rawCount : {
-			spec: trace.inject({
-				kind: "PColumn",
-				name: "pl7.app/rna-seq/countMatrix",
-				domain: {
-					"pl7.app/blockId": blockId,
-					"pl7.app/species": species,
-					"pl7.app/rna-seq/normalized": "false"
-				},
-				valueType: "Double",
-				annotations: {
-					"pl7.app/label": "Raw gene expression"
-				},
-				axesSpec: [
-					inputSpec.axesSpec[0],
-					{
-						"name": "pl7.app/rna-seq/geneId",
-						"type": "String",
-						"domain": {
-							"pl7.app/blockId": blockId,
-							"pl7.app/species": species
-						},
-						"annotations": {
-							"pl7.app/label": "Ensembl Id"
-						}
-					}
-					]
-			}),
-			data: starResults.output("rawCounts")
-	 	},
-	normCount : {
-			spec: trace.inject({
-				kind: "PColumn",
-				name: "pl7.app/rna-seq/countMatrix",
-				domain: {
-					"pl7.app/blockId": blockId,
-					"pl7.app/species": species,
-					"pl7.app/rna-seq/normalized": "true"
-
-				},
-				valueType: "Double",
-				annotations: {
-					"pl7.app/label": "Normalized gene expression",
-					"pl7.app/table/hValue": "true"
-				},
-				axesSpec: [
-					inputSpec.axesSpec[0],
-					{
-						"name": "pl7.app/rna-seq/geneId",
-						"type": "String",
-						"domain": {
-							"pl7.app/blockId": blockId,
-							"pl7.app/species": species
-						},
-						"annotations": {
-							"pl7.app/label": "Ensembl Id"
-						}
-					}
-					]
-			}),
+		rawCount: {
+			spec: rawCountsPf["rawCounts.spec"],
+			data: rawCountsPf["rawCounts.data"]
+		},
+		normCount : {
+			spec: trace.inject(normCountsPf["normcounts.spec"]),
 			data: normCountsPf["normcounts.data"]
 		},
-	geneSymbols: {
-		spec: trace.inject({
-				kind: "PColumn",
-				name: "geneSymbols",
-				domain: {
-					"pl7.app/blockId": blockId,
-					"pl7.app/species": species
-				},
-				valueType: "String",
-				annotations: {
-					"pl7.app/label": "Gene Symbol"
-				},
-				axesSpec: [
-					inputSpec.axesSpec[0],
-					{
-						"name": "pl7.app/rna-seq/geneId",
-						"type": "String",
-						"domain": {
-							"pl7.app/blockId": blockId,
-							"pl7.app/species": species
-						},
-						"annotations": {
-							"pl7.app/label": "Ensembl Id",
-							"pl7.app/axisNature": "scaleCompatible"//,
-							// "pl7.app/table/orderPriority": "10"
-						}
-					}
-					]
-			}),
+		geneSymbols: {
+			spec: trace.inject(normCountsPf["genesymbol.spec"]),
 			data: normCountsPf["genesymbol.data"]
-	}
+		}
 	}
 
 	return {

@@ -27,18 +27,18 @@ getSpeciesName := func(species){
 }
 
 getGenomeAsset := func(species) {
-	yeastAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-assets:saccharomyces-cerevisiae")
-	humanAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-assets:homo-sapiens")
-	mouseAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-assets:mus-musculus")
-	ratAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-assets:rattus-norvegicus")
-	zebrafishAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-assets:danio-rerio")
-	fruitFlyAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-assets:drosophila-melanogaster")
-	arabidopsisAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-assets:arabidopsis-thaliana")
-	nematodeAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-assets:caenorhabditis-elegans")
-	chickenAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-assets:gallus-gallus")
-	cowAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-assets:bos-taurus")
-	pigAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-assets:sus_scrofa")
-	testAssets := assets.importAsset("@platforma-open/milaboratories.star-read-mapping.genome-assets:test-species")
+	yeastAssets := assets.importAsset("@platforma-open/milaboratories.genome-assets:saccharomyces-cerevisiae")
+	humanAssets := assets.importAsset("@platforma-open/milaboratories.genome-assets:homo-sapiens")
+	mouseAssets := assets.importAsset("@platforma-open/milaboratories.genome-assets:mus-musculus")
+	ratAssets := assets.importAsset("@platforma-open/milaboratories.genome-assets:rattus-norvegicus")
+	zebrafishAssets := assets.importAsset("@platforma-open/milaboratories.genome-assets:danio-rerio")
+	fruitFlyAssets := assets.importAsset("@platforma-open/milaboratories.genome-assets:drosophila-melanogaster")
+	arabidopsisAssets := assets.importAsset("@platforma-open/milaboratories.genome-assets:arabidopsis-thaliana")
+	nematodeAssets := assets.importAsset("@platforma-open/milaboratories.genome-assets:caenorhabditis-elegans")
+	chickenAssets := assets.importAsset("@platforma-open/milaboratories.genome-assets:gallus-gallus")
+	cowAssets := assets.importAsset("@platforma-open/milaboratories.genome-assets:bos-taurus")
+	pigAssets := assets.importAsset("@platforma-open/milaboratories.genome-assets:sus-scrofa")
+	testAssets := assets.importAsset("@platforma-open/milaboratories.genome-assets:test-species")
 
 	GenomeAssetsMap := ll.toStrict({
 		"saccharomyces-cerevisiae": yeastAssets,
@@ -51,7 +51,7 @@ getGenomeAsset := func(species) {
 		"caenorhabditis-elegans": nematodeAssets,
 		"gallus-gallus": chickenAssets,
 		"bos-taurus": cowAssets,
-		"sus_scrofa": pigAssets,
+		"sus-scrofa": pigAssets,
 		"test-species": testAssets
 	})
 

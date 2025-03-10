@@ -5,29 +5,31 @@ json := import("json")
 ll := import("@platforma-sdk/workflow-tengo:ll")
 xsv := import("@platforma-sdk/workflow-tengo:pframes.xsv")
 exec := import("@platforma-sdk/workflow-tengo:exec")
-file := import("@platforma-sdk/workflow-tengo:file")
 assets := import("@platforma-sdk/workflow-tengo:assets")
 pframes := import("@platforma-sdk/workflow-tengo:pframes")
 pConstants := import("@platforma-sdk/workflow-tengo:pframes.constants")
+slices := import("@platforma-sdk/workflow-tengo:slices")
 
 genomes := import(":genomes")
-pfCountsConv := import(":pf-counts-conv")
-
 
 self.defineOutputs("starLog",
 	"starReport",
 	"featureCountsLog",
 	"countsReport",
-	"countMatrixImport")
+	"rawCountsTsv")
 
 
 self.body(func(inputs) {
 	inputData := inputs[pConstants.VALUE_FIELD_NAME]
+	aggregationAxesNames := inputs[pConstants.AGGREGATION_AXES_NAMES_FIELD_NAME]
+
 	species := inputs.species
 	fileExtension := inputs.fileExtension
 	strandness := inputs.strandness
 
 	genomeAssets := genomes.getGenomeAsset(species)
+
+	inputDataMeta := inputData.getDataAsJson()
 
 	star:= exec.builder().
 		software(assets.importSoftware("@platforma-open/milaboratories.software-star:star")).
@@ -52,31 +54,104 @@ self.body(func(inputs) {
 		arg("--outSAMtype").arg("BAM").arg("SortedByCoordinate").
 		arg("--readFilesIn")
 
-	filesByRIndex := {}
-	for sKey, inputFile in inputData.inputs() {
-		key := json.decode(sKey)
-		r := key[0]
-		if (r[0] != 'R' && r[0] != "I") || (r[1] != '1' && r[1] != '2') || len(r) != 2 {
-			ll.panic("malformed read index: %v", r)
-		}
-		filesByRIndex[r] = inputFile
-	}
-
 	nReads := 0
-
-	for rIndex in ["R1", "R2"] {
-		inputFile := filesByRIndex[rIndex]
-		if is_undefined(inputFile) {
-			continue
+	filesByRIndex := {}
+	if inputDataMeta.keyLength == 1 {
+		ll.assert(aggregationAxesNames == ["pl7.app/sequencing/readIndex"], "unexpected aggregation axes names")
+		for sKey, inputFile in inputData.inputs() {
+			key := json.decode(sKey)
+			r := key[0]
+			if (r[0] != 'R' && r[0] != "I") || (r[1] != '1' && r[1] != '2') || len(r) != 2 {
+				ll.panic("malformed read index: %v", r)
+			}
+			fileName := "input_" + r + "." + fileExtension
+			star.addFile(fileName, inputFile).arg(fileName)
+			filesByRIndex[r] = inputFile
 		}
-		nReads = nReads + 1
-		fileName := "input_" + rIndex + "." + fileExtension
-		ll.print("print fileName in loop", fileName)
-		star.addFile(fileName, inputFile).
-			arg(fileName)
-	}
 
-	ll.assert(nReads != 0, "No R read indexes")
+		for rIndex in ["R1", "R2"] {
+			inputFile := filesByRIndex[rIndex]
+			if is_undefined(inputFile) {
+				continue
+			}
+			nReads = nReads + 1
+		}
+		ll.assert(nReads != 0, "No R read indexes")
+	} else if inputDataMeta.keyLength == 2 {
+		ll.assert(aggregationAxesNames == ["pl7.app/sequencing/lane", "pl7.app/sequencing/readIndex"], "unexpected aggregation axes names")
+		fileLists := {}
+		for sKey, inputFile in inputData.inputs() {
+			key := json.decode(sKey)
+			lane := key[0]
+			r := key[1]
+			if (r[0] != 'R' && r[0] != "I") || (r[1] != '1' && r[1] != '2') || len(r) != 2 {
+				ll.panic("malformed read index: %v", r)
+			}
+			if is_undefined(int(lane)) {
+				ll.panic("malformed lane: %v", lane)
+			}
+			fileName := "input_L" + lane + "_" + r + "." + fileExtension
+			star.addFile(fileName, inputFile)
+
+			// Initialize as an empty array if key does not exist
+			if fileLists[r] == undefined {
+				fileLists[r] = []
+			}
+			fileLists[r] = append(fileLists[r], fileName)
+
+			filesByRIndex[r] = inputFile
+		}
+
+		// Function to extract lane number manually
+		extractLaneNumber := func(file) {
+			prefix := "input_L"  // Extract number from "input_L01_R1.fastq.gz"
+			start := len(prefix)  // Position after "input_L"
+
+			numStr := ""
+			for i := start; i < len(file); i++ {
+				char := file[i]
+				if char >= '0' && char <= '9' {
+					numStr = numStr + char
+				} else {
+					break  // Stop when encountering a non-numeric character
+				}
+			}
+			return int(numStr)  // Convert "01" → 1
+		}
+
+		// Sort files by lane number using simple quickSort - default string ordering works for file names
+		sortedR1 := slices.quickSort(fileLists["R1"])
+		sortedR2 := slices.quickSort(fileLists["R2"])
+
+		// Function to manually join a list into a comma-separated string
+		join := func(arr) {
+			result := ""
+			for i, el in arr {
+				if i > 0 {
+					result = result + ","  // Add comma separator for subsequent elements
+				}
+				result = result + el
+			}
+			return result
+		}
+
+		// Convert file lists into comma-separated strings
+		r1Files := join(sortedR1)
+		r2Files := join(sortedR2)
+		star.arg(r1Files).arg(r2Files)
+
+		for rIndex in ["R1", "R2"] {
+			inputFile := filesByRIndex[rIndex]
+			if is_undefined(inputFile) {
+				continue
+			}
+			nReads = nReads + 1
+
+		}
+		ll.assert(nReads != 0, "No R read indexes")
+	} else {
+		ll.panic("unexpected aggregation axes structure: %v", aggregationAxesNames)
+	}
 
 	if fileExtension == "fastq.gz" || fileExtension == "fq.gz" {
 		star = star.arg("--readFilesCommand").arg("gunzip -c")
@@ -128,23 +203,14 @@ self.body(func(inputs) {
 	countsReport := featureCounts.getFile("rawCounts.tsv.summary")
 	outputFeatureCounts := featureCounts.getFile("rawCounts.tsv")
 
-	tsvImportParams := pfCountsConv.getColumns(species)
-
-	countMatrixImport := xsv.importFile(featureCounts.getFile("rawCounts.tsv"), "tsv", tsvImportParams, { dataOnly: true })
-
-	// PFrame
-	//   rawCounts.data
-	//   rawCounts.spec
-	// after we add { dataOnly: true }
-	//   rawCounts [ containing value from rawCounts.data ]
-	ll.print("print import params", tsvImportParams)
+	rawCountsTsv := featureCounts.getFile("rawCounts.tsv")
 
 	output := {
 		starLog: starLog,
-		starReport: file.exportFile(starReport),
+		starReport: starReport,
 		featureCountsLog: featureCountsLog,
-		countsReport: file.exportFile(countsReport),
-		countMatrixImport: countMatrixImport
+		countsReport: countsReport,
+		rawCountsTsv: rawCountsTsv
 	}
 
 	return output
