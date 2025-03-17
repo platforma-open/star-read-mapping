@@ -184,7 +184,8 @@ export const model = BlockModel.create()
       .filter(isPColumn)
       .filter((column) =>
         valueTypes.find((valueType) => (valueType === column.spec.valueType) && (
-          column.id.includes('metadata')),
+          (column.spec.name === 'pl7.app/metadata')
+          || (column.spec.name === 'pl7.app/label')),
         ),
       );
 
@@ -217,7 +218,8 @@ export const model = BlockModel.create()
       .filter(isPColumn)
       .filter((column) =>
         valueTypes.find((valueType) => (valueType === column.spec.valueType) && (
-          column.id.includes('metadata')),
+          (column.spec.name === 'pl7.app/metadata')
+          || (column.spec.name === 'pl7.app/label')),
         ),
       );
 
