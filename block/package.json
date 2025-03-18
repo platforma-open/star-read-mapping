@@ -33,8 +33,7 @@
       "longDescription": "file:../docs/description.md",
       "changelog": "file:./CHANGELOG.md",
       "tags": [
-        "rna-seq",
-        "qc",
+        "RNA-seq",
         "upstream"
       ],
       "organization": {
@@ -42,7 +41,7 @@
         "url": "https://organization.com",
         "logo": "file:../logos/organization-logo.png"
       },
-      "marketplaceRanking": 10000
+      "marketplaceRanking": 13900
     }
   },
   "devDependencies": {
