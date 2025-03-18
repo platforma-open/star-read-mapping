@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.5.5
+
+### Patch Changes
+
+- 7cbe019: Updated tags and ranking
+
 ## 1.5.4
 
 ### Patch Changes
