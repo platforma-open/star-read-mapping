@@ -22,7 +22,7 @@ catalog:
   '@platforma-open/milaboratories.software-subread': ^1.0.0
   '@platforma-open/milaboratories.software-star': ^1.0.1
   '@platforma-open/milaboratories.genome-assets': 1.2.0
-  '@platforma-open/milaboratories.runenv-r-normalize-counts': ^1.0.4
+  '@platforma-open/milaboratories.runenv-r-normalize-counts': ^1.0.6
   '@platforma-open/milaboratories.runenv-r-sample-qc': ^1.0.5
   '@platforma-sdk/package-builder': ^2.15.2
 
