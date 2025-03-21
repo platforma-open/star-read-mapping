@@ -22,8 +22,8 @@ catalogs:
       specifier: 1.2.0
       version: 1.2.0
     '@platforma-open/milaboratories.runenv-r-normalize-counts':
-      specifier: ^1.0.4
-      version: 1.0.4
+      specifier: ^1.0.6
+      version: 1.0.6
     '@platforma-open/milaboratories.runenv-r-sample-qc':
       specifier: ^1.0.5
       version: 1.0.5
@@ -150,7 +150,7 @@ importers:
     devDependencies:
       '@platforma-open/milaboratories.runenv-r-normalize-counts':
         specifier: 'catalog:'
-        version: 1.0.4
+        version: 1.0.6
       '@platforma-open/milaboratories.runenv-r-sample-qc':
         specifier: 'catalog:'
         version: 1.0.5
@@ -1089,8 +1089,8 @@ packages:
   '@platforma-open/milaboratories.genome-assets@1.2.0':
     resolution: {integrity: sha512-6rC+v5udzWSXLPGysyobuqoRssVc2h9eRhN7ZRbPkDUFSI43PB73PG4cTmEye1Mv4nLNC2E8bKTHzcb2qMoakA==}
 
-  '@platforma-open/milaboratories.runenv-r-normalize-counts@1.0.4':
-    resolution: {integrity: sha512-okCZmKaI6Uc/8E6EkkK15yu69JmwsJnafZ319E6XU22rLMNkOnhrs0lUS/m1ydx/W5o0Wy68+ISKwXP06S35EA==}
+  '@platforma-open/milaboratories.runenv-r-normalize-counts@1.0.6':
+    resolution: {integrity: sha512-SQ0p5VjDX1NsmZx0w9t/VHjPFZlBgiuU4AQTEd7sZ0cW209QsPaf1wksN/fQsWycUtS1YhMjvLTH3p9uO1vbjA==}
 
   '@platforma-open/milaboratories.runenv-r-sample-qc@1.0.5':
     resolution: {integrity: sha512-AEv07kWBDtTK+AZAjRX0fmqwQzXMaDfvfz3TKLGONu7lFdK4BSm5AjkizHT9Lozf0e6vbRZeMzoTHGlCrrrc2Q==}
@@ -6484,7 +6484,7 @@ snapshots:
       '@platforma-open/milaboratories.genome-assets.sus-scrofa': 1.0.0
       '@platforma-open/milaboratories.genome-assets.test-species': 1.0.0
 
-  '@platforma-open/milaboratories.runenv-r-normalize-counts@1.0.4': {}
+  '@platforma-open/milaboratories.runenv-r-normalize-counts@1.0.6': {}
 
   '@platforma-open/milaboratories.runenv-r-sample-qc@1.0.5': {}
 
