@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.1.0
+
+### Minor Changes
+
+- ed5d088: Fix Renv
+
 ## 2.0.3
 
 ### Patch Changes
