@@ -30,6 +30,12 @@ export type BlockArgs = {
   strandness?: string;
 
   /**
+   * % of available CPU to use
+   */
+  // cpuPercent: number;
+  // cpuNumber: number;
+
+  /**
    * Block title
    */
   title?: string;
@@ -48,6 +54,8 @@ export const model = BlockModel.create()
   .withArgs<BlockArgs>({
     species: 'homo-sapiens',
     strandness: '0',
+    // cpuPercent: 80,
+    // cpuNumber: 0,
   })
 
   .withUiState<UiState>({

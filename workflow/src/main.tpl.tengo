@@ -42,6 +42,7 @@ render := import("@platforma-sdk/workflow-tengo:render")
 assets := import("@platforma-sdk/workflow-tengo:assets")
 pframes := import("@platforma-sdk/workflow-tengo:pframes")
 llPFrames := import("@platforma-sdk/workflow-tengo:pframes.ll")
+feats := import("@platforma-sdk/workflow-tengo:feats")
 
 genomes := import(":genomes")
 convParams := import(":pf-params")
@@ -68,6 +69,23 @@ wf.body(func(args) {
 	species := args.species
 	strandness := args.strandness
 
+	// Define CPU selection command
+	// 4 when feature not available, otherwise 80% fromm all
+	cpuCommand := "4"
+	if feats.commandExpressions {
+		// No commas allowed in this commands!
+		cpuCommand = "{int(ceil(system.cpu * 0.8))}"
+		// @TODO: for a future in which different CPU numbers don't interfere with deduplication
+		// 			And commas are allowed in this commands
+		// if args.cpuNumber != 0 {
+		// 	// user defined CPU number capped to maximum available CPU
+		// 	cpuCommand = "{min(system.cpu, " + string(args.cpuNumber) + ")}"
+		// } else  {
+		// 	// User defined fraction of available CPU with 1 as minimum
+		// 	cpuCommand = "{int(ceil({int(system.cpu * (" + string(args.cpuPercent) + "/100))}))}"
+		// }
+	} 
+	
 	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
 
 	targetOutputs := targetOutputs.getTargetOutputs(species, blockId)
@@ -93,8 +111,9 @@ wf.body(func(args) {
 			extra: {
 				species: species,
 				strandness: strandness,
-				fileExtension: fileExtension
-			}
+				fileExtension: fileExtension,
+				cpuCommand: cpuCommand
+				}
 		}
 	)
 

@@ -9,6 +9,7 @@ assets := import("@platforma-sdk/workflow-tengo:assets")
 pframes := import("@platforma-sdk/workflow-tengo:pframes")
 pConstants := import("@platforma-sdk/workflow-tengo:pframes.constants")
 slices := import("@platforma-sdk/workflow-tengo:slices")
+feats := import("@platforma-sdk/workflow-tengo:feats")
 
 genomes := import(":genomes")
 
@@ -26,6 +27,7 @@ self.body(func(inputs) {
 	species := inputs.species
 	fileExtension := inputs.fileExtension
 	strandness := inputs.strandness
+	cpuCommand := inputs.cpuCommand
 
 	genomeAssets := genomes.getGenomeAsset(species)
 
@@ -159,9 +161,16 @@ self.body(func(inputs) {
 
 
 	star = star.
-		arg("--outFileNamePrefix").arg("sample_").
-		arg("--runThreadN").arg("4").
-		saveFile("sample_Aligned.sortedByCoord.out.bam").
+		arg("--outFileNamePrefix").arg("sample_")
+
+	// Old Platforma versions wont have argWithVar formatting feature
+	if feats.commandExpressions {
+		star.arg("--runThreadN").argWithVar(cpuCommand)
+	} else {
+		// If feature not available this value should already be a string(integer)
+		star.arg("--runThreadN").arg(cpuCommand)
+	}
+	star = star.saveFile("sample_Aligned.sortedByCoord.out.bam").
 		saveFile("sample_Log.final.out").
 		printErrStreamToStdout().
 		saveStdoutContent().
@@ -180,9 +189,17 @@ self.body(func(inputs) {
 		addAsset(genomeAssets, ".", ["annotations.gtf"]).
 		arg("-t").arg("exon").
 		arg("-g").arg("gene_id").
-		arg("-s").arg(strandness).
-		arg("-T").arg("4").
-		arg("-a").arg("annotations.gtf")
+		arg("-s").arg(strandness)
+
+	// Old Platforma versions wont have argWithVar formatting feature
+	if feats.commandExpressions {
+		featureCounts.arg("-T").argWithVar(cpuCommand)
+	} else {
+		// If feature not available this value should already be a string(integer)
+		featureCounts.arg("-T").arg(cpuCommand)
+	}
+
+	featureCounts.arg("-a").arg("annotations.gtf")
 
 	if nReads == 2 {
 		featureCounts = featureCounts.arg("-p")
