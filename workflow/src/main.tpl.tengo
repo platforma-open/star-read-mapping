@@ -74,7 +74,7 @@ wf.body(func(args) {
 	cpuCommand := "4"
 	if feats.commandExpressions {
 		// No commas allowed in this commands!
-		cpuCommand = "{int(ceil(system.cpu * 0.8))}"
+		cpuCommand = "{system.cpu}"
 		// @TODO: for a future in which different CPU numbers don't interfere with deduplication
 		// 			And commas are allowed in this commands
 		// if args.cpuNumber != 0 {
