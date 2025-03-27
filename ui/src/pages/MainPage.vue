@@ -149,8 +149,6 @@ const gridOptions: GridOptions = {
     FeatureCountsStatsCell,
     PlAgTextAndButtonCell,
     ProgressCell,
-    //     ProgressCell,
-    //     ChainsStatsCell
   },
 };
 
@@ -161,44 +159,6 @@ function setInput(inputRef?: PlRef) {
   else
     app.model.args.title = undefined;
 }
-
-// // @TODO: Uncoment when user defined nCPU is ok with deduplication
-// // variables for CPU usage
-// type LocalState = {
-//   tab: 'percent' | 'number' | undefined;
-// };
-
-// const state = reactive<LocalState>({
-//   tab: undefined,
-// });
-
-// const cpuSelectionOptions = [
-//   { text: '% from all available', value: 'percent' },
-//   { text: 'User defined number', value: 'number' },
-// ] as const satisfies ListOption [];
-
-// const computedTab = computed({
-//   // return tab or first tab assignment given cpuNumber value
-//   get() {
-//     return state.tab ?? (app.model.args.cpuNumber == -1 ? 'percent' : 'number');
-//   },
-//   set(tab) {
-//     state.tab = tab;
-//   },
-// });
-
-// // Make user see that selection in one tab overwrites value in the other one
-// watch(() => app.model.args.cpuNumber, (_) => {
-//   if (app.model.args.cpuNumber !== -1) {
-//     app.model.args.cpuPercent = 0;
-//   }
-// });
-
-// watch(() => app.model.args.cpuPercent, (_) => {
-//   if (app.model.args.cpuPercent !== 0) {
-//     app.model.args.cpuNumber = 0;
-//   }
-// });
 
 </script>
 
@@ -231,25 +191,6 @@ function setInput(inputRef?: PlRef) {
 
     <PlDropdown v-model="app.model.args.species" :options="speciesOptions" label="Select species" />
     <PlDropdown v-model="app.model.args.strandness" :options="inputOptionsStr" label="Select strandness" />
-
-    <!-- Content hidden until you click ADDITIONAL SETTINGS -->
-    <!-- // @TODO: Uncoment when user defined nCPU is ok with deduplication
-    <PlAccordionSection label="ADDITIONAL SETTINGS">
-      <PlBtnGroup v-model="computedTab" :options="cpuSelectionOptions" label="CPU allocation criteria">
-        <template #tooltip>
-          Select the CPU resources to allocate for the task. You can either specify a percentage of all available CPUs or assign a specific CPU number
-        </template>
-      </PlBtnGroup>
-      <Slider
-        v-if="computedTab === 'percent'"
-        v-model="app.model.args.cpuPercent" :min="10" :max="100" :step="10"
-        :breakpoints="true" label="CPU %"
-      />
-      <PlNumberField
-        v-if="computedTab === 'number'"
-        v-model="app.model.args.cpuNumber" label="Nº CPU" :minValue="1"
-      />
-    </PlAccordionSection> -->
   </PlSlideModal>
 
   <PlSlideModal v-model="data.sampleReportOpen" width="80%">

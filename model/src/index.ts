@@ -30,12 +30,6 @@ export type BlockArgs = {
   strandness?: string;
 
   /**
-   * % of available CPU to use
-   */
-  // cpuPercent: number;
-  // cpuNumber: number;
-
-  /**
    * Block title
    */
   title?: string;
@@ -54,8 +48,6 @@ export const model = BlockModel.create()
   .withArgs<BlockArgs>({
     species: 'homo-sapiens',
     strandness: '0',
-    // cpuPercent: 80,
-    // cpuNumber: 0,
   })
 
   .withUiState<UiState>({
@@ -176,7 +168,6 @@ export const model = BlockModel.create()
     const pCols = wf.outputs?.resolve('pcaComponents')?.getPColumns();
     if (pCols === undefined) return undefined;
 
-    // return wf.createPFrame(pCols);
     // enriching with upstream data
     const valueTypes = [
       'Int',
@@ -210,7 +201,6 @@ export const model = BlockModel.create()
     const pCols = wf.outputs?.resolve('sampleDistances')?.getPColumns();
     if (pCols === undefined) return undefined;
 
-    // return wf.createPFrame(pCols);
     // enriching with upstream data
     const valueTypes = [
       'Int',

@@ -70,20 +70,11 @@ wf.body(func(args) {
 	strandness := args.strandness
 
 	// Define CPU selection command
-	// 4 when feature not available, otherwise 80% fromm all
+	// 4 when feature not available, otherwise 100%
 	cpuCommand := "4"
 	if feats.commandExpressions {
 		// No commas allowed in this commands!
 		cpuCommand = "{system.cpu}"
-		// @TODO: for a future in which different CPU numbers don't interfere with deduplication
-		// 			And commas are allowed in this commands
-		// if args.cpuNumber != 0 {
-		// 	// user defined CPU number capped to maximum available CPU
-		// 	cpuCommand = "{min(system.cpu, " + string(args.cpuNumber) + ")}"
-		// } else  {
-		// 	// User defined fraction of available CPU with 1 as minimum
-		// 	cpuCommand = "{int(ceil({int(system.cpu * (" + string(args.cpuPercent) + "/100))}))}"
-		// }
 	} 
 	
 	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
