@@ -1,5 +1,16 @@
 # @platforma-open/milaboratories.block-template.ui
 
+## 2.2.0
+
+### Minor Changes
+
+- 6961bcb: Update to use all available CPU
+
+### Patch Changes
+
+- Updated dependencies [6961bcb]
+  - @platforma-open/milaboratories.star-read-mapping.model@2.3.0
+
 ## 2.1.2
 
 ### Patch Changes

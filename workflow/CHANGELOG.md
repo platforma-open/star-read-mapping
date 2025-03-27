@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.5.0
+
+### Minor Changes
+
+- 6961bcb: Update to use all available CPU
+
 ## 2.4.2
 
 ### Patch Changes

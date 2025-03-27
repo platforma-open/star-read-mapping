@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.model
 
+## 2.3.0
+
+### Minor Changes
+
+- 6961bcb: Update to use all available CPU
+
 ## 2.2.0
 
 ### Minor Changes
