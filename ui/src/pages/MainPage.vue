@@ -26,11 +26,6 @@ import FeatureCountsStatsCell from './FeatureCountsStatsCell.vue';
 import ReportPanel from './ReportPanel.vue';
 import { resultMap } from './results';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const test = 1;
-
-const _test2 = 'dsfsf';
-
 const app = useApp();
 
 const data = reactive<{
@@ -154,8 +149,6 @@ const gridOptions: GridOptions = {
     FeatureCountsStatsCell,
     PlAgTextAndButtonCell,
     ProgressCell,
-    //     ProgressCell,
-    //     ChainsStatsCell
   },
 };
 

@@ -168,7 +168,6 @@ export const model = BlockModel.create()
     const pCols = wf.outputs?.resolve('pcaComponents')?.getPColumns();
     if (pCols === undefined) return undefined;
 
-    // return wf.createPFrame(pCols);
     // enriching with upstream data
     const valueTypes = [
       'Int',
@@ -202,7 +201,6 @@ export const model = BlockModel.create()
     const pCols = wf.outputs?.resolve('sampleDistances')?.getPColumns();
     if (pCols === undefined) return undefined;
 
-    // return wf.createPFrame(pCols);
     // enriching with upstream data
     const valueTypes = [
       'Int',

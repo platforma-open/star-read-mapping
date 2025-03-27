@@ -42,6 +42,7 @@ render := import("@platforma-sdk/workflow-tengo:render")
 assets := import("@platforma-sdk/workflow-tengo:assets")
 pframes := import("@platforma-sdk/workflow-tengo:pframes")
 llPFrames := import("@platforma-sdk/workflow-tengo:pframes.ll")
+feats := import("@platforma-sdk/workflow-tengo:feats")
 
 genomes := import(":genomes")
 convParams := import(":pf-params")
@@ -68,6 +69,14 @@ wf.body(func(args) {
 	species := args.species
 	strandness := args.strandness
 
+	// Define CPU selection command
+	// 4 when feature not available, otherwise 100%
+	cpuCommand := "4"
+	if feats.commandExpressions {
+		// No commas allowed in this commands!
+		cpuCommand = "{system.cpu}"
+	} 
+	
 	fileExtension := inputSpec.domain["pl7.app/fileExtension"]
 
 	targetOutputs := targetOutputs.getTargetOutputs(species, blockId)
@@ -93,8 +102,9 @@ wf.body(func(args) {
 			extra: {
 				species: species,
 				strandness: strandness,
-				fileExtension: fileExtension
-			}
+				fileExtension: fileExtension,
+				cpuCommand: cpuCommand
+				}
 		}
 	)
 
