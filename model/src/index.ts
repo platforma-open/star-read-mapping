@@ -6,7 +6,6 @@ import {
   isPColumnSpec,
   parseResourceMap,
   type PlRef,
-  type ValueType,
 } from '@platforma-sdk/model';
 
 import { type GraphMakerState } from '@milaboratories/graph-maker';
@@ -168,27 +167,16 @@ export const model = BlockModel.create()
     const pCols = wf.outputs?.resolve('pcaComponents')?.getPColumns();
     if (pCols === undefined) return undefined;
 
-    // enriching with upstream data
-    const valueTypes = [
-      'Int',
-      'Long',
-      'Float',
-      'Double',
-      'String',
-      'Bytes',
-    ] as ValueType[];
+    // Check for metadata in upstream data
     const upstream = wf.resultPool
       .getData()
       .entries.map((v) => v.obj)
       .filter(isPColumn)
       .filter((column) =>
-        valueTypes.find((valueType) => (valueType === column.spec.valueType) && (
-          (column.spec.name === 'pl7.app/metadata')
-          || (column.spec.name === 'pl7.app/label')),
-        ),
+        column.spec.name === 'pl7.app/metadata' || column.spec.name === 'pl7.app/label',
       );
 
-    return wf.createPFrame([...pCols, ...upstream]);
+    return createPFrameForGraphs(wf, [...pCols, ...upstream]);
   })
 
   .output('sampleDistancesSpec', (wf) => {
@@ -201,26 +189,16 @@ export const model = BlockModel.create()
     const pCols = wf.outputs?.resolve('sampleDistances')?.getPColumns();
     if (pCols === undefined) return undefined;
 
-    // enriching with upstream data
-    const valueTypes = [
-      'Int',
-      'Long',
-      'Float',
-      'Double',
-      'String',
-      'Bytes',
-    ] as ValueType[];
+    // Check for metadata in upstream data
     const upstream = wf.resultPool
       .getData()
       .entries.map((v) => v.obj)
       .filter(isPColumn)
       .filter((column) =>
-        valueTypes.find((valueType) => (valueType === column.spec.valueType) && (
-          (column.spec.name === 'pl7.app/metadata')
-          || (column.spec.name === 'pl7.app/label')),
-        ),
+        column.spec.name === 'pl7.app/metadata' || column.spec.name === 'pl7.app/label',
       );
 
+    // @TODO find why createPFrameForGraphs is not detecting the metadata without the previous check
     return createPFrameForGraphs(wf, [...pCols, ...upstream]);
   })
 
