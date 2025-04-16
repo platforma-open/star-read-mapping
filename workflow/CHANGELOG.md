@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.6.0
+
+### Minor Changes
+
+- f51e143: Fix expression heatmap freeze upon filter removal and update dependencies
+
 ## 2.5.0
 
 ### Minor Changes
