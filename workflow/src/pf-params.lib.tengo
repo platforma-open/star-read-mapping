@@ -160,7 +160,7 @@ getPCAConvParams := func(blockId, sampleAxisSpec) {
 		}, {
 			column: "PC2",
 			id: "pc2",
-			allowNA: false,
+			allowNA: true,
 			spec: {
 				name: "pl7.app/rna-seq/pc2",
 				valueType: "Double",
