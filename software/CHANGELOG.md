@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.2.0
+
+### Minor Changes
+
+- a4d7c4f: Updated to work with any sample number
+
 ## 2.1.0
 
 ### Minor Changes
