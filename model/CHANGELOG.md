@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.model
 
+## 2.4.0
+
+### Minor Changes
+
+- 0301cf9: Update graph creation
+
 ## 2.3.0
 
 ### Minor Changes
