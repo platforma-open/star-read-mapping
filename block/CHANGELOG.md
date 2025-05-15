@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.6.0
+
+### Minor Changes
+
+- 8a588e0: Update SDK
+
 ## 1.5.10
 
 ### Patch Changes
