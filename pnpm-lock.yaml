@@ -58,8 +58,8 @@ catalogs:
       specifier: ^1.30.26
       version: 1.30.26
     '@platforma-sdk/workflow-tengo':
-      specifier: ^4.5.0
-      version: 4.5.0
+      specifier: ^4.5.1
+      version: 4.5.1
     '@vitejs/plugin-vue':
       specifier: ^5.2.1
       version: 5.2.1
@@ -243,7 +243,7 @@ importers:
         version: 2.1.3
       '@platforma-sdk/workflow-tengo':
         specifier: 'catalog:'
-        version: 4.5.0
+        version: 4.5.1
 
 packages:
 
@@ -1183,6 +1183,9 @@ packages:
 
   '@platforma-sdk/workflow-tengo@4.5.0':
     resolution: {integrity: sha512-9PA3CJptxZ0Fe4IU7a0NH4ts/rnkhA89brg1K4LgW9w7Yu+WRiwyr6wE1Ruy9/SwAFL+t5Omn/ubvv0L9rt0JA==}
+
+  '@platforma-sdk/workflow-tengo@4.5.1':
+    resolution: {integrity: sha512-NhzXmH38J76JWOX0iH6o/LwTQnaNDANV5hZwLnO0ZBTke6yr5LNLZjYAZbKO6FRegZqqZVBeUjdo8dLhI58zmA==}
 
   '@protobuf-ts/grpc-transport@2.9.6':
     resolution: {integrity: sha512-MdL6aiIhlEdXn0ZVmMfFtXtNPze21vqUW3w+E3MDqv/hgyPf5jpvQeRz+9+lu2flPfXRf+2w2d+6nWpMv25o6Q==}
@@ -6681,6 +6684,11 @@ snapshots:
       - typescript
 
   '@platforma-sdk/workflow-tengo@4.5.0':
+    dependencies:
+      '@milaboratories/software-pframes-conv': 2.2.2
+      '@platforma-open/milaboratories.software-small-binaries': 1.15.21
+
+  '@platforma-sdk/workflow-tengo@4.5.1':
     dependencies:
       '@milaboratories/software-pframes-conv': 2.2.2
       '@platforma-open/milaboratories.software-small-binaries': 1.15.21
