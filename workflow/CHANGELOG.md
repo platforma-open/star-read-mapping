@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.7.1
+
+### Patch Changes
+
+- 7508dc1: chore: update deps
+
 ## 2.7.0
 
 ### Minor Changes
