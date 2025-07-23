@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import '@milaboratories/graph-maker/styles';
 // import { ref } from 'vue';
-import type { GraphMakerProps } from '@milaboratories/graph-maker';
+import type { PredefinedGraphOption } from '@milaboratories/graph-maker';
 import { GraphMaker } from '@milaboratories/graph-maker';
 import { useApp } from '../app';
 
 const app = useApp();
 
-const defaultOptions: GraphMakerProps['defaultOptions'] = [
+const defaultOptions: PredefinedGraphOption<'scatterplot'>[] | undefined = [
   {
     inputName: 'x',
     selectedSource: {
