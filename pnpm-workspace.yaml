@@ -15,7 +15,7 @@ catalog:
   '@platforma-sdk/eslint-config': ^1.0.3
 
   '@platforma-sdk/test': ^1.30.35
-  '@milaboratories/graph-maker': ^1.1.61
+  '@milaboratories/graph-maker': ^1.1.137
 
   '@milaboratories/software-pframes-conv': ^2.1.19
   '@platforma-open/milaboratories.software-small-binaries': ^1.15.19

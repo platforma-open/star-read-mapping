@@ -2,6 +2,7 @@
 import '@milaboratories/graph-maker/styles';
 // import { ref } from 'vue';
 import type { GraphMakerProps } from '@milaboratories/graph-maker';
+import type { PredefinedGraphOption } from '@milaboratories/graph-maker';
 import { GraphMaker } from '@milaboratories/graph-maker';
 import { useApp } from '../app';
 import { computed } from 'vue';
@@ -14,7 +15,7 @@ const app = useApp();
 //   app.model.ui.sDistGraphState = {template: "heatmap", title: "Sample Distances"}
 // }
 
-const defaultOptions = computed((): GraphMakerProps['defaultOptions'] => {
+const defaultOptions = computed((): PredefinedGraphOption<'heatmap'>[] | undefined => {
   const distanceSpec = app.model.outputs.sampleDistancesSpec;
 
   if (!distanceSpec) {
