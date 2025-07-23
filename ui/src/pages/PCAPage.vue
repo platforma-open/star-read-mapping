@@ -7,7 +7,7 @@ import { useApp } from '../app';
 
 const app = useApp();
 
-const defaultOptions: PredefinedGraphOption<'scatterplot'>[] | undefined = [
+const defaultOptions: PredefinedGraphOption<'scatterplot'>[] = [
   {
     inputName: 'x',
     selectedSource: {
