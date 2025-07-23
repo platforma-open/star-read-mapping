@@ -1,5 +1,12 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.6.3
+
+### Patch Changes
+
+- Updated dependencies [fa338dc]
+  - @platforma-open/milaboratories.star-read-mapping.ui@2.2.2
+
 ## 1.6.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.block-template.ui
 
+## 2.2.2
+
+### Patch Changes
+
+- fa338dc: Update Graph Maker
+
 ## 2.2.1
 
 ### Patch Changes
