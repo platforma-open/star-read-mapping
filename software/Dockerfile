@@ -42,8 +42,13 @@ WORKDIR /app
 # Copy project files (this will be specific to each R script when building)
 COPY . ./
 
-# Restore renv environment
-RUN R -e "renv::consent(provided = TRUE)" && \
+# Initialize renv and restore environment
+# Temporarily rename .Rprofile to avoid sourcing non-existent renv/activate.R
+# Initialize renv, then restore the .Rprofile and restore packages
+RUN mv .Rprofile .Rprofile.bak || true && \
+    R --vanilla -e "renv::init(bare = TRUE)" && \
+    mv .Rprofile.bak .Rprofile && \
+    R -e "renv::consent()" && \
     R -e "renv::restore()"
 
 # Default command runs Rscript
