@@ -5,6 +5,9 @@ FROM r-base:4.4.2
 ENV R_VERSION=4.4.2
 ENV BIOCONDUCTOR_VERSION=3.20
 ENV RENV_VERSION=1.0.11
+# Force renv to avoid Posit Package Manager autodetection and use CRAN cloud mirror
+ENV RENV_CONFIG_PPM_ENABLED=false
+ENV RENV_CONFIG_REPOS_OVERRIDE=https://cloud.r-project.org
 
 # Install system dependencies required for R packages
 RUN apt-get update && apt-get install -y \
@@ -33,7 +36,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install BiocManager and renv at system level
-RUN R -e "install.packages(c('BiocManager', 'renv'), repos='https://packagemanager.posit.co/cran/latest')" \
+RUN R -e "install.packages(c('BiocManager', 'renv'), repos='https://cloud.r-project.org')" \
     && R -e "BiocManager::install(version='$BIOCONDUCTOR_VERSION')"
 
 # Set working directory
@@ -45,11 +48,12 @@ COPY . ./
 # Initialize renv and restore environment
 # Temporarily rename .Rprofile to avoid sourcing non-existent renv/activate.R
 # Initialize renv, then restore the .Rprofile and restore packages
-RUN mv .Rprofile .Rprofile.bak || true && \
-    R --vanilla -e "renv::init(bare = TRUE)" && \
+RUN mv .Rprofile .Rprofile.bak || true
+RUN R --vanilla -e "renv::init(bare = TRUE)" && \
     mv .Rprofile.bak .Rprofile && \
     R -e "renv::consent()" && \
     R -e "renv::restore()"
+
 
 # Default command runs Rscript
 ENTRYPOINT ["Rscript"]
