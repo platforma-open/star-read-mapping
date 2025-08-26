@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.6.5
+
+### Patch Changes
+
+- 52c5b9c: bump sdk-workflow version
+
 ## 1.6.4
 
 ### Patch Changes
