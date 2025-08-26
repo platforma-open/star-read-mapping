@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.3.0
+
+### Minor Changes
+
+- 87bb3e8: add docker support
+
 ## 2.2.0
 
 ### Minor Changes
