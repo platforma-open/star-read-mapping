@@ -22,6 +22,16 @@
             "Rscript",
             "{pkg}/run_sample_qc.R"
           ]
+        },
+        "docker": {
+          "artifact": {
+            "type": "docker",
+            "context": "./src/run-sample-qc",
+            "dockerfile": "Dockerfile"
+          },
+          "cmd": [
+            "run_sample_qc.R"
+          ]
         }
       },
       "normalize-counts": {
@@ -35,6 +45,16 @@
           "cmd": [
             "Rscript",
             "{pkg}/normalize_counts.R"
+          ]
+        },
+        "docker": {
+          "artifact": {
+            "type": "docker",
+            "context": "./src/normalize-counts",
+            "dockerfile": "Dockerfile"
+          },
+          "cmd": [
+            "normalize_counts.R"
           ]
         }
       }

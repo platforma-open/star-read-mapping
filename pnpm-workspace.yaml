@@ -1,10 +1,10 @@
 packages:
-  - software
-  - workflow
-  - model
-  - ui
-  - block
-  - test
+- software
+- workflow
+- model
+- ui
+- block
+- test
 
 catalog:
   '@platforma-sdk/block-tools': ^2.5.47
@@ -24,7 +24,7 @@ catalog:
   '@platforma-open/milaboratories.genome-assets': 1.2.0
   '@platforma-open/milaboratories.runenv-r-normalize-counts': ^1.0.6
   '@platforma-open/milaboratories.runenv-r-sample-qc': ^1.0.5
-  '@platforma-sdk/package-builder': ^2.16.0
+  '@platforma-sdk/package-builder': ^2.17.2
 
   '@milaboratories/helpers': ^1.6.11
 
