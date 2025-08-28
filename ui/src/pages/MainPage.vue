@@ -91,7 +91,7 @@ const defaultColDef: ColDef = {
 };
 
 const columnDefs: ColDef[] = [
-  makeRowNumberColDef(),
+  makeRowNumberColDef() as ColDef,
   {
     colId: 'label',
     field: 'sampleLabel',
