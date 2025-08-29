@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.7.0
+
+### Minor Changes
+
+- 05307e4: update dependecies
+
 ## 1.6.5
 
 ### Patch Changes
