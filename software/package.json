@@ -30,7 +30,7 @@
             "dockerfile": "Dockerfile"
           },
           "cmd": [
-            "run_sample_qc.R"
+            "/app/run_sample_qc.R"
           ]
         }
       },
@@ -54,7 +54,7 @@
             "dockerfile": "Dockerfile"
           },
           "cmd": [
-            "normalize_counts.R"
+            "/app/normalize_counts.R"
           ]
         }
       }
