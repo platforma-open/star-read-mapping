@@ -2,24 +2,17 @@
 import type { ICellRendererParams } from 'ag-grid-enterprise';
 import FeatureCountsRow from './components/FeatureCountsRow.vue';
 import type { FeatureCountsQC } from './results';
-import { PlAgCellProgress, type PlProgressCellProps } from '@platforma-sdk/ui-vue';
-import { computed } from 'vue';
+import { PlAgCellProgress } from '@platforma-sdk/ui-vue';
 
-const props = defineProps<{
+defineProps<{
   params: ICellRendererParams<{ featureCountsQc: FeatureCountsQC }>;
 }>();
-
-const progressProps = computed<PlProgressCellProps>(() => ({
-  stage: 'running',
-  step: '',
-  progressString: '',
-}));
 </script>
 
 <template>
   <PlAgCellProgress
-    v-if="!props.params.data?.featureCountsQc"
-    v-bind="{ params: { ...props.params as any, ...progressProps } }"
+    v-if="!params.data?.featureCountsQc"
+    v-bind="{ params: { ...params, stage: 'running', step: '', progressString: '' } }"
   />
-  <FeatureCountsRow v-else style="height: 100%" :align-report="props.params.data?.featureCountsQc" />
+  <FeatureCountsRow v-else style="height: 100%" :align-report="params.data?.featureCountsQc" />
 </template>

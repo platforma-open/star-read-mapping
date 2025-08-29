@@ -74,5 +74,5 @@ const ProgressProps = computed<PlProgressCellProps>(() => {
 </script>
 
 <template>
-  <PlAgCellProgress v-bind="{ params: { ...props.params as any, ...ProgressProps } }" />
+  <PlAgCellProgress v-bind="{ params: { ...props.params, ...ProgressProps } }" />
 </template>
