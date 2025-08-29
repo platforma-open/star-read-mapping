@@ -9,7 +9,8 @@
     "watch": "turbo watch build",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "lint": "pnpm -r lint"
+    "lint": "pnpm -r lint",
+    "deps-up": "pl-blocks-deps-updater"
   },
   "devDependencies": {
     "turbo": "catalog:",
