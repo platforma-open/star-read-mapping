@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.3.1
+
+### Patch Changes
+
+- 7934c87: fix: script in docker not found
+
 ## 2.3.0
 
 ### Minor Changes
