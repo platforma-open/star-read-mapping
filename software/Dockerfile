@@ -1,11 +1,8 @@
-# Use R base image with specific version to match renv.lock files
 FROM r-base:4.4.2
 
-# Set environment variables
 ENV R_VERSION=4.4.2
 ENV BIOCONDUCTOR_VERSION=3.20
 ENV RENV_VERSION=1.0.11
-# Force renv to avoid Posit Package Manager autodetection and use CRAN cloud mirror
 ENV RENV_CONFIG_PPM_ENABLED=false
 ENV RENV_CONFIG_REPOS_OVERRIDE=https://cloud.r-project.org
 
@@ -35,25 +32,25 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install BiocManager and renv at system level
-RUN R -e "install.packages(c('BiocManager', 'renv'), repos='https://cloud.r-project.org')" \
-    && R -e "BiocManager::install(version='$BIOCONDUCTOR_VERSION')"
-
 # Set working directory
 WORKDIR /app
 
-# Copy project files (this will be specific to each R script when building)
-COPY . ./
+RUN R -e "install.packages('renv', repos = 'https://cloud.r-project.org')"
 
-# Initialize renv and restore environment
-# Temporarily rename .Rprofile to avoid sourcing non-existent renv/activate.R
-# Initialize renv, then restore the .Rprofile and restore packages
-RUN mv .Rprofile .Rprofile.bak || true
-RUN R --vanilla -e "renv::init(bare = TRUE)" && \
-    mv .Rprofile.bak .Rprofile && \
-    R -e "renv::consent()" && \
-    R -e "renv::restore()"
+# .Rprofile breaks renv restore
+# Copy only files that are needed
+COPY *.R .
+COPY ./renv.lock ./renv.lock
 
+# Have to use absolute paths because during execution the working directory will be changed
+# and realpath command does not work
+ENV RENV_PATHS_RENV=/app/renv
+ENV RENV_PATHS_LOCKFILE=/app/renv.lock
+
+RUN R --no-echo -e "renv::restore(clean = TRUE)"
+
+RUN echo "#!/bin/bash\nR --no-echo --no-restore -e \"renv::restore()\"\n\"\$@\"" > /app/run.sh
+RUN chmod +x /app/run.sh
 
 # Default command runs Rscript
-ENTRYPOINT ["Rscript"]
+ENTRYPOINT ["/app/run.sh"]
