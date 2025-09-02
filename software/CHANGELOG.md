@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.3.2
+
+### Patch Changes
+
+- 01feb53: fix launch block with docker
+
 ## 2.3.1
 
 ### Patch Changes
