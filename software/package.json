@@ -6,7 +6,7 @@
   "scripts": {
     "build": "pl-pkg build",
     "test": "true",
-    "prepublishOnly": "pl-pkg publish"
+    "prepublishOnly": "pl-pkg prepublish"
   },
   "block-software": {
     "entrypoints": {
