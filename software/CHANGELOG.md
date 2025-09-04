@@ -1,5 +1,12 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.3.3
+
+### Patch Changes
+
+- 60e31a0: fix: software package not found
+- 60e31a0: fix: software not found
+
 ## 2.3.2
 
 ### Patch Changes
