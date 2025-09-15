@@ -10,11 +10,12 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "lint": "pnpm -r lint",
-    "deps-up": "pl-blocks-deps-updater"
+    "update-sdk": "pl-blocks-deps-updater"
   },
   "devDependencies": {
     "turbo": "catalog:",
-    "@changesets/cli": "catalog:"
+    "@changesets/cli": "catalog:",
+    "@platforma-sdk/blocks-deps-updater": "catalog:"
   },
   "packageManager": "pnpm@9.12.0",
   "--": {
