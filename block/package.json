@@ -41,7 +41,13 @@
         "url": "https://organization.com",
         "logo": "file:../logos/organization-logo.png"
       },
-      "marketplaceRanking": 13900
+      "marketplaceRanking": 13900,
+      "supportedPlatforms": [
+        "linux-x64",
+        "linux-aarch64",
+        "macosx-x64",
+        "macosx-aarch64"
+      ]
     }
   },
   "devDependencies": {

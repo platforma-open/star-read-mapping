@@ -1,8 +1,10 @@
+import type {
+  PColumnIdAndSpec,
+} from '@platforma-sdk/model';
 import {
   BlockModel,
   createPFrameForGraphs,
   type InferOutputsType,
-  isPColumn,
   isPColumnSpec,
   parseResourceMap,
   type PlRef,
@@ -168,15 +170,29 @@ export const model = BlockModel.create()
     if (pCols === undefined) return undefined;
 
     // Check for metadata in upstream data
-    const upstream = wf.resultPool
-      .getData()
-      .entries.map((v) => v.obj)
-      .filter(isPColumn)
-      .filter((column) =>
-        column.spec.name === 'pl7.app/metadata' || column.spec.name === 'pl7.app/label',
-      );
+    // const upstream = wf.resultPool
+    //   .getData()
+    //   .entries.map((v) => v.obj)
+    //   .filter(isPColumn)
+    //   .filter((column) =>
+    //     column.spec.name === 'pl7.app/metadata' || column.spec.name === 'pl7.app/label',
+    //   );
 
-    return createPFrameForGraphs(wf, [...pCols, ...upstream]);
+    return createPFrameForGraphs(wf, pCols);
+  })
+
+  // List of pcolumns used for PCA default options
+  .output('pcaPcols', (wf) => {
+    const pCols = wf.outputs?.resolve('pcaComponents')?.getPColumns();
+    if (pCols === undefined) return undefined;
+
+    return pCols.map(
+      (c) =>
+        ({
+          columnId: c.id,
+          spec: c.spec,
+        } satisfies PColumnIdAndSpec),
+    );
   })
 
   .output('sampleDistancesSpec', (wf) => {
@@ -190,16 +206,17 @@ export const model = BlockModel.create()
     if (pCols === undefined) return undefined;
 
     // Check for metadata in upstream data
-    const upstream = wf.resultPool
-      .getData()
-      .entries.map((v) => v.obj)
-      .filter(isPColumn)
-      .filter((column) =>
-        column.spec.name === 'pl7.app/metadata' || column.spec.name === 'pl7.app/label',
-      );
+    // const upstream = wf.resultPool
+    //   .getData()
+    //   .entries.map((v) => v.obj)
+    //   .filter(isPColumn)
+    //   .filter((column) =>
+    //     column.spec.name === 'pl7.app/metadata' || column.spec.name === 'pl7.app/label',
+    //   );
 
     // @TODO find why createPFrameForGraphs is not detecting the metadata without the previous check
-    return createPFrameForGraphs(wf, [...pCols, ...upstream]);
+    // return createPFrameForGraphs(wf, [...pCols, ...upstream]);
+    return createPFrameForGraphs(wf, pCols);
   })
 
   .sections([
@@ -214,6 +231,6 @@ export const model = BlockModel.create()
       : 'STAR Read Mapping',
   )
 
-  .done();
+  .done(2);
 
 export type BlockOutputs = InferOutputsType<typeof model>;
