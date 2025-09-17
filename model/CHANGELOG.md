@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.model
 
+## 2.4.1
+
+### Patch Changes
+
+- 0b8a279: Full SDK update
+
 ## 2.4.0
 
 ### Minor Changes
