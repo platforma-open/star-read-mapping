@@ -24,7 +24,7 @@ catalog:
   '@platforma-open/milaboratories.genome-assets': 1.2.0
   '@platforma-open/milaboratories.runenv-r-normalize-counts': ^1.0.6
   '@platforma-open/milaboratories.runenv-r-sample-qc': ^1.0.5
-  '@platforma-sdk/package-builder': ^3.5.2
+  '@platforma-sdk/package-builder': ^3.8.0
   '@platforma-sdk/blocks-deps-updater': ^2.0.0
 
   '@milaboratories/helpers': ^1.8.0
