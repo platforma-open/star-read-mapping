@@ -18,7 +18,7 @@ catalog:
   '@milaboratories/graph-maker': ^1.1.157
 
   '@milaboratories/software-pframes-conv': ^2.2.7
-  '@platforma-open/milaboratories.software-small-binaries': ^1.15.19
+  '@platforma-open/milaboratories.software-small-binaries': ^1.15.23
   '@platforma-open/milaboratories.software-subread': ^1.0.0
   '@platforma-open/milaboratories.software-star': ^1.0.1
   '@platforma-open/milaboratories.genome-assets': 1.2.0
