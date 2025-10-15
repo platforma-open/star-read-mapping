@@ -1,5 +1,15 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.3.4
+
+### Patch Changes
+
+- b009d4c: technical release
+- e88bff1: technical release
+- 223bcf2: technical release
+- 373feb3: technical release
+- bc2b9b4: Technical release: fix CVEs in docker image
+
 ## 2.3.3
 
 ### Patch Changes

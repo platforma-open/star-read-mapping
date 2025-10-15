@@ -1,5 +1,14 @@
 # @platforma-open/milaboratories.star-read-mapping.model
 
+## 2.4.2
+
+### Patch Changes
+
+- b009d4c: technical release
+- e88bff1: technical release
+- 223bcf2: technical release
+- 373feb3: technical release
+
 ## 2.4.1
 
 ### Patch Changes
