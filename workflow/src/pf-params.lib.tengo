@@ -37,7 +37,8 @@ getRawCountsConvParams := func(species, blockId) {
 				},
 				annotations: {
 					"pl7.app/label": "Raw gene expression",
-					"pl7.app/table/hValue": "true"
+					"pl7.app/table/hValue": "true",
+					"pl7.app/isAbundance": "true"
 				}
 			}
 		} ],
@@ -83,7 +84,8 @@ getNormCountsConvParams := func(blockId, sampleAxisSpec, species) {
 				},
 				annotations: {
 					"pl7.app/label": "Normalized gene expression",
-					"pl7.app/table/hValue": "true"
+					"pl7.app/table/hValue": "true",
+					"pl7.app/isAbundance": "true"
 				}
 			}
 		} ],
