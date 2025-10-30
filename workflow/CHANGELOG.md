@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.7.7
+
+### Patch Changes
+
+- e4f5c4b: Add annotation for abundance block
+
 ## 2.7.6
 
 ### Patch Changes
