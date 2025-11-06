@@ -173,7 +173,8 @@ self.body(func(inputs) {
 	star = star.saveFile("sample_Aligned.sortedByCoord.out.bam").
 		saveFile("sample_Log.final.out").
 		printErrStreamToStdout().
-		saveStdoutContent().
+		saveStdoutStream().
+		// saveStdoutContent().
 		cache(24 * 60 * 60 * 1000).
 		run()
 
@@ -211,7 +212,8 @@ self.body(func(inputs) {
 		saveFile("rawCounts.tsv").
 		saveFile("rawCounts.tsv.summary"). // featureCounts qc
 		printErrStreamToStdout().
-		saveStdoutContent().
+		saveStdoutStream().
+		// saveStdoutContent().
 		cache(24 * 60 * 60 * 1000).
 		run()
 

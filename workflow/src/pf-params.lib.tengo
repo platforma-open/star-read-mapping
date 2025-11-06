@@ -42,7 +42,7 @@ getRawCountsConvParams := func(species, blockId) {
 				}
 			}
 		} ],
-		storageFormat: "Binary",
+		storageFormat: "Parquet",
 		partitionKeyLength: 0
 	}
 }
@@ -89,7 +89,7 @@ getNormCountsConvParams := func(blockId, sampleAxisSpec, species) {
 				}
 			}
 		} ],
-		storageFormat: "Binary",
+		storageFormat: "Parquet",
 		partitionKeyLength: 1 // partitioned by sample
 	}
 }
@@ -134,7 +134,7 @@ getDistanceConvParams := func(blockId, sampleAxisSpec) {
 				}
 			}
 		} ],
-		storageFormat: "Binary",
+		storageFormat: "Parquet",
 		partitionKeyLength: 0
 	}
 }
@@ -171,7 +171,7 @@ getPCAConvParams := func(blockId, sampleAxisSpec) {
 				}
 			}
 		} ],
-		storageFormat: "Binary",
+		storageFormat: "Parquet",
 		partitionKeyLength: 0
 	}
 }
