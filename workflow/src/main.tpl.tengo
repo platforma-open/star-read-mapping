@@ -125,7 +125,8 @@ wf.body(func(args) {
 		saveFile("pca_results.csv").
 		saveFile("sample_distances.csv").
 		printErrStreamToStdout().
-		saveStdoutContent().
+		saveStdoutStream().
+		// saveStdoutContent().
 		cache(24 * 60 * 60 * 1000).
 		run()
 
@@ -152,7 +153,8 @@ wf.body(func(args) {
 		saveFile("normalized_counts.csv").
 		//saveFile("lognormalized_counts.csv").
 		printErrStreamToStdout().
-		saveStdoutContent().
+		saveStdoutStream().
+		// saveStdoutContent().
 		cache(24 * 60 * 60 * 1000).
 		run()
 
