@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.7.8
+
+### Patch Changes
+
+- bc1bf52: Support parquet format (update SDK)
+
 ## 2.7.7
 
 ### Patch Changes
