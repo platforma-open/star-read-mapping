@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.7.8
+
+### Patch Changes
+
+- 8051c91: Block metadata update
+
 ## 1.7.7
 
 ### Patch Changes
