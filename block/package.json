@@ -27,9 +27,8 @@
       "title": "STAR Read Mapping",
       "logo": "file:../logos/block-logo.png",
       "url": "https://github.com/platforma-open/star-read-mapping",
-      "docs": "https://github.com/platforma-open/star-read-mapping/docs",
       "support": "mailto:support@milaboratories.com",
-      "description": "Bulk RNA-seq raw sequencing data preprocessing using STAR aligner. It runs QC and produces a count matrix.",
+      "description": "Aligns bulk RNA-seq reads using STAR, counts genes with featureCounts, and generates count matrices with QC metrics.",
       "longDescription": "file:../docs/description.md",
       "changelog": "file:./CHANGELOG.md",
       "tags": [
