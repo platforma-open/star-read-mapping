@@ -18,9 +18,9 @@
     "@platforma-sdk/blocks-deps-updater": "catalog:"
   },
   "packageManager": "pnpm@9.12.0",
-  "--": {
+  "//pnpm": {
     "overrides": {
-      "@platforma-sdk/package-builder": "file:/Users/popoffvg/Documents/git/mil/platforma/tools/package-builder/package.tgz"
+      "@platforma-sdk/workflow-tengo": "file:/Users/denkoren/work/milaboratory/platforma/platforma/sdk/workflow-tengo/package.tgz"
     }
   }
 }
