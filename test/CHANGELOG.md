@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.test
 
+## 1.0.2
+
+### Patch Changes
+
+- 0d14f0d: Make block to work in docker-based installations
+
 ## 1.0.1
 
 ### Patch Changes

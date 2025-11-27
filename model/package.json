@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.star-read-mapping.model",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "Block model",
   "type": "module",
   "main": "dist/index.cjs",

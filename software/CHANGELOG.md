@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.3.5
+
+### Patch Changes
+
+- 0d14f0d: Make block to work in docker-based installations
+
 ## 2.3.4
 
 ### Patch Changes

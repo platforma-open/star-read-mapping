@@ -1,5 +1,13 @@
 # @platforma-open/milaboratories.block-template.ui
 
+## 2.2.5
+
+### Patch Changes
+
+- 0d14f0d: Make block to work in docker-based installations
+- Updated dependencies [0d14f0d]
+  - @platforma-open/milaboratories.star-read-mapping.model@2.4.3
+
 ## 2.2.4
 
 ### Patch Changes

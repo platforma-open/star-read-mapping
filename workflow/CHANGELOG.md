@@ -1,5 +1,13 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.7.9
+
+### Patch Changes
+
+- 0d14f0d: Make block to work in docker-based installations
+- Updated dependencies [0d14f0d]
+  - @platforma-open/milaboratories.star-read-mapping.software@2.3.5
+
 ## 2.7.8
 
 ### Patch Changes
