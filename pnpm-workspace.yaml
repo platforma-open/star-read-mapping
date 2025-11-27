@@ -7,18 +7,18 @@ packages:
 - test
 
 catalog:
-  '@platforma-sdk/block-tools': ^2.6.21
+  '@platforma-sdk/block-tools': ^2.6.25
   '@platforma-sdk/model': ^1.45.30
   '@platforma-sdk/ui-vue': ^1.45.30
   '@platforma-sdk/tengo-builder': ^2.3.9
-  '@platforma-sdk/workflow-tengo': ^5.6.1
+  '@platforma-sdk/workflow-tengo': ^5.6.3
   '@platforma-sdk/eslint-config': ^1.1.0
 
   '@platforma-sdk/test': ^1.45.30
   '@milaboratories/graph-maker': ^1.1.179
 
   '@milaboratories/software-pframes-conv': ^2.2.9
-  '@platforma-open/milaboratories.software-small-binaries': ^1.15.23
+  '@platforma-open/milaboratories.software-small-binaries': ^1.15.25
   '@platforma-open/milaboratories.software-subread': ^1.0.2
   '@platforma-open/milaboratories.software-star': ^1.1.1
   '@platforma-open/milaboratories.genome-assets': 1.2.0
