@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.run-sample-qc-r.software
 
+## 2.3.6
+
+### Patch Changes
+
+- 5d2b2ba: Set correct renv.lock file for normalize-counts script
+
 ## 2.3.5
 
 ### Patch Changes

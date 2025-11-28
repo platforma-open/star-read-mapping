@@ -1,5 +1,12 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.7.10
+
+### Patch Changes
+
+- Updated dependencies [5d2b2ba]
+  - @platforma-open/milaboratories.star-read-mapping.software@2.3.6
+
 ## 2.7.9
 
 ### Patch Changes
