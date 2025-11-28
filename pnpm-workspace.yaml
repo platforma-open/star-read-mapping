@@ -11,7 +11,7 @@ catalog:
   '@platforma-sdk/model': ^1.45.30
   '@platforma-sdk/ui-vue': ^1.45.30
   '@platforma-sdk/tengo-builder': ^2.3.9
-  '@platforma-sdk/workflow-tengo': ^5.6.2
+  '@platforma-sdk/workflow-tengo': ^5.6.3
   '@platforma-sdk/eslint-config': ^1.1.0
 
   '@platforma-sdk/test': ^1.45.30
