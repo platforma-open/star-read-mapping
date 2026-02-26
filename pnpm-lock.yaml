@@ -7,64 +7,64 @@ settings:
 catalogs:
   default:
     '@changesets/cli':
-      specifier: ^2.28.1
+      specifier: ~2.28.1
       version: 2.28.1
     '@milaboratories/graph-maker':
-      specifier: ^1.1.179
+      specifier: ~1.1.179
       version: 1.1.179
     '@milaboratories/helpers':
-      specifier: ^1.12.0
+      specifier: ~1.12.0
       version: 1.12.0
     '@milaboratories/software-pframes-conv':
-      specifier: ^2.2.9
+      specifier: ~2.2.9
       version: 2.2.9
     '@platforma-open/milaboratories.genome-assets':
       specifier: 1.2.0
       version: 1.2.0
     '@platforma-open/milaboratories.runenv-r-normalize-counts':
-      specifier: ^1.0.6
+      specifier: ~1.0.6
       version: 1.0.6
     '@platforma-open/milaboratories.runenv-r-sample-qc':
-      specifier: ^1.0.5
+      specifier: ~1.0.5
       version: 1.0.5
     '@platforma-open/milaboratories.software-small-binaries':
-      specifier: ^1.15.25
+      specifier: ~1.15.25
       version: 1.15.25
     '@platforma-open/milaboratories.software-star':
-      specifier: ^1.1.1
+      specifier: ~1.1.1
       version: 1.1.1
     '@platforma-open/milaboratories.software-subread':
-      specifier: ^1.0.2
+      specifier: ~1.0.2
       version: 1.0.2
     '@platforma-sdk/block-tools':
-      specifier: ^2.6.30
+      specifier: ~2.6.30
       version: 2.6.30
     '@platforma-sdk/blocks-deps-updater':
-      specifier: ^2.0.0
+      specifier: ~2.0.0
       version: 2.0.0
     '@platforma-sdk/eslint-config':
-      specifier: ^1.1.0
+      specifier: ~1.1.0
       version: 1.1.0
     '@platforma-sdk/model':
-      specifier: ^1.45.30
+      specifier: ~1.45.30
       version: 1.45.30
     '@platforma-sdk/package-builder':
-      specifier: ^3.10.7
-      version: 3.10.7
+      specifier: ~3.11.4
+      version: 3.11.4
     '@platforma-sdk/tengo-builder':
-      specifier: ^2.3.9
+      specifier: ~2.3.9
       version: 2.3.9
     '@platforma-sdk/test':
-      specifier: ^1.45.30
+      specifier: ~1.45.30
       version: 1.45.30
     '@platforma-sdk/ui-vue':
-      specifier: ^1.45.30
+      specifier: ~1.45.30
       version: 1.45.30
     '@platforma-sdk/workflow-tengo':
-      specifier: ^5.6.3
+      specifier: ~5.6.3
       version: 5.6.3
     '@vitejs/plugin-vue':
-      specifier: ^5.2.1
+      specifier: ~5.2.1
       version: 5.2.1
     ag-grid-enterprise:
       specifier: ~34.1.2
@@ -73,28 +73,28 @@ catalogs:
       specifier: ~34.1.2
       version: 34.1.2
     shx:
-      specifier: ^0.4.0
+      specifier: ~0.4.0
       version: 0.4.0
     tsup:
       specifier: ~8.4.0
       version: 8.4.0
     turbo:
-      specifier: ^2.4.4
+      specifier: ~2.4.4
       version: 2.4.4
     typescript:
       specifier: ~5.5.4
       version: 5.5.4
     vite:
-      specifier: ^6.2.2
+      specifier: ~6.2.2
       version: 6.2.2
     vitest:
-      specifier: ^3.0.8
+      specifier: ~3.0.8
       version: 3.0.8
     vue:
-      specifier: ^3.5.13
+      specifier: ~3.5.13
       version: 3.5.13
     vue-tsc:
-      specifier: ^2.2.8
+      specifier: ~2.2.8
       version: 2.2.8
 
 importers:
@@ -168,7 +168,7 @@ importers:
         version: 1.0.5
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.4
 
   test:
     dependencies:
@@ -920,6 +920,9 @@ packages:
   '@milaboratories/resolve-helper@1.1.1':
     resolution: {integrity: sha512-0A7yX8p3uhTWAGphq9oV3fGQODtmCgPHEuB0UkUw5MSdAOM4rjQX35IPOi3fVVPumVJxeygqdJZ4sfSRU4+IVA==}
 
+  '@milaboratories/resolve-helper@1.1.2':
+    resolution: {integrity: sha512-xicajvqgaGOdXlKwolwVHdXNB3zRUbvjIiZQWcy2R+3rbScfEaBspnDDstDXKc4nMbieO+8Bq2o7AbtKmheDfw==}
+
   '@milaboratories/software-pframes-conv@2.2.9':
     resolution: {integrity: sha512-w+GaazDSqEgqYUJ38I5lgOsggyZJpcBVGvDMHIX1pyTdvPjWAOWu3mLkScaYuWeitFfh8aAedf5vrLqXtnX8bw==}
 
@@ -1097,8 +1100,8 @@ packages:
   '@platforma-sdk/model@1.45.30':
     resolution: {integrity: sha512-/zdg+HY14z+bT5Q4yMbRb+lM7GtcUVxYIcv2OrnK+Va8bNjpx8qKRhWfBFYAU+wYQ9eSJu7dCA0wsDAN/UxDuw==}
 
-  '@platforma-sdk/package-builder@3.10.7':
-    resolution: {integrity: sha512-3qWieTD0GTCNQ65lVV1/LAcwNlTFh7BuswS6qrK8acRtREFEZm/QvywbE6fQu7gEEF697y7/6/ktR8Sd1EzP/A==}
+  '@platforma-sdk/package-builder@3.11.4':
+    resolution: {integrity: sha512-t7SG8DZeRhawmGvSjAf67E7BH2VtRg4mVqB5GXid+gZSPVR76YLeLVf6FN2Be55pQjHK0blb7YYqFUBB5ykdmA==}
     hasBin: true
 
   '@platforma-sdk/tengo-builder@2.3.9':
@@ -4903,6 +4906,7 @@ packages:
   tar@7.4.3:
     resolution: {integrity: sha512-5S7Va8hKfV7W5U6g3aYxXmlPoZVAwUMy9AOKyF2fVuZa2UD3qZjg578OrLRt8PcNN1PleVaL/5/yYATNL0ICUw==}
     engines: {node: '>=18'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   term-size@2.2.1:
     resolution: {integrity: sha512-wK0Ri4fOGjv/XPy8SBHZChl8CM7uMc5VML7SqiQ0zG7+J5Vr+RMQDoHa2CNT6KHUnTGIXH34UDMkPzAUyapBZg==}
@@ -6420,7 +6424,7 @@ snapshots:
 
   '@milaboratories/pf-plots@1.1.45':
     dependencies:
-      '@milaboratories/pl-model-common': 1.21.6
+      '@milaboratories/pl-model-common': 1.24.0
       '@platforma-sdk/model': 1.45.30
       canonicalize: 2.1.0
       lodash: 4.17.21
@@ -6631,6 +6635,8 @@ snapshots:
       '@platforma-open/milaboratories.software-ptabler.schema': 1.12.2
 
   '@milaboratories/resolve-helper@1.1.1': {}
+
+  '@milaboratories/resolve-helper@1.1.2': {}
 
   '@milaboratories/software-pframes-conv@2.2.9': {}
 
@@ -6893,17 +6899,15 @@ snapshots:
       utility-types: 3.11.0
       zod: 3.23.8
 
-  '@platforma-sdk/package-builder@3.10.7':
+  '@platforma-sdk/package-builder@3.11.4':
     dependencies:
       '@aws-sdk/client-s3': 3.859.0
       '@aws-sdk/lib-storage': 3.859.0(@aws-sdk/client-s3@3.859.0)
-      '@milaboratories/resolve-helper': 1.1.1
+      '@milaboratories/resolve-helper': 1.1.2
       '@oclif/core': 4.0.37
       '@types/archiver': 6.0.3
       '@types/node': 24.5.2
       archiver: 7.0.1
-      canonicalize: 2.1.0
-      tar: 7.4.3
       undici: 7.16.0
       winston: 3.17.0
       yaml: 2.8.0
