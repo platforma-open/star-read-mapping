@@ -21,7 +21,7 @@
   "packageManager": "pnpm@9.12.0",
   "//pnpm": {
     "overrides": {
-      "@platforma-sdk/workflow-tengo": "file:/Users/denkoren/work/milaboratory/platforma/platforma/sdk/workflow-tengo/package.tgz"
+      "@platforma-sdk/package-builder": "file:/Users/popoffvg/Documents/git/mil/platforma/tools/package-builder/platforma-sdk-package-builder-3.11.4.tgz"
     }
   }
 }

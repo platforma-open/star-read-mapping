@@ -20,7 +20,7 @@
       },
       {
         "Name": "BioCbooks",
-        "URL": "https://bioconductor.org/packages/3.20/books"
+        "URL": "https://bioconductor.org/packages/3.20/bioc"
       },
       {
         "Name": "CRAN",

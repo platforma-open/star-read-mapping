@@ -48,9 +48,6 @@ catalogs:
     '@platforma-sdk/model':
       specifier: ^1.45.30
       version: 1.58.3
-    '@platforma-sdk/package-builder':
-      specifier: ^3.11.4
-      version: 3.10.7
     '@platforma-sdk/tengo-builder':
       specifier: ^2.3.9
       version: 2.3.9
@@ -93,6 +90,9 @@ catalogs:
     vue-tsc:
       specifier: ^2.2.8
       version: 2.2.8
+
+overrides:
+  '@platforma-sdk/package-builder': file:/Users/popoffvg/Documents/git/mil/platforma/tools/package-builder/platforma-sdk-package-builder-3.11.4.tgz
 
 importers:
 
@@ -164,8 +164,8 @@ importers:
         specifier: 'catalog:'
         version: 1.0.5
       '@platforma-sdk/package-builder':
-        specifier: 'catalog:'
-        version: 3.10.7
+        specifier: file:/Users/popoffvg/Documents/git/mil/platforma/tools/package-builder/platforma-sdk-package-builder-3.11.4.tgz
+        version: file:../../platforma/tools/package-builder/platforma-sdk-package-builder-3.11.4.tgz
 
   test:
     dependencies:
@@ -1103,6 +1103,9 @@ packages:
   '@milaboratories/resolve-helper@1.1.1':
     resolution: {integrity: sha512-0A7yX8p3uhTWAGphq9oV3fGQODtmCgPHEuB0UkUw5MSdAOM4rjQX35IPOi3fVVPumVJxeygqdJZ4sfSRU4+IVA==}
 
+  '@milaboratories/resolve-helper@1.1.2':
+    resolution: {integrity: sha512-xicajvqgaGOdXlKwolwVHdXNB3zRUbvjIiZQWcy2R+3rbScfEaBspnDDstDXKc4nMbieO+8Bq2o7AbtKmheDfw==}
+
   '@milaboratories/software-pframes-conv@2.2.9':
     resolution: {integrity: sha512-w+GaazDSqEgqYUJ38I5lgOsggyZJpcBVGvDMHIX1pyTdvPjWAOWu3mLkScaYuWeitFfh8aAedf5vrLqXtnX8bw==}
 
@@ -1292,8 +1295,9 @@ packages:
   '@platforma-sdk/model@1.58.3':
     resolution: {integrity: sha512-GFDwxF+1l+it/eBfcWmiXW9U8911X1J0YS3+WMPYF4ErVya6W1eGSJX0pgrwXVVzv6tQ5fW8LSrbRL4AWwzs5g==}
 
-  '@platforma-sdk/package-builder@3.10.7':
-    resolution: {integrity: sha512-3qWieTD0GTCNQ65lVV1/LAcwNlTFh7BuswS6qrK8acRtREFEZm/QvywbE6fQu7gEEF697y7/6/ktR8Sd1EzP/A==}
+  '@platforma-sdk/package-builder@file:../../platforma/tools/package-builder/platforma-sdk-package-builder-3.11.4.tgz':
+    resolution: {integrity: sha512-+qBL/4YjOXt8538mk1jPMhseZXAJWXOC4uwmGqPAGvXrFjtcEOEZ5R/QGXXWz7PECARpGLNUFb/eAue9uMh61A==, tarball: file:../../platforma/tools/package-builder/platforma-sdk-package-builder-3.11.4.tgz}
+    version: 3.11.4
     hasBin: true
 
   '@platforma-sdk/tengo-builder@2.3.9':
@@ -7176,6 +7180,8 @@ snapshots:
 
   '@milaboratories/resolve-helper@1.1.1': {}
 
+  '@milaboratories/resolve-helper@1.1.2': {}
+
   '@milaboratories/software-pframes-conv@2.2.9': {}
 
   '@milaboratories/tengo-tester@1.6.4': {}
@@ -7470,17 +7476,15 @@ snapshots:
       utility-types: 3.11.0
       zod: 3.23.8
 
-  '@platforma-sdk/package-builder@3.10.7':
+  '@platforma-sdk/package-builder@file:../../platforma/tools/package-builder/platforma-sdk-package-builder-3.11.4.tgz':
     dependencies:
       '@aws-sdk/client-s3': 3.859.0
       '@aws-sdk/lib-storage': 3.859.0(@aws-sdk/client-s3@3.859.0)
-      '@milaboratories/resolve-helper': 1.1.1
+      '@milaboratories/resolve-helper': 1.1.2
       '@oclif/core': 4.8.1
       '@types/archiver': 6.0.4
       '@types/node': 24.5.2
       archiver: 7.0.1
-      canonicalize: 2.1.0
-      tar: 7.5.9
       undici: 7.16.0
       winston: 3.19.0
       yaml: 2.8.2
