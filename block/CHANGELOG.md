@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.7.11
+
+### Patch Changes
+
+- 631f391: Adds dash system dependency
+
 ## 1.7.10
 
 ### Patch Changes
