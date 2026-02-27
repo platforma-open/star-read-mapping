@@ -54,7 +54,8 @@ self.body(func(inputs) {
 		addAsset(genomeAssets, "genomeIndex", ["transcriptInfo.tab"]).
 		arg("--genomeDir").arg("genomeIndex").
 		arg("--outSAMtype").arg("BAM").arg("SortedByCoordinate").
-		arg("--readFilesIn")
+		arg("--readFilesIn").
+		mem("4Gb")
 
 	nReads := 0
 	filesByRIndex := {}
