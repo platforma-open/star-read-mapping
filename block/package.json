@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.star-read-mapping",
-  "version": "1.7.11",
+  "version": "1.7.12",
   "scripts": {
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json,vue}\"",
     "build": "shx rm -rf ./block-pack && block-tools pack",

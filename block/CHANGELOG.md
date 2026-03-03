@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping
 
+## 1.7.12
+
+### Patch Changes
+
+- eae1048: Set 4Gb memory limit for STAR alignment step
+
 ## 1.7.11
 
 ### Patch Changes
