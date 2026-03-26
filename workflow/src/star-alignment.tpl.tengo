@@ -68,16 +68,18 @@ self.body(func(inputs) {
 				ll.panic("malformed read index: %v", r)
 			}
 			fileName := "input_" + r + "." + fileExtension
-			star.addFile(fileName, inputFile).arg(fileName)
+			star.addFile(fileName, inputFile)
 			filesByRIndex[r] = inputFile
 		}
 
+		// Add read file args in deterministic order (R1 before R2)
 		for rIndex in ["R1", "R2"] {
 			inputFile := filesByRIndex[rIndex]
 			if is_undefined(inputFile) {
 				continue
 			}
 			nReads = nReads + 1
+			star.arg("input_" + rIndex + "." + fileExtension)
 		}
 		ll.assert(nReads != 0, "No R read indexes")
 	} else if inputDataMeta.keyLength == 2 {
