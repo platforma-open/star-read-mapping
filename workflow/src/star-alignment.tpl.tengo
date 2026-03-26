@@ -59,6 +59,7 @@ self.body(func(inputs) {
 
 	nReads := 0
 	filesByRIndex := {}
+	fileNamesByRIndex := {}
 	if inputDataMeta.keyLength == 1 {
 		ll.assert(aggregationAxesNames == ["pl7.app/sequencing/readIndex"], "unexpected aggregation axes names")
 		for sKey, inputFile in inputData.inputs() {
@@ -70,6 +71,7 @@ self.body(func(inputs) {
 			fileName := "input_" + r + "." + fileExtension
 			star.addFile(fileName, inputFile)
 			filesByRIndex[r] = inputFile
+			fileNamesByRIndex[r] = fileName
 		}
 
 		// Add read file args in deterministic order (R1 before R2)
@@ -79,7 +81,7 @@ self.body(func(inputs) {
 				continue
 			}
 			nReads = nReads + 1
-			star.arg("input_" + rIndex + "." + fileExtension)
+			star.arg(fileNamesByRIndex[rIndex])
 		}
 		ll.assert(nReads != 0, "No R read indexes")
 	} else if inputDataMeta.keyLength == 2 {
