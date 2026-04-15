@@ -164,7 +164,7 @@ export const model = BlockModel.create()
    */
   .output('isRunning', (ctx) => ctx.outputs?.getIsReadyOrError() === false)
 
-  .output('pcaPf', (wf) => {
+  .outputWithStatus('pcaPf', (wf) => {
     // return wf.outputs?.resolve("pf")?.resolve("rawCounts.data")?.listInputFields()
     const pCols = wf.outputs?.resolve('pcaComponents')?.getPColumns();
     if (pCols === undefined) return undefined;
@@ -201,7 +201,7 @@ export const model = BlockModel.create()
     return pCols[0].spec;
   })
 
-  .output('sampleDistancesPf', (wf) => {
+  .outputWithStatus('sampleDistancesPf', (wf) => {
     const pCols = wf.outputs?.resolve('sampleDistances')?.getPColumns();
     if (pCols === undefined) return undefined;
 
