@@ -49,7 +49,7 @@ COPY ./renv.lock ./renv.lock
 ENV RENV_PATHS_RENV=/app/renv
 ENV RENV_PATHS_LOCKFILE=/app/renv.lock
 
-RUN R --no-echo -e "renv::restore(clean = TRUE)" \
+RUN R --no-echo -e "options(Ncpus = 1); renv::restore(clean = TRUE)" \
     && find /root/.cache/R -name keys.html -delete \
     && find /usr/local/lib/R -name keys.html -delete
 
