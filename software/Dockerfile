@@ -49,10 +49,10 @@ COPY ./renv.lock ./renv.lock
 ENV RENV_PATHS_RENV=/app/renv
 ENV RENV_PATHS_LOCKFILE=/app/renv.lock
 
-# Parallel dependencies processing in renv cause errors because of unordered transitive dependencies installation
-# We have to run restoration process twice: first wave installs most of deps, 2nd wave fixes failures from races
-RUN R --no-echo -e "renv::restore(clean = TRUE)" || true
-RUN R --no-echo -e "renv::restore()" \
+# First pass: parallel install (fast for the bulk of packages).
+# Second pass: sequential retry to resolve any parallel-install races
+# (e.g. ggplot2 starting before tibble is visible in the library).
+RUN R --no-echo -e "tryCatch(renv::restore(), error = function(e) message('parallel pass finished with errors: ', conditionMessage(e))); options(Ncpus = 1); renv::restore(clean = TRUE)" \
     && find /root/.cache/R -name keys.html -delete \
     && find /usr/local/lib/R -name keys.html -delete
 
