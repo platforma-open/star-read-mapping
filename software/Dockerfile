@@ -8,7 +8,8 @@ ENV RENV_CONFIG_REPOS_OVERRIDE=https://cloud.r-project.org
 
 # Install system dependencies required for R packages
 RUN apt-get update && apt-get install -y \
-    dash \
+    curl \
+    ca-certificates \
     libcurl4-openssl-dev \
     libssl-dev \
     libxml2-dev \
