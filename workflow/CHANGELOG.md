@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.star-read-mapping.workflow
 
+## 2.7.11
+
+### Patch Changes
+
+- 1312d78: Make small-binaries to work in K8S environment
+
 ## 2.7.10
 
 ### Patch Changes

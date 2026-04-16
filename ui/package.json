@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.star-read-mapping.ui",
-  "version": "2.2.5",
+  "version": "2.3.0",
   "type": "module",
   "scripts": {
     "dev": "ts-builder serve --target block-ui",
