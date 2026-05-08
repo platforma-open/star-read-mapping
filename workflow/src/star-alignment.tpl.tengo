@@ -55,7 +55,7 @@ self.body(func(inputs) {
 		arg("--genomeDir").arg("genomeIndex").
 		arg("--outSAMtype").arg("BAM").arg("SortedByCoordinate").
 		arg("--readFilesIn").
-		mem("4Gb")
+		mem("32GiB")
 
 	nReads := 0
 	filesByRIndex := {}
