@@ -59,6 +59,7 @@ self.body(func(inputs) {
 
 	nReads := 0
 	filesByRIndex := {}
+	fileNamesByRIndex := {}
 	if inputDataMeta.keyLength == 1 {
 		ll.assert(aggregationAxesNames == ["pl7.app/sequencing/readIndex"], "unexpected aggregation axes names")
 		for sKey, inputFile in inputData.inputs() {
@@ -68,16 +69,24 @@ self.body(func(inputs) {
 				ll.panic("malformed read index: %v", r)
 			}
 			fileName := "input_" + r + "." + fileExtension
-			star.addFile(fileName, inputFile).arg(fileName)
+			star.addFile(fileName, inputFile)
 			filesByRIndex[r] = inputFile
+			fileNamesByRIndex[r] = fileName
 		}
 
+		// Add read file args in deterministic order (R1 before R2). Map iteration
+		// is non-deterministic, so combining addFile + arg in the loop above can
+		// produce --readFilesIn input_R2.fq.gz input_R1.fq.gz, which puts R2 in
+		// STAR's read1 slot. STAR may then either fail with "wrong read ID line
+		// format" or produce a BAM that featureCounts -p rejects with "No
+		// paired-end reads were detected".
 		for rIndex in ["R1", "R2"] {
 			inputFile := filesByRIndex[rIndex]
 			if is_undefined(inputFile) {
 				continue
 			}
 			nReads = nReads + 1
+			star.arg(fileNamesByRIndex[rIndex])
 		}
 		ll.assert(nReads != 0, "No R read indexes")
 	} else if inputDataMeta.keyLength == 2 {
