@@ -33,6 +33,20 @@ self.body(func(inputs) {
 
 	inputDataMeta := inputData.getDataAsJson()
 
+	// STAR memory is dominated by mmap of the suffix-array index, which scales
+	// with genome size. Pin the request per species rather than relying on
+	// queue defaults so it stays correct if heavy-queue defaults are retuned.
+	starMem := "32GiB"
+	if species == "saccharomyces-cerevisiae" || species == "test-species" {
+		starMem = "2GiB"
+	} else if species == "drosophila-melanogaster" || species == "arabidopsis-thaliana" || species == "caenorhabditis-elegans" {
+		starMem = "4GiB"
+	} else if species == "danio-rerio" || species == "gallus-gallus" {
+		starMem = "16GiB"
+	}
+	// Mammalian (homo-sapiens, mus-musculus, rattus-norvegicus, bos-taurus,
+	// sus-scrofa) and unknown genomes fall through to 32GiB.
+
 	star:= exec.builder().
 		software(assets.importSoftware("@platforma-open/milaboratories.software-star:star")).
 		mkDir("genomeIndex").
@@ -55,7 +69,7 @@ self.body(func(inputs) {
 		arg("--genomeDir").arg("genomeIndex").
 		arg("--outSAMtype").arg("BAM").arg("SortedByCoordinate").
 		arg("--readFilesIn").
-		mem("4Gb")
+		mem(starMem)
 
 	nReads := 0
 	filesByRIndex := {}
