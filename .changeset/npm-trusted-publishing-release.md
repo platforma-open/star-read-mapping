@@ -1,9 +1,10 @@
 ---
-"@platforma-open/milaboratories.star-read-mapping": minor
-"@platforma-open/milaboratories.star-read-mapping.model": minor
-"@platforma-open/milaboratories.star-read-mapping.software": minor
-"@platforma-open/milaboratories.star-read-mapping.ui": minor
-"@platforma-open/milaboratories.star-read-mapping.workflow": minor
+"@platforma-open/milaboratories.star-read-mapping": patch
+"@platforma-open/milaboratories.star-read-mapping.model": patch
+"@platforma-open/milaboratories.star-read-mapping.software": patch
+"@platforma-open/milaboratories.star-read-mapping.ui": patch
+"@platforma-open/milaboratories.star-read-mapping.workflow": patch
+"@platforma-open/milaboratories.test": patch
 ---
 
 Release every package through npm trusted publishing (OIDC) so each package's trusted publisher is used before it expires.
